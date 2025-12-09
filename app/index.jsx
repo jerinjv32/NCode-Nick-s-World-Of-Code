@@ -1,24 +1,13 @@
 import { StyleSheet, View, Text } from 'react-native'
-import React from 'react'
-import { useFonts } from 'expo-font'
 import { Link } from 'expo-router'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
-const Title = () => {
-  const [fontsLoaded] = useFonts({
-    'press-start-2p': require('../assets/fonts/PressStart2P-Regular.ttf')
-  })
-
- if(!fontsLoaded){
-    return null
-  }  
+const Title = () => {  
   return (
-    <SafeAreaProvider>
-      <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container}>
          <Text style={styles.title}><Text style={{color: '#35315C'}}>N</Text>CODE</Text>
          <Link href={'/home'}><Text style={{color: 'white'}}>Home Page</Text></Link>
-      </SafeAreaView>
-    </SafeAreaProvider>
+    </SafeAreaView>
   )
 }
 
