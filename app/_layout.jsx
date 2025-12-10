@@ -9,7 +9,7 @@ export default function RootLayout() {
     
     if(!fontsLoaded){return(null)}
   return (
-    <SafeAreaProvider>
+    <SafeAreaProvider style={{backgroundColor: '#2f2f2f'}}>
       <Stack screenOptions={{ 
         headerShown: false,
         animation: "none" // Remove jitter

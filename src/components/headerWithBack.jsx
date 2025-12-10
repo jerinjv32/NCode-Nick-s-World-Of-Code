@@ -1,35 +1,19 @@
 import { StyleSheet, Text, View } from 'react-native'
-import { usePathname } from 'expo-router'
+import Arrow from '../../assets/svg/arrow'
 
-
-const header = () => {
-    const path = usePathname()
-
-    let title
-    switch(path){
-        case '/home':
-            title = 'Problem Trail'
-            break
-        case '/chatBot':
-            title = 'Chat Bot'
-            break
-        case '/collabCoding':
-            title = 'Collab Coding'
-            break
-    }
-    return (
-            <View style={styles.header}>
-                <View style={styles.headerTitleBox}>
-                    <Text style={styles.headerTitle}>{title}</Text>
-                </View>
-                <View style={styles.profileBox}>
-                    <View style={styles.profile}></View>
-                </View>
-            </View>
+const headerWithBack = () => {
+  return (
+    <View style={styles.header}>
+        <View style={styles.headerTitleBox}>
+            <Arrow/>
+            <Text style={styles.headerTitle}>{title}</Text>
+            <View style={styles.profile}></View>
+        </View>
+    </View>
   )
 }
 
-export default header
+export default headerWithBack
 
 const styles = StyleSheet.create({
     header:{

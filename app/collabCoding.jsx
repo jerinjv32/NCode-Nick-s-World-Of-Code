@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../src/components/header'
 import Footer from '../src/components/footer'
 import { ImageBackground } from 'react-native'
-
 
 const CollabCoding = () => {
   return (

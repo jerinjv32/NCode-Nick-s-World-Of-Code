@@ -36,7 +36,7 @@ const footer = () => {
              </View>
             </View>
             <View style={styles.box}>
-                <View style={styles.iconProperty}><CodeEditor/></View>
+                <Link href={'/codeEditor'}><View style={styles.iconProperty}><CodeEditor/></View></Link>
             </View>
         </View>
   )

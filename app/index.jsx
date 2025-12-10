@@ -1,12 +1,16 @@
 import { StyleSheet, View, Text } from 'react-native'
-import { Link } from 'expo-router'
+import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { ImageBackground } from 'react-native'
 
 const Title = () => {  
   return (
     <SafeAreaView style={styles.container}>
-         <Text style={styles.title}><Text style={{color: '#35315C'}}>N</Text>CODE</Text>
-         <Link href={'/home'}><Text style={{color: 'white'}}>Home Page</Text></Link>
+        <ImageBackground source={require('../assets/images/background.png')} resizeMode='cover'>
+          <View style={[styles.button,  styles.shadow]}>
+              <Text style={styles.title} onPress={()=>{router.replace('/home')}}><Text style={{color: '#6760AB'}}>N</Text>CODE</Text>
+          </View>
+        </ImageBackground>
     </SafeAreaView>
   )
 }
@@ -23,6 +27,22 @@ const styles = StyleSheet.create({
     title:{
         fontFamily: 'press-start-2p',
         fontSize: 60,
-        color: 'white', 
+        color: 'white',
     },
+    button:{
+      borderWidth: 3,
+      borderColor: '#35315C',
+      paddingTop: 30,
+      paddingHorizontal: 20,
+      borderRadius: 10,
+      backgroundColor: '#212020',
+    },
+    shadow:{
+      shadowOffset: { width: 10, height: 4 },
+      // shadowColor: '#171717',
+      shadowColor: '#ffff',
+      shadowOpacity: 0.2,
+      shadowRadius: 3,
+      elevation: 10
+    }
 })
