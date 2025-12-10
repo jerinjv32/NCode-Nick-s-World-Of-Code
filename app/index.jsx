@@ -7,7 +7,7 @@ const Title = () => {
   return (
     <SafeAreaView style={styles.container}>
         <ImageBackground source={require('../assets/images/background.png')} resizeMode='cover'>
-          <View style={[styles.button,  styles.shadow]}>
+            <View style={[styles.button, styles.shadow]}>
               <Text style={styles.title} onPress={()=>{router.replace('/home')}}><Text style={{color: '#6760AB'}}>N</Text>CODE</Text>
           </View>
         </ImageBackground>
@@ -38,11 +38,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#212020',
     },
     shadow:{
-      shadowOffset: { width: 10, height: 4 },
-      // shadowColor: '#171717',
-      shadowColor: '#ffff',
-      shadowOpacity: 0.2,
-      shadowRadius: 3,
-      elevation: 10
+      shadowColor: '#171717',
+      elevation: 5
     }
 })
