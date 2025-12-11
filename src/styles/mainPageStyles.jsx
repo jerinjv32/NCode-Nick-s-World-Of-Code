@@ -50,16 +50,19 @@ export default StyleSheet.create({
         borderRadius: 10
     },
     lessonProgression:{ 
-        width: 100,
+        width: 300,
         height: 100,
-        marginTop: 140,
+        marginTop: 160,
         marginBottom: 50,
     },
     previousBtn:{
         flexDirection: 'row', 
         justifyContent: 'space-between', 
         alignItems: 'center', 
-        marginTop: 7
+        marginTop: 7,
+        alignItems: 'center',
+        justifyContent: 'center', 
+        flex: 1,
     },
     NextBtn:{
         flexDirection: 'row-reverse',

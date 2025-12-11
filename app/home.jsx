@@ -9,23 +9,23 @@ import traversingLessonsStyles from '../src/styles/traversingLessonsStyles'
 import PreviousBtn from '../assets/svg/Previous'
 import NextBtn from '../assets/svg/Next'
 import CircleProgress from '../assets/svg/CircleProgress'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import ProgressBar from '../assets/svg/ProgressBar'
 
-const radius = 40
+const totalLesson = 7
 
 const Home = () => {
+    const [lesson, setLesson] = useState(0)
+
+    useEffect(()=>{
+        setCounter(c => 1 + (lesson/totalLesson))
+    },[lesson])
+
+    const addLesson = () => lesson < totalLesson ? setLesson(l => l + 1) : setLesson(0)
+
     const [counter, setCounter] = useState(1)
     const [progress, setProgress] = useState(0)
 
-    const increment = () => {
-        if (counter === 2 || counter > 2) {
-            setCounter(1)
-        }
-        else {
-            setCounter(c => c+0.1)
-        }
-    }
 
     const increaseProgress  = () => {
         if (progress === 375 || progress > 375){
@@ -67,17 +67,15 @@ const Home = () => {
                 {/* Lesson Progression */}
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
                     <View style={mainPageStyles.lessonProgression}>
-                        <View style={styles.container}>
-                            <CircleProgress counter={counter}/>
+                        <CircleProgress counter={counter} lesson={lesson} totalLesson={totalLesson}/>
                     </View>
                 </View>
                 {/* Lesson Progrssion ends here */}
 
                 {/* Go button */}
-                </View>
                 <View style={mainPageStyles.goButtonPosition}>
                     <View style={[mainPageStyles.goButton, mainPageStyles.goButtonBorder]}>
-                        <Pressable style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onPress={()=>increment()}>
+                        <Pressable style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onPress={()=>addLesson()}>
                             <Text style={mainPageStyles.goButtonText}>GO!</Text>
                         </Pressable>
                     </View>
@@ -140,9 +138,11 @@ const styles = StyleSheet.create({
         width: 100,
         height: 10
     },
-    container: { 
-        alignItems: 'center',
-        justifyContent: 'center', 
-        flex: 1 
-    },
+    lessonName:{
+        color: 'white',
+        textAlign: 'center',
+        fontFamily: 'press-start-2p',
+        fontSize: 13,
+        lineHeight: 20,
+    }
 })
