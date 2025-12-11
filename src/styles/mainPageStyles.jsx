@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native'
+import NextBtn from '../../assets/svg/Next'
 
 
 export default StyleSheet.create({
@@ -48,11 +49,22 @@ export default StyleSheet.create({
         borderWidth: 3,
         borderRadius: 10
     },
-    lessonProgression:{
-        backgroundColor: '#ffff', 
+    lessonProgression:{ 
         width: 100,
         height: 100,
-        marginTop: 30,
+        marginTop: 140,
         marginBottom: 50,
+    },
+    previousBtn:{
+        flexDirection: 'row', 
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginTop: 7
+    },
+    NextBtn:{
+        flexDirection: 'row-reverse',
+        justifyContent: 'space-between', 
+        alignItems: 'center', 
+        marginTop: 7
     }
 })

@@ -1,5 +1,4 @@
-/* eslint-disable react/react-in-jsx-scope */
-import { StyleSheet } from 'react-native'
+import { Pressable, StyleSheet } from 'react-native'
 import { View, Text } from 'react-native'
 import { ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,22 +6,55 @@ import Header from '../src/components/header'
 import Footer from '../src/components/footer'
 import mainPageStyles from '../src/styles/mainPageStyles'
 import traversingLessonsStyles from '../src/styles/traversingLessonsStyles'
-import PreviousBtn from '../assets/svg/previous'
+import PreviousBtn from '../assets/svg/Previous'
 import NextBtn from '../assets/svg/Next'
+import CircleProgress from '../assets/svg/CircleProgress'
+import { useState } from 'react'
+import ProgressBar from '../assets/svg/ProgressBar'
+
+const radius = 40
 
 const Home = () => {
- return (
+    const [counter, setCounter] = useState(1)
+    const [progress, setProgress] = useState(0)
+
+    const increment = () => {
+        if (counter === 2 || counter > 2) {
+            setCounter(1)
+        }
+        else {
+            setCounter(c => c+0.1)
+        }
+    }
+
+    const increaseProgress  = () => {
+        if (progress === 375 || progress > 375){
+            setProgress(0)
+        }
+        else {
+            setProgress(p => p + 37.5)
+        }
+    }
+
+    const decreaseProgress = () => {
+        if (progress === 0 || progress < 0) {
+            setProgress(0)
+        }
+        else {
+            setProgress(p => p - 37.5)
+        }
+    }
+    return (
     <SafeAreaView style={{ flex:1, backgroundColor: '#2F2F2F' }}>
         <Header/>
         <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.background}>
             {/* Progress Bar */}
-            <View>
                 <Text style={styles.progressMotive}>Keep going! Your are almost there</Text>
-                <View style={[styles.progressBar, styles.progressBarBorder]}>
-                    <View style={styles.fillColor}></View>
-                </View>
+            <View>
+                <ProgressBar progress={ progress }/>
             </View>
-            
+            {/* Progress Bar Ends Here */}
+
             {/* Main */}
             <View style={[mainPageStyles.container, mainPageStyles.border]}>
                 {/* Current level */}
@@ -35,7 +67,9 @@ const Home = () => {
                 {/* Lesson Progression */}
                 <View style={{flexDirection: 'column', alignItems: 'center'}}>
                     <View style={mainPageStyles.lessonProgression}>
-                    <Text>Lesson Progression Goes here</Text>
+                        <View style={styles.container}>
+                            <CircleProgress counter={counter}/>
+                    </View>
                 </View>
                 {/* Lesson Progrssion ends here */}
 
@@ -43,9 +77,9 @@ const Home = () => {
                 </View>
                 <View style={mainPageStyles.goButtonPosition}>
                     <View style={[mainPageStyles.goButton, mainPageStyles.goButtonBorder]}>
-                        <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+                        <Pressable style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onPress={()=>increment()}>
                             <Text style={mainPageStyles.goButtonText}>GO!</Text>
-                        </View>
+                        </Pressable>
                     </View>
                 </View>
                 {/* Go button ends here */}
@@ -55,22 +89,26 @@ const Home = () => {
             {/* Traversing Options */}
             <View style={traversingLessonsStyles.container}>
                 <View style={traversingLessonsStyles.bg}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 7}}>
+                    {/* Previous Btn */}
+                    <Pressable style={mainPageStyles.previousBtn} onPress={() => decreaseProgress()}>
                         <PreviousBtn style={{marginLeft: 5}}/>
                         <Text style={[traversingLessonsStyles.text, {marginTop: 5}]}>PREVIOUS</Text>
-                    </View>
+                    </Pressable>
+                    {/* Previous Btn Ends here */}
                 </View>
                 <View style={traversingLessonsStyles.bg}>
-                    <View style={{flexDirection: 'row-reverse', justifyContent: 'space-between', alignItems: 'center', marginTop: 7}}>
+                    {/* Next Button */}
+                    <Pressable style={mainPageStyles.NextBtn} onPress={() => increaseProgress()}>
                         <NextBtn style={{marginLeft: 5}}/>
                         <Text style={[traversingLessonsStyles.text, {marginTop: 5}]}>NEXT</Text>
-                    </View>
+                    </Pressable>
+                    {/* Next Button Ends Here */}
                 </View>
             </View>
         </ImageBackground>
         <Footer/>
     </SafeAreaView>
-  )
+    )
 }
 
 export default Home
@@ -84,9 +122,8 @@ const styles = StyleSheet.create({
     progressMotive:{
         color: 'white',
         fontFamily: 'press-start-2p',
-        fontSize: 10,
+        fontSize: 9,
         marginLeft: 5,
-        marginBottom: 10,
     },
     progressBar:{
         width: 370,
@@ -102,5 +139,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#35315C',
         width: 100,
         height: 10
-    }
+    },
+    container: { 
+        alignItems: 'center',
+        justifyContent: 'center', 
+        flex: 1 
+    },
 })

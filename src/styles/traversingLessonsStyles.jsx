@@ -5,9 +5,9 @@ export default StyleSheet.create({
     container:{
         height: 58,
         width: 375,
-        marginTop: 13,
+        marginTop: 10,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     text:{
         marginHorizontal: 10,

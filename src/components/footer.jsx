@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-evenly',
         alignItems: 'center',
         backgroundColor: '#282828',
-        height: 98,
+        height: 90,
     },
     box:{
         height: 70,
