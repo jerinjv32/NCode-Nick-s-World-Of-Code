@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../src/components/header'
 import Footer from '../src/components/footer'
@@ -8,27 +8,45 @@ import { Image } from 'react-native'
 import { TextInput } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
 import { Platform } from 'react-native'
+import SendIcon from '../assets/svg/SendIcon'
 
 const chatBot = () => {
+  const [text, setText] = useState('')
   const [message, newMessage] = useState(
     [
       {
-        id: Math.random(),
-        title: "The lapis philosophorum, or philosopher's stone...",
-        role: 'user'
-      },
-      {
-        id: Math.random(),
-        title: "The lapis philosophorum, or philosopher's stone..",
+        id: Date.now().toString(),
+        title: "Hello how can I help you?",
         role: 'bot'
       },
-      {
-        id: Math.random(),
-        title: "The lapis philosophorum, or philosopher's stone...",
-        role: 'user'
-      },
-      
     ])
+    
+  const sendMessage = (text) => {
+  if (!text.trim()) return;
+
+  newMessage(prev => [
+    {
+      id: Date.now().toString(),
+      title: text,
+      role: 'user',
+    },
+    ...prev,
+  ]);
+  setText('');
+  };
+
+  const aiResponse = () =>{setTimeout(() => {
+    newMessage(
+      prev=>[
+        {
+          id: Date.now().toString(),
+          title: 'Expected AI Response',
+          role: 'bot'
+        },
+        ...prev
+      ]);
+    },500)
+  }
 
     const ChooseStyle = ({title,role}) => {
       if (role === 'bot'){
@@ -64,13 +82,18 @@ const chatBot = () => {
               <FlatList
                 data={message}
                 renderItem={({item:row}) => <Item title={row.title} role={row.role}/>}
-                keyExtractor={row => row.id}
+                keyExtractor={row =>  row.id.toString()}
                 inverted
               />
             </View>
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS == 'ios' ? 100 : 0}>
             <View style={styles.userInput}>
-              <TextInput style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'}></TextInput>
+              <TextInput value={text} style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'} 
+              onChangeText={setText}>
+              </TextInput>
+              <Pressable onPress={() => {sendMessage(text), aiResponse()}}>
+                <SendIcon style={{marginTop: 10, marginRight: 15}}/>
+              </Pressable>
             </View>
           </KeyboardAvoidingView>
         <Footer/>
@@ -115,7 +138,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     userInput:{
-      width: '95%',
+      // width: '95%',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
       height: 50,
       borderWidth: 3,
       borderColor: '#35315C',
@@ -128,6 +153,7 @@ const styles = StyleSheet.create({
     },
     inputText:{
       color: 'white',
-      marginLeft: 20
+      marginLeft: 20,
+      width: 325
     }
 })
