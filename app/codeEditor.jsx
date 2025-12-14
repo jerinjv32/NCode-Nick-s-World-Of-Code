@@ -1,8 +1,10 @@
-import { StyleSheet, Text, Touchable, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../src/components/header'
 import { Dropdown } from 'react-native-element-dropdown'
 import { useState } from 'react'
+import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
+
 
 const lang = [
     {
@@ -68,6 +70,17 @@ const codeEditor = () => {
                     <Text style={styles.runBtn}>RUN</Text>
                 </TouchableOpacity>
             </View>
+            <CodeEditor
+                style={{
+                    fontSize: 20,
+                    inputLineHeight: 26,
+                    highlighterLineHeight: 26,
+                    color: 'white',
+                }}
+                language="python"
+                syntaxStyle={CodeEditorSyntaxStyles.dracula}
+                showLineNumbers
+            />
         </SafeAreaView>
     )
 }
