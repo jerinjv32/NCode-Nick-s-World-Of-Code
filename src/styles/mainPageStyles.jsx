@@ -55,19 +55,9 @@ export default StyleSheet.create({
         marginTop: 160,
         marginBottom: 50,
     },
-    previousBtn:{
-        flexDirection: 'row', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginTop: 7,
-        alignItems: 'center',
-        justifyContent: 'center', 
-        flex: 1,
-    },
-    NextBtn:{
-        flexDirection: 'row-reverse',
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
-        marginTop: 7
+    buttons:{
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
     }
 })

@@ -10,7 +10,6 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
     },
     text:{
-        marginHorizontal: 10,
         color: 'white',
         fontSize: 10,
         fontFamily: 'press-start-2p'

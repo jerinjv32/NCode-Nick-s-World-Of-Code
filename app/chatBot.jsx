@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../src/components/header'
 import Footer from '../src/components/footer'
@@ -36,6 +36,7 @@ const chatBot = () => {
   };
 
   const aiResponse = () =>{setTimeout(() => {
+      if (!text.trim()) return;
     newMessage(
       prev=>[
         {
@@ -91,9 +92,9 @@ const chatBot = () => {
               <TextInput value={text} style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'} 
               onChangeText={setText}>
               </TextInput>
-              <Pressable onPress={() => {sendMessage(text), aiResponse()}}>
+              <TouchableOpacity onPress={() => {sendMessage(text), aiResponse()}}>
                 <SendIcon style={{marginTop: 10, marginRight: 15}}/>
-              </Pressable>
+              </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
         <Footer/>

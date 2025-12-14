@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet } from 'react-native'
+import { TouchableOpacity, StyleSheet } from 'react-native'
 import { View, Text } from 'react-native'
 import { ImageBackground } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -75,9 +75,9 @@ const Home = () => {
                 {/* Go button */}
                 <View style={mainPageStyles.goButtonPosition}>
                     <View style={[mainPageStyles.goButton, mainPageStyles.goButtonBorder]}>
-                        <Pressable style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onPress={()=>addLesson()}>
+                        <TouchableOpacity style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onPress={()=>addLesson()}>
                             <Text style={mainPageStyles.goButtonText}>GO!</Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 {/* Go button ends here */}
@@ -85,23 +85,20 @@ const Home = () => {
             {/* Main Ends here */}
 
             {/* Traversing Options */}
-            <View style={traversingLessonsStyles.container}>
-                <View style={traversingLessonsStyles.bg}>
+            <View style={traversingLessonsStyles.container}>             
                     {/* Previous Btn */}
-                    <Pressable style={mainPageStyles.previousBtn} onPress={() => decreaseProgress()}>
+                    <TouchableOpacity style={[mainPageStyles.buttons, traversingLessonsStyles.bg]} onPress={() => decreaseProgress()}>
                         <PreviousBtn style={{marginLeft: 5}}/>
-                        <Text style={[traversingLessonsStyles.text, {marginTop: 5}]}>PREVIOUS</Text>
-                    </Pressable>
+                        <Text style={[traversingLessonsStyles.text, {marginRight: 10}]}>PREVIOUS</Text>
+                    </TouchableOpacity>
                     {/* Previous Btn Ends here */}
-                </View>
-                <View style={traversingLessonsStyles.bg}>
+
                     {/* Next Button */}
-                    <Pressable style={mainPageStyles.NextBtn} onPress={() => increaseProgress()}>
-                        <NextBtn style={{marginLeft: 5}}/>
-                        <Text style={[traversingLessonsStyles.text, {marginTop: 5}]}>NEXT</Text>
-                    </Pressable>
+                    <TouchableOpacity style={[mainPageStyles.buttons, traversingLessonsStyles.bg]} onPress={() => increaseProgress()}>
+                        <Text style={[traversingLessonsStyles.text, {marginLeft: 10}]}>NEXT</Text>
+                        <NextBtn style={{marginRight: 5}}/>
+                    </TouchableOpacity>
                     {/* Next Button Ends Here */}
-                </View>
             </View>
         </ImageBackground>
         <Footer/>

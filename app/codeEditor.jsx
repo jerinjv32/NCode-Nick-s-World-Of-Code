@@ -72,10 +72,8 @@ const codeEditor = () => {
             </View>
             <CodeEditor
                 style={{
-                    fontSize: 20,
                     inputLineHeight: 26,
                     highlighterLineHeight: 26,
-                    color: 'white',
                 }}
                 language="python"
                 syntaxStyle={CodeEditorSyntaxStyles.dracula}

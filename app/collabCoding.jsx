@@ -35,9 +35,9 @@ const CollabCoding = () => {
 
           {/* Generate room button */}
           <Text style={[styles.text, {marginTop: 30, textAlign: 'center'}]}>Or, generate a room and{'\n'}share the generated key </Text>
-          <Pressable >
-            <Text style={[styles.text, styles.button]}>Generate Room</Text>
-          </Pressable>
+          <TouchableOpacity style={{backgroundColor: 'transparent'}}>
+              <Text style={[styles.text, styles.button]}>Generate Room</Text>
+          </TouchableOpacity>
           {/* Generate room button ends here */}
 
 
