@@ -1,9 +1,11 @@
-import { StyleSheet, Text, View } from 'react-native'
-import { usePathname } from 'expo-router'
-
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Link, usePathname } from 'expo-router'
+import Arrow from '../../assets/svg/arrow'
+import { useState } from 'react'
 
 const header = () => {
     const path = usePathname()
+    let displayArrow = 'none'
 
     let title
     switch(path){
@@ -16,15 +18,20 @@ const header = () => {
         case '/collabCoding':
             title = 'Collab Coding'
             break
+        case '/codeEditor':
+            title = 'Code Editor'
+            displayArrow = 'flex'
+            break
     }
+
     return (
             <View style={styles.header}>
-                <View style={styles.headerTitleBox}>
-                    <Text style={styles.headerTitle}>{title}</Text>
-                </View>
-                <View style={styles.profileBox}>
-                    <View style={styles.profile}></View>
-                </View>
+                <Link href={'/home'}>
+                    <Arrow width={40} height={40} transform="rotate(180,0,0)" 
+                    style={{display: displayArrow,}}/>
+                </Link>
+                <Text style={styles.headerTitle}>{title}</Text>
+                <Image source={require('../../assets/icons/user_profile.png')} style={[styles.profile,{height: 40, width: 40}]}/>
             </View>
   )
 }
@@ -36,22 +43,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: '#282828',
         height: 65,
-    },
-    headerTitleBox:{
-        flex: 1,
+        justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent: 'center',
-        marginLeft: 50,
+        padding: 10
     },
     headerTitle:{
         fontSize: 10,
         fontFamily: 'press-start-2p',
         color: 'white'        
-    },
-    profileBox:{
-        flexDirection: 'column',
-        justifyContent: 'center',
-        marginRight: 10,
     },
     profile:{
         width: 45,
