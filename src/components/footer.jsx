@@ -76,8 +76,6 @@ const styles = StyleSheet.create({
         borderColor: '#35315C',
     },
     iconProperty:{
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
+        flexDirection: 'row',
     }
 })

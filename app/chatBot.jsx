@@ -93,7 +93,7 @@ const chatBot = () => {
               onChangeText={setText}>
               </TextInput>
               <TouchableOpacity onPress={() => {sendMessage(text), aiResponse()}}>
-                <SendIcon style={{marginTop: 10, marginRight: 15}}/>
+                <SendIcon style={{marginTop: 10, marginBottom: 10, marginRight: 10}}/>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
@@ -139,9 +139,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
     },
     userInput:{
-      // width: '95%',
       flexDirection: 'row',
       justifyContent: 'space-between',
+      alignItems: 'center',
       height: 50,
       borderWidth: 3,
       borderColor: '#35315C',
@@ -149,8 +149,7 @@ const styles = StyleSheet.create({
       borderRadius: 50,
       elevation: 5,
       shadowColor: '#171717',
-      marginBottom: 10,
-      marginHorizontal: 10
+      marginBottom: 10
     },
     inputText:{
       color: 'white',

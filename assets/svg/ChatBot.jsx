@@ -4,7 +4,7 @@ const ChatBot = (props) => (
   <Svg
     width={60}
     height={60}
-    viewBox="0 0 32 32"
+    viewBox="-1 -1 32 32"
     xmlns="http://www.w3.org/2000/svg"
     shapeRendering="crispEdges"
     {...props}
