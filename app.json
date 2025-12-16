@@ -1,5 +1,6 @@
 {
   "expo": {
+    "scheme": "ncode-nicks-world-of-code",
     "name": "NCode-Nicks-World-Of-Code",
     "slug": "NCode-Nicks-World-Of-Code",
     "version": "1.0.0",
@@ -24,6 +25,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-router"
+    ]
   }
 }
