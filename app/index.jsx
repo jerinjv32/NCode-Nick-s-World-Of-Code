@@ -1,41 +1,44 @@
-import { StyleSheet, View, Text, Touchable, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Touchable, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { ImageBackground } from 'react-native'
 
 const Title = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <View>
-        {/* logo */}
-        <View style={[styles.button, styles.shadow]}>
-          <Text style={styles.title}><Text style={{ color: '#6760AB', }}>N</Text>CODE</Text>
-        </View>
-        {/* username */}
-        <View style={styles.inputBox} >
-          <Text style={styles.text}>
-            username
+      <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
+        <View>
+          {/* logo */}
+          <View style={[styles.button, styles.shadow]}>
+            <Text style={styles.title}><Text style={{ color: '#6760AB', }}>N</Text>CODE</Text>
+          </View>
+          {/* username */}
+          <View style={styles.inputBox} >
+            <Text style={[styles.text, {opacity: 0.5}]}>
+              Username
+            </Text>
+            <TextInput style={styles.text} maxLength={20}></TextInput>
+          </View>
+          {/* password */}
+          <View style={styles.inputBox}>
+            <Text style={[styles.text, {opacity: 0.5}]}>
+              password
+            </Text>
+            <TextInput style={styles.text} maxLength={20}></TextInput>
+          </View>
+          <Text style={[styles.text, { textAlign: 'right' }]}>
+            Forgot Password?
+          </Text>
+          {/* sign in button */}
+          <TouchableOpacity onPress={() => router.push('/home')} >
+            <Text style={styles.signIntext}>
+              Sign In
+            </Text>
+          </TouchableOpacity>
+          <Text style={[styles.text, { marginTop: 20, textAlign: 'center' }]}>
+            New? Sign Up
           </Text>
         </View>
-        {/* password */}
-        <View style={styles.inputBox}>
-          <Text style={styles.text}>
-            password
-          </Text>
-        </View>
-        <Text style={[styles.text, { textAlign: 'right' }]}>
-          Forgot Password?
-        </Text>
-        {/* sign in button */}
-        <TouchableOpacity onPress={() => router.push('/home')} >
-          <Text style={styles.signIntext}>
-            Sign In
-          </Text>
-        </TouchableOpacity>
-        <Text style={[styles.text, { marginTop: 20, textAlign: 'center' }]}>
-          New? Sign Up
-        </Text>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   )
 }
