@@ -1,0 +1,6 @@
+export const grey = '#2F2F2F'
+export const purple = '#35315C'
+export const darkGrey = '#212020'
+export const boxShadowColor = '#171717'
+export const commonFontColor = 'white'
+export const lightPurple = '#6760AB'

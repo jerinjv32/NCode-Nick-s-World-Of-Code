@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { commonFontColor, darkGrey, purple } from './colors'
 
 
 export default StyleSheet.create({
@@ -10,17 +11,17 @@ export default StyleSheet.create({
         justifyContent: 'space-between',
     },
     text:{
-        color: 'white',
+        color: commonFontColor,
         fontSize: 10,
         fontFamily: 'press-start-2p'
     },
     bg:{
-        backgroundColor: '#212020',
+        backgroundColor: darkGrey,
         width: 144,
         height: 58,
         borderWidth: 3,
         borderRadius: 10,
-        borderColor: '#35315C',
+        borderColor: purple,
         elevation: 5,
     }
 })

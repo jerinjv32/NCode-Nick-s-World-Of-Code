@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import Header from '../src/components/header'
 import Footer from '../src/components/footer'
 import { ImageBackground } from 'react-native'
+import { commonFontColor, darkGrey, purple } from '../src/styles/colors'
 
 const CollabCoding = () => {
   return (
@@ -56,15 +57,15 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
     },
     text:{
-      color: 'white',
+      color: commonFontColor,
       fontSize: 12,
       fontFamily: 'press-start-2p',
       padding: 10,
       lineHeight: 20
     },
     button:{
-      backgroundColor: '#212020',
-      borderColor: '#35315C',
+      backgroundColor: darkGrey,
+      borderColor: purple,
       borderWidth: 3,
       borderRadius: 10,
       paddingHorizontal: 50,
@@ -80,8 +81,8 @@ const styles = StyleSheet.create({
       borderStyle: 'dashed',
     },
     keyInput:{
-      backgroundColor: '#212020',
-      borderColor: '#35315C',
+      backgroundColor: darkGrey,
+      borderColor: purple,
       borderWidth: 3,
       borderRadius: 10,
       width: 235,
@@ -91,12 +92,12 @@ const styles = StyleSheet.create({
     },
     inputText:{
       fontSize: 20,
-      color: 'white',
+      color: commonFontColor,
       letterSpacing: 10
     },
     joinBtn:{
-      color:'white', 
-      backgroundColor: '#35315C',
+      color: commonFontColor, 
+      backgroundColor: purple,
       fontFamily: 'press-start-2p',
       paddingTop: 20,
       paddingBottom: 10,
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
       marginBottom: 40,
       borderRadius: 10,
       borderWidth: 3,
-      borderColor: '#35315C',
+      borderColor: purple,
       elevation: 5,
     }
 })

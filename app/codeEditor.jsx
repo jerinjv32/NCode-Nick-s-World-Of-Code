@@ -4,6 +4,7 @@ import Header from '../src/components/header'
 import { Dropdown } from 'react-native-element-dropdown'
 import { useState } from 'react'
 import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
+import { commonFontColor, darkGrey, grey, lightPurple, purple } from '../src/styles/colors'
 
 
 const lang = [
@@ -23,39 +24,39 @@ const lang = [
 const codeEditor = () => {
      const [value, setValue] = useState(null);
     return (
-        <SafeAreaView style={{backgroundColor: '#2f2f2f', flex: 1}}>
+        <SafeAreaView style={{backgroundColor: grey, flex: 1}}>
             <Header/>
             <View style={styles.tab}>
                 <Dropdown 
                 data={lang}
                 style={{width: 170, 
-                    backgroundColor: '#212020', 
+                    backgroundColor: darkGrey, 
                     paddingHorizontal: 10,
                     paddingVertical: 5,
                     borderWidth: 3,
-                    borderColor: '#35315C',
+                    borderColor: purple,
                     borderRadius: 10,
                     elevation: 5
                 }}
                 containerStyle={{
-                    backgroundColor: '#35315C',
+                    backgroundColor: purple,
                     borderWidth: 3,
-                    borderColor: '#35315C',
+                    borderColor: purple,
                     borderRadius: 10,
                     elevation: 5
                 }}
                 itemTextStyle={{
-                    color: 'white',
+                    color: commonFontColor,
                     fontSize: 10,
                 }}
                 selectedTextStyle={{
                     fontSize: 10,
-                    color: 'white',
+                    color: commonFontColor,
                 }}
                 activeColor='#2c2848ff'
                 placeholderStyle={{
                     fontSize: 10, 
-                    color: 'white'
+                    color: commonFontColor
                 }}
                 valueField={'value'}
                 labelField={'label'}                
@@ -87,8 +88,8 @@ export default codeEditor
 
 const styles = StyleSheet.create({
     runBtn:{
-        color: 'white',
-        backgroundColor: '#6760AB',
+        color: commonFontColor,
+        backgroundColor: lightPurple,
         fontSize: 10,
         fontFamily: 'press-start-2p',
         elevation: 5,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
         width: 85,
         textAlign: 'center',
         borderRadius: 10,
-        borderColor: '#6760AB',
+        borderColor: lightPurple,
         marginLeft: 10,
         marginRight: 10,
     },
@@ -105,7 +106,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         marginTop: 10,
-        borderBottomColor: '#212020',
+        borderBottomColor: darkGrey,
         borderBottomWidth: 1,
         paddingBottom: 10,
     }

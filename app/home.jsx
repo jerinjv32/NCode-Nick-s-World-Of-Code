@@ -11,6 +11,7 @@ import NextBtn from '../assets/svg/Next'
 import CircleProgress from '../assets/svg/CircleProgress'
 import { useEffect, useState } from 'react'
 import ProgressBar from '../assets/svg/ProgressBar'
+import { grey, darkGrey, purple, commonFontColor } from '../src/styles/colors'
 
 const totalLesson = 7
 
@@ -45,7 +46,7 @@ const Home = () => {
         }
     }
     return (
-    <SafeAreaView style={{ flex:1, backgroundColor: '#2F2F2F' }}>
+    <SafeAreaView style={{ flex:1, backgroundColor: grey }}>
         <Header/>
         <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.background}>
             {/* Progress Bar */}
@@ -115,7 +116,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     progressMotive:{
-        color: 'white',
+        color: commonFontColor,
         fontFamily: 'press-start-2p',
         fontSize: 9,
         marginLeft: 5,
@@ -123,20 +124,20 @@ const styles = StyleSheet.create({
     progressBar:{
         width: 370,
         height: 16,
-        backgroundColor: '#212020'
+        backgroundColor: darkGrey,
     },
     progressBarBorder:{
         borderWidth: 3,
-        borderColor: '#35315C',
+        borderColor: purple,
         borderRadius: 10,
     },
     fillColor:{
-        backgroundColor: '#35315C',
+        backgroundColor: purple,
         width: 100,
         height: 10
     },
     lessonName:{
-        color: 'white',
+        color: commonFontColor,
         textAlign: 'center',
         fontFamily: 'press-start-2p',
         fontSize: 13,

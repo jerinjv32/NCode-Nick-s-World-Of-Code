@@ -1,29 +1,29 @@
-import { StyleSheet, Text, View } from 'react-native'
-import NextBtn from '../../assets/svg/Next'
+import { StyleSheet } from 'react-native'
+import { boxShadowColor, commonFontColor, darkGrey, grey, purple } from './colors'
 
 
 export default StyleSheet.create({
     container:{
         marginTop: 10,
-        backgroundColor: '#2F2F2F',
+        backgroundColor: grey,
         width: 375,
         height: 530,
     },
     border:{
-        borderColor: '#35315C',
+        borderColor: purple,
         borderWidth: 3,
         borderRadius: 10,
     },
     levels:{
         marginTop: 20,
-        color: 'white',
+        color: commonFontColor,
         textAlign: 'center',
         fontFamily: 'press-start-2p',
         fontSize: 16
     },
     lessons:{
         marginTop: 20,
-        color: 'white',
+        color: commonFontColor,
         textAlign: 'center',
         fontFamily: 'press-start-2p',
         fontSize: 13
@@ -33,19 +33,19 @@ export default StyleSheet.create({
         alignItems: 'center'
     },
     goButton:{
-        backgroundColor: '#212020',
+        backgroundColor: darkGrey,
         height: 84,
         width: 84,
         elevation: 5,
-        shadowColor: '#171717'
+        shadowColor: boxShadowColor
     },
     goButtonText:{
-      color: 'white',
+      color: commonFontColor,
       fontFamily: 'press-start-2p',
       fontSize: 16,  
     },
     goButtonBorder:{
-        borderColor: '#35315C',
+        borderColor: purple,
         borderWidth: 3,
         borderRadius: 10
     },
