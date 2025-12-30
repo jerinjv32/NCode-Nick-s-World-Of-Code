@@ -40,7 +40,7 @@ const chatBot = () => {
 
   const aiResponse = async (prompt) =>{
     try{
-      const response = await axios.post('http://192.168.1.4:8001/chat',{
+      const response = await axios.post('http://address/chat',{
         prompt: prompt
       });
       console.log(response.data.title)
