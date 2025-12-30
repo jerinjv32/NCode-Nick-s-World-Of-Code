@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@rivascva/react-native-code-editor": "^1.2.2",
+    "axios": "^1.13.2",
     "expo": "~54.0.29",
     "expo-constants": "~18.0.12",
     "expo-linking": "~8.0.10",

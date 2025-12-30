@@ -10,10 +10,11 @@ import { KeyboardAvoidingView } from 'react-native'
 import { Platform } from 'react-native'
 import SendIcon from '../assets/svg/SendIcon'
 import { boxShadowColor, commonFontColor, darkGrey, purple } from '../src/styles/colors'
+import axios from 'axios'
 
 const chatBot = () => {
-  const[prompt, setPrompt] = useState('')
   const [text, setText] = useState('')
+  
   const [message, newMessage] = useState(
     [
       {
@@ -34,30 +35,30 @@ const chatBot = () => {
       },
       ...prev,
     ]);
-    setPrompt(text)
     setText('');
   };
 
-
-  const aiResponse = async () =>{
-      const response = await fetch("http://192.168.1.4:8001/chat",{
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({ message })
-      })
-      const data = await response.json()
-      console.log(data.title)
-      const botText = data.title
+  const aiResponse = async (prompt) =>{
+    try{
+      const response = await axios.post('http://192.168.1.4:8001/chat',{
+        prompt: prompt
+      });
+      console.log(response.data.title)
+      const botText = response.data.title
       newMessage(
-      prev=>[
-        {
-          id: Date.now().toString(),
-          title: botText,
-          role: 'bot'
-        },
-        ...prev
-      ]
-    );
+        prev=>[
+          {
+            id: Date.now().toString(),
+            title: botText,
+            role: 'bot'
+          },
+          ...prev
+        ]
+      );
+    }
+    catch (error){
+      console.error("Error:", error)
+    }
   }
 
   const ChooseStyle = ({title,role}) => {
@@ -103,7 +104,7 @@ const chatBot = () => {
               <TextInput value={text} style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'} 
               onChangeText={setText}>
               </TextInput>
-              <TouchableOpacity onPress={() => {sendMessage(text), aiResponse()}}>
+              <TouchableOpacity onPress={() => {sendMessage(text), aiResponse(text)}}>
                 <SendIcon style={{marginTop: 10, marginBottom: 10, marginRight: 10}}/>
               </TouchableOpacity>
             </View>
