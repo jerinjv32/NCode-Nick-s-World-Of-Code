@@ -11,6 +11,7 @@ import { Platform } from 'react-native'
 import SendIcon from '../assets/svg/SendIcon'
 import { boxShadowColor, commonFontColor, darkGrey, purple } from '../src/styles/colors'
 import axios from 'axios'
+import Markdown from 'react-native-markdown-display'
 
 const chatBot = () => {
   const [text, setText] = useState('')
@@ -24,7 +25,8 @@ const chatBot = () => {
       },
     ]
   )
-    
+  
+  // Setting app user message and emptying the textinput area
   const sendMessage = (text) => {
     if (!text.trim()) return;
     newMessage(prev => [
@@ -38,6 +40,7 @@ const chatBot = () => {
     setText('');
   };
 
+  // Fetching and passing the prompt to the model
   const aiResponse = async (prompt) =>{
     try{
       const response = await axios.post('http://192.168.1.4:8001/chat',{
@@ -62,21 +65,50 @@ const chatBot = () => {
   }
 
   const ChooseStyle = ({title,role}) => {
+    // Response from AI 
     if (role === 'bot'){
       return(
         <>
           <Image source={require('../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, {marginRight: 15}]}/>
           <View style={[styles.botMessage, styles.msgCommonstyle]}>
-          <Text style={styles.messageText}>{title}</Text>
+            {/* <Text style={styles.messageText}>{title}</Text> */}
+            <Markdown style={{
+              body:{
+                color: commonFontColor,
+                fontSize: 12,
+                fontFamily: 'Roboto',
+                textAlign: 'justify',
+                padding: 7
+              },
+              code_inline:{
+                backgroundColor: 'black'
+              },
+              code_block:{
+                backgroundColor: 'black'
+              },
+              fence:{
+                backgroundColor: 'black'
+              }
+            }}>{title}</Markdown>
           </View>
         </>
       )
     }
     else{
+      // User Message Prop
       return(
         <>
           <View style={[styles.userMessage, styles.msgCommonstyle]}>
-          <Text style={styles.messageText}>{title}</Text>
+          {/* <Text style={styles.messageText}>{title}</Text> */}
+            <Markdown style={{
+              body:{
+                color: commonFontColor,
+                fontSize: 12,
+                fontFamily: 'Roboto',
+                textAlign: 'justify',
+                padding: 7
+              }
+            }}>{title}</Markdown>
           </View>
           <Image source={require('../assets/icons/user_profile.png')} style={[styles.avatar, {marginLeft: 15}]}/>
         </>
