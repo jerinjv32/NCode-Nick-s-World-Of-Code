@@ -9,9 +9,10 @@ import { TextInput } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
 import { Platform } from 'react-native'
 import SendIcon from '../assets/svg/SendIcon'
-import { botMessage, botMessageColor, boxShadowColor, commonFontColor, darkGrey, purple } from '../src/styles/colors'
+import { boxShadowColor, commonFontColor, darkGrey, purple } from '../src/styles/colors'
 
 const chatBot = () => {
+  const[prompt, setPrompt] = useState('')
   const [text, setText] = useState('')
   const [message, newMessage] = useState(
     [
@@ -20,63 +21,72 @@ const chatBot = () => {
         title: "Hello how can I help you?",
         role: 'bot'
       },
-    ])
+    ]
+  )
     
   const sendMessage = (text) => {
-  if (!text.trim()) return;
-
-  newMessage(prev => [
-    {
-      id: Date.now().toString(),
-      title: text,
-      role: 'user',
-    },
-    ...prev,
-  ]);
-  setText('');
+    if (!text.trim()) return;
+    newMessage(prev => [
+      {
+        id: Date.now().toString(),
+        title: text,
+        role: 'user',
+      },
+      ...prev,
+    ]);
+    setPrompt(text)
+    setText('');
   };
 
-  const aiResponse = () =>{setTimeout(() => {
-      if (!text.trim()) return;
-    newMessage(
+
+  const aiResponse = async () =>{
+      const response = await fetch("http://192.168.1.4:8001/chat",{
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message })
+      })
+      const data = await response.json()
+      console.log(data.title)
+      const botText = data.title
+      newMessage(
       prev=>[
         {
           id: Date.now().toString(),
-          title: 'Expected AI Response',
+          title: botText,
           role: 'bot'
         },
         ...prev
-      ]);
-    },500)
+      ]
+    );
   }
 
-    const ChooseStyle = ({title,role}) => {
-      if (role === 'bot'){
-        return(
-          <>
-            <Image source={require('../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, {marginRight: 15}]}/>
-            <View style={[styles.botMessage, styles.msgCommonstyle]}>
-            <Text style={styles.messageText}>{title}</Text>
-            </View>
-          </>
-        )
-      }
-      else{
-        return(
-          <>
-            <View style={[styles.userMessage, styles.msgCommonstyle]}>
-            <Text style={styles.messageText}>{title}</Text>
-            </View>
-            <Image source={require('../assets/icons/user_profile.png')} style={[styles.avatar, {marginLeft: 15}]}/>
-          </>
-        )
-      }
+  const ChooseStyle = ({title,role}) => {
+    if (role === 'bot'){
+      return(
+        <>
+          <Image source={require('../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, {marginRight: 15}]}/>
+          <View style={[styles.botMessage, styles.msgCommonstyle]}>
+          <Text style={styles.messageText}>{title}</Text>
+          </View>
+        </>
+      )
     }
-    const Item = ({title, role}) => (
-        <View style={styles.msgContainer}>
-            <ChooseStyle title={title} role={role}/>
-        </View>
-    )
+    else{
+      return(
+        <>
+          <View style={[styles.userMessage, styles.msgCommonstyle]}>
+          <Text style={styles.messageText}>{title}</Text>
+          </View>
+          <Image source={require('../assets/icons/user_profile.png')} style={[styles.avatar, {marginLeft: 15}]}/>
+        </>
+      )
+    }
+  }
+  const Item = ({title, role}) => (
+      <View style={styles.msgContainer}>
+          <ChooseStyle title={title} role={role}/>
+      </View>
+  )
   return (
     <SafeAreaView style={{flex:1, backgroundColor: '#2F2F2F'}}>
       <Header/>
