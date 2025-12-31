@@ -12,58 +12,40 @@ import SendIcon from '../assets/svg/SendIcon'
 import { boxShadowColor, commonFontColor, darkGrey, purple } from '../src/styles/colors'
 import axios from 'axios'
 import Markdown from 'react-native-markdown-display'
+import useStoreMessages from '../src/store'
 
 const chatBot = () => {
   const [text, setText] = useState('')
   
-  const [message, newMessage] = useState(
-    [
-      {
-        id: Date.now().toString(),
-        title: "Hello how can I help you?",
-        role: 'bot'
-      },
-    ]
-  )
+  const message = useStoreMessages(state => state.message);
+  const addBotMessage = useStoreMessages(state => state.addBotMessage)
+  const addUserMessage = useStoreMessages(state => state.addUserMessage)
   
   // Setting app user message and emptying the textinput area
   const sendMessage = (text) => {
     if (!text.trim()) return;
-    newMessage(prev => [
-      {
-        id: Date.now().toString(),
-        title: text,
-        role: 'user',
-      },
-      ...prev,
-    ]);
+    addUserMessage(text)
     setText('');
   };
 
   // Fetching and passing the prompt to the model
-  const aiResponse = async (prompt) =>{
+  const aiResponse = async (prompt, callback) =>{
     try{
-      const response = await axios.post('http://192.168.1.4:8001/chat',{
+      const response = await axios.post('http://192.168.1.7:8001/chat',{
         prompt: prompt
       });
       console.log(response.data.title)
       const botText = response.data.title
-      newMessage(
-        prev=>[
-          {
-            id: Date.now().toString(),
-            title: botText,
-            role: 'bot'
-          },
-          ...prev
-        ]
-      );
+      callback(botText)
     }
     catch (error){
       console.error("Error:", error)
+      callback("There went something wrong...")
     }
   }
-
+  const displayMessage = (botText) => {
+      addBotMessage(botText);
+  }
   const ChooseStyle = ({title,role}) => {
     // Response from AI 
     if (role === 'bot'){
@@ -71,13 +53,11 @@ const chatBot = () => {
         <>
           <Image source={require('../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, {marginRight: 15}]}/>
           <View style={[styles.botMessage, styles.msgCommonstyle]}>
-            {/* <Text style={styles.messageText}>{title}</Text> */}
             <Markdown style={{
               body:{
                 color: commonFontColor,
                 fontSize: 12,
                 fontFamily: 'Roboto',
-                textAlign: 'justify',
                 padding: 7
               },
               code_inline:{
@@ -87,7 +67,7 @@ const chatBot = () => {
                 backgroundColor: 'black'
               },
               fence:{
-                backgroundColor: 'black'
+                backgroundColor: purple
               }
             }}>{title}</Markdown>
           </View>
@@ -99,13 +79,11 @@ const chatBot = () => {
       return(
         <>
           <View style={[styles.userMessage, styles.msgCommonstyle]}>
-          {/* <Text style={styles.messageText}>{title}</Text> */}
             <Markdown style={{
               body:{
                 color: commonFontColor,
                 fontSize: 12,
                 fontFamily: 'Roboto',
-                textAlign: 'justify',
                 padding: 7
               }
             }}>{title}</Markdown>
@@ -136,7 +114,7 @@ const chatBot = () => {
               <TextInput value={text} style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'} 
               onChangeText={setText}>
               </TextInput>
-              <TouchableOpacity onPress={() => {sendMessage(text), aiResponse(text)}}>
+              <TouchableOpacity onPress={() => {sendMessage(text), aiResponse(text, displayMessage)}}>
                 <SendIcon style={{marginTop: 10, marginBottom: 10, marginRight: 10}}/>
               </TouchableOpacity>
             </View>
