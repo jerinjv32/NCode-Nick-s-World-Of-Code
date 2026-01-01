@@ -6,7 +6,7 @@ import { useState } from 'react'
 const header = () => {
     const path = usePathname()
     let displayArrow = 'none'
-
+    let displayProfile = 'flex'
     let title
     switch(path){
         case '/home':
@@ -22,6 +22,11 @@ const header = () => {
             title = 'Code Editor'
             displayArrow = 'flex'
             break
+        case '/userProfile':
+            title = 'Profile'
+            displayArrow = 'flex'
+            displayProfile = 'none'
+            break
     }
 
     return (
@@ -31,7 +36,9 @@ const header = () => {
                     style={{display: displayArrow,}}/>
                 </Link>
                 <Text style={styles.headerTitle}>{title}</Text>
-                <Image source={require('../../assets/icons/user_profile.png')} style={[styles.profile,{height: 40, width: 40}]}/>
+                <Link href={'/userProfile'}>
+                    <Image source={require('../../assets/icons/user_profile.png')} style={[styles.profile,{height: 40, width: 40, display: displayProfile}]}/>
+                </Link>
             </View>
   )
 }

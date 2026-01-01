@@ -11,7 +11,6 @@ const footer = () => {
     let colorOfBorder1 = '#35315C'
     let colorOfBorder2  = '#35315C'
     let colorOfBorder3  = '#35315C'
-
     let elevation1 = 0
     let elevation2 = 0
     let elevation3 = 0
@@ -29,11 +28,12 @@ const footer = () => {
         case '/collabCoding':
             colorOfBorder3 = '#6760AB'
             elevation3 = 5
-            break 
+            break
+
     }
     return (
         <View style={styles.footer}>
-            <View style={[styles.box, , {borderColor: colorOfBorder1, elevation: elevation1}]}>
+            <View style={[styles.box, {borderColor: colorOfBorder1, elevation: elevation1}]}>
                 <Link href={'/home'}>
                     <View style={styles.iconProperty}><ProblemTrail/></View>
                 </Link>
