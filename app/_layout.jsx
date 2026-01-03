@@ -1,19 +1,5 @@
-import { Stack } from "expo-router";
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { useFonts } from 'expo-font'
+import { Slot, Stack, Tabs } from "expo-router";
 
 export default function RootLayout() {
-    const [fontsLoaded] = useFonts({
-        'press-start-2p': require('../assets/fonts/PressStart2P-Regular.ttf')
-    })
-    
-    if(!fontsLoaded){return(null)}
-  return (
-    <SafeAreaProvider style={{backgroundColor: '#2f2f2f'}}>
-      <Stack screenOptions={{ 
-        headerShown: false,
-        animation: "none" // Remove jitter
-      }} />
-    </SafeAreaProvider>
-  );
+  return <Slot initialRouteName="(auth)"/>
 }

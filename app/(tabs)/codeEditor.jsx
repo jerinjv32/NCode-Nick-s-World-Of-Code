@@ -1,11 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Header from '../src/components/header'
 import { Dropdown } from 'react-native-element-dropdown'
 import { useState } from 'react'
 import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
-import { commonFontColor, darkGrey, grey, lightPurple, purple } from '../src/styles/colors'
-
+import { commonFontColor, darkGrey, grey, lightPurple, purple } from '../../src/styles/colors'
 
 const lang = [
     {
@@ -22,10 +20,9 @@ const lang = [
     }
 ]
 const codeEditor = () => {
-     const [value, setValue] = useState(null);
+    const [value, setValue] = useState(null);
     return (
-        <SafeAreaView style={{backgroundColor: grey, flex: 1}}>
-            <Header/>
+        <SafeAreaView edges={['bottom']}>
             <View style={styles.tab}>
                 <Dropdown 
                 data={lang}
@@ -102,11 +99,12 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     tab:{
+        backgroundColor: grey,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        marginTop: 10,
-        borderBottomColor: darkGrey,
+        paddingTop: 10,
+        borderBottomColor: grey,
         borderBottomWidth: 1,
         paddingBottom: 10,
     }

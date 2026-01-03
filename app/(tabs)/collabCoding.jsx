@@ -1,15 +1,12 @@
 import { Pressable, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Header from '../src/components/header'
-import Footer from '../src/components/footer'
 import { ImageBackground } from 'react-native'
-import { commonFontColor, darkGrey, purple } from '../src/styles/colors'
+import { commonFontColor, darkGrey, purple } from '../../src/styles/colors'
 
 const CollabCoding = () => {
   return (
-    <SafeAreaView style={{flex:1, backgroundColor: '#2F2F2F'}}>
-        <Header/>
-        <ImageBackground source={require('../assets/images/background.png')} resizeMode="cover" style={styles.background}>
+    <SafeAreaView edges={['bottom']} style={{flex:1, backgroundColor: '#2F2F2F'}}>
+        <ImageBackground source={require('../../assets/images/background.png')} resizeMode="cover" style={styles.background}>
           {/* Welcome Text */}
           <Text style={[styles.text, {marginTop : 10, marginBottom: 20}]}>!{'\n\n'}
             Welcome to collab coding.{'\n'}Here you can work on the same{'\n'}code base with your friends.</Text>
@@ -43,7 +40,6 @@ const CollabCoding = () => {
 
 
         </ImageBackground>
-        <Footer/>
     </SafeAreaView>
   )
 }

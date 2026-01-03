@@ -1,11 +1,11 @@
 import { StyleSheet, View, Text, Touchable, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform } from 'react-native'
 import { router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { grey, darkGrey, purple, boxShadowColor } from '../src/styles/colors'
+import { grey, darkGrey, purple, boxShadowColor } from '../../src/styles/colors'
 
 const Title = () => {
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
         <View>
           {/* logo */}
@@ -30,8 +30,8 @@ const Title = () => {
             Forgot Password?
           </Text>
           {/* sign in button */}
-          <TouchableOpacity onPress={() => router.push('/home')} style={styles.signIntextBox}>
-              <Text style={styles.signIntext}>Sign In</Text>
+          <TouchableOpacity onPress={() => router.replace('/home')} style={styles.signIntextBox}>
+                <Text style={styles.signIntext}>Sign In</Text>
           </TouchableOpacity>
           <Text style={[styles.text, { marginTop: 20, textAlign: 'center' }]}>
             New? Sign Up

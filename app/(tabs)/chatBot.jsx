@@ -1,18 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import Header from '../src/components/header'
-import Footer from '../src/components/footer'
 import { useState } from 'react'
 import { FlatList } from 'react-native'
 import { Image } from 'react-native'
 import { TextInput } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
 import { Platform } from 'react-native'
-import SendIcon from '../assets/svg/SendIcon'
-import { boxShadowColor, commonFontColor, darkGrey, purple } from '../src/styles/colors'
+import SendIcon from '../../assets/svg/SendIcon'
+import { boxShadowColor, commonFontColor, darkGrey, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import Markdown from 'react-native-markdown-display'
-import useStoreMessages from '../src/store'
+import useStoreMessages from '../../src/store'
 
 const chatBot = () => {
   const [text, setText] = useState('')
@@ -51,7 +49,7 @@ const chatBot = () => {
     if (role === 'bot'){
       return(
         <>
-          <Image source={require('../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, {marginRight: 15}]}/>
+          <Image source={require('../../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, {marginRight: 15}]}/>
           <View style={[styles.botMessage, styles.msgCommonstyle]}>
             <Markdown style={{
               body:{
@@ -88,7 +86,7 @@ const chatBot = () => {
               }
             }}>{title}</Markdown>
           </View>
-          <Image source={require('../assets/icons/user_profile.png')} style={[styles.avatar, {marginLeft: 15}]}/>
+          <Image source={require('../../assets/icons/user_profile.png')} style={[styles.avatar, {marginLeft: 15}]}/>
         </>
       )
     }
@@ -99,8 +97,7 @@ const chatBot = () => {
       </View>
   )
   return (
-    <SafeAreaView style={{flex:1, backgroundColor: '#2F2F2F'}}>
-      <Header/>
+    <SafeAreaView edges={['bottom']} style={{flex:1, backgroundColor: '#2F2F2F'}}>
           <View style={{flex: 1}}>
               <FlatList
                 data={message}
@@ -109,7 +106,7 @@ const chatBot = () => {
                 inverted
               />
             </View>
-          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS == 'ios' ? 100 : 0}>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS == 'ios' ? 100 : 110}>
             <View style={styles.userInput}>
               <TextInput value={text} style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'} 
               onChangeText={setText}>
@@ -119,7 +116,6 @@ const chatBot = () => {
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
-        <Footer/>
     </SafeAreaView>
   )
 }

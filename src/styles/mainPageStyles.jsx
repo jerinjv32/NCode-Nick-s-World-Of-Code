@@ -6,8 +6,7 @@ export default StyleSheet.create({
     container:{
         marginTop: 10,
         backgroundColor: grey,
-        width: 375,
-        height: 530,
+        width: '91%',
     },
     border:{
         borderColor: purple,

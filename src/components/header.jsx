@@ -1,6 +1,5 @@
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 import { Link, usePathname } from 'expo-router'
-import Arrow from '../../assets/svg/arrow'
 import { useState } from 'react'
 
 const header = () => {

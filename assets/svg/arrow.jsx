@@ -1,20 +1,27 @@
-import Svg, { Rect } from "react-native-svg";
-const Arrow = (props) => (
+import * as React from "react";
+import Svg, { SvgProps, G, Path } from "react-native-svg";
+const BackArrow = (props) => (
   <Svg
-    width={16}
-    height={16}
-    viewBox="0 0 16 16"
-    xmlns="http://www.w3.org/2000/svg"
-    shapeRendering="crispEdges"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#ffffff"
+    transform="rotate(0)"
     {...props}
   >
-    <Rect x={10} y={4} width={1} height={1} fill="#FFFFFF" />
-    <Rect x={11} y={5} width={1} height={1} fill="#FFFFFF" />
-    <Rect x={12} y={6} width={1} height={3} fill="#FFFFFF" />
-    <Rect x={4} y={7} width={8} height={1} fill="#FFFFFF" />
-    <Rect x={13} y={7} width={1} height={1} fill="#FFFFFF" />
-    <Rect x={11} y={9} width={1} height={1} fill="#FFFFFF" />
-    <Rect x={10} y={10} width={1} height={1} fill="#FFFFFF" />
+    <G id="SVGRepo_bgCarrier" strokeWidth={0} />
+    <G
+      id="SVGRepo_tracerCarrier"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <G id="SVGRepo_iconCarrier">
+      <Path
+        d="M9 8L5 12M5 12L9 16M5 12H19"
+        stroke="#ffff"
+        strokeWidth={2}
+        strokeLinecap="round"
+      />
+    </G>
   </Svg>
 );
-export default Arrow;
+export default BackArrow;

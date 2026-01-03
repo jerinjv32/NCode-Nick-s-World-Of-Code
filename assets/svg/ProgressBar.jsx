@@ -7,7 +7,7 @@ const ProgressBar = ({ progress }) => {
   return (
     <View style={styles.container}>
         <Svg width={375} height={15} viewBox='0 0 375 15'>
-            <Rect x={0} y={0} height={15} width={375} fill={'#212020'} strokeWidth={4} stroke={'#35315C'} rx={10}/>
+            <Rect x={0} y={0} height={15} width={375} fill={'#212020'} strokeWidth={4} stroke={'#35315C'} rx={8}/>
             <Rect 
               x={0} 
               y={0} 
