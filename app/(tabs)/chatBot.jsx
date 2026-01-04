@@ -100,7 +100,7 @@ const chatBot = () => {
     <SafeAreaView edges={['bottom']} style={{flex:1, backgroundColor: '#2F2F2F'}}>
           <View style={{flex: 1}}>
               <FlatList
-                data={message}
+                data={message} 
                 renderItem={({item:row}) => <Item title={row.title} role={row.role}/>}
                 keyExtractor={row =>  row.id.toString()}
                 inverted
