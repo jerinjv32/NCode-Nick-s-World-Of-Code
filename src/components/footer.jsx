@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native'
 import ProblemTrail from '../../assets/svg/ProblemTrail'
 import ChatBot from '../../assets/svg/ChatBot'
-import CollabCoding from '../../assets/svg/CollabCoding'
+import CollabCoding from '../../assets/svg/CollabCodingIcon'
 import CodeEditor from '../../assets/svg/CodeEditor'
 import { Link, usePathname} from 'expo-router'
 

@@ -1,33 +1,111 @@
-import * as React from "react";
-import Svg, { Path } from "react-native-svg";
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { Dropdown } from 'react-native-element-dropdown'
+import { useState } from 'react'
+import CodeEditor, { CodeEditorSyntaxStyles } from '@rivascva/react-native-code-editor';
+import { commonFontColor, darkGrey, grey, lightPurple, purple } from '../../src/styles/colors'
 
-interface MySvgProps {
-  size ?: string | number;
-  color ?: string;
-  isFocused ?: boolean;
-  newSize: number; 
+const lang = [
+    {
+        label: 'python',
+        value: '1'
+    },
+    {
+        label: 'JavaScript',
+        value: '2'
+    },
+    {
+        label: 'C',
+        value: '3'
+    }
+]
+const codeEditor = () => {
+    const [value, setValue] = useState(null);
+    return (
+        <SafeAreaView edges={['bottom']}>
+            <View style={styles.tab}>
+                <Dropdown 
+                data={lang}
+                style={{width: 170, 
+                    backgroundColor: darkGrey, 
+                    paddingHorizontal: 10,
+                    paddingVertical: 5,
+                    borderWidth: 3,
+                    borderColor: purple,
+                    borderRadius: 10,
+                    elevation: 5
+                }}
+                containerStyle={{
+                    backgroundColor: purple,
+                    borderWidth: 3,
+                    borderColor: purple,
+                    borderRadius: 10,
+                    elevation: 5
+                }}
+                itemTextStyle={{
+                    color: commonFontColor,
+                    fontSize: 10,
+                }}
+                selectedTextStyle={{
+                    fontSize: 10,
+                    color: commonFontColor,
+                }}
+                activeColor='#2c2848ff'
+                placeholderStyle={{
+                    fontSize: 10, 
+                    color: commonFontColor
+                }}
+                valueField={'value'}
+                labelField={'label'}                
+                fontFamily='press-start-2p'
+                value={value}
+                onChange={item => {
+                    setValue(item.value);
+                }}
+                >
+                </Dropdown>
+                <TouchableOpacity activeOpacity={0.5}>
+                    <Text style={styles.runBtn}>RUN</Text>
+                </TouchableOpacity>
+            </View>
+            <CodeEditor
+                style={{
+                    inputLineHeight: 26,
+                    highlighterLineHeight: 26,
+                }}
+                language="python"
+                syntaxStyle={CodeEditorSyntaxStyles.dracula}
+                showLineNumbers
+            />
+        </SafeAreaView>
+    )
 }
 
-const CodeEditor = ( iconSize : MySvgProps) => {
-  const {size = 44, color, isFocused, newSize} = iconSize;
-  return(
-  <Svg
-    width={isFocused ? newSize : size}
-    height={isFocused ? newSize : size}
-    viewBox="0 0 24 24"
-    fill="none"
-  >
-    <Path
-      d="M9 11C10.5 11 10.5302 11 12 11"
-      stroke={color}
-      strokeLinecap="round"
-    />
-    <Path d="M6 9L7.5 10L6 11" stroke={color} strokeLinecap="round" />
-    <Path
-      d="M6 7H12H18C19.1046 7 20 7.89543 20 9V15C20 16.1046 19.1046 17 18 17H6C4.89543 17 4 16.1046 4 15V9C4 7.89543 4.89543 7 6 7Z"
-      stroke={color}
-    />
-  </Svg>
-);
-}
-export default CodeEditor;
+export default codeEditor
+
+const styles = StyleSheet.create({
+    runBtn:{
+        color: commonFontColor,
+        backgroundColor: lightPurple,
+        fontSize: 10,
+        fontFamily: 'press-start-2p',
+        elevation: 5,
+        padding: 8,
+        width: 85,
+        textAlign: 'center',
+        borderRadius: 10,
+        borderColor: lightPurple,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    tab:{
+        backgroundColor: grey,
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingTop: 10,
+        borderBottomColor: grey,
+        borderBottomWidth: 1,
+        paddingBottom: 10,
+    }
+})

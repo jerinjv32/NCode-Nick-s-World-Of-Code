@@ -1,17 +1,18 @@
 import { Tabs, useRouter } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from 'expo-font'
-import { commonFontColor, grey, headerFooter, lightPurple, purple } from "../../src/styles/colors";
-import { Pressable, TouchableOpacity, Text } from "react-native";
+import { commonFontColor, grey, headerFooter, lightPurple } from "../../src/styles/colors";
+import { Pressable, TouchableOpacity } from "react-native";
 import UserProfileIcon from "../../assets/svg/UserProfileIcon";
 import ProblemTrail from "../../assets/svg/ProblemTrail";
 import ChatBot from "../../assets/svg/ChatBot";
-import CodeEditor from "./codeEditor";
+import CodeEditorIcon from "../../assets/svg/CodeEditorIcon";
+import CollabCodingIcon from "../../assets/svg/CollabCodingIcon";
 
 export default function TabLayout() {
     const router = useRouter();
     const [fontsLoaded] = useFonts({
-        'press-start-2p': require('../../assets/fonts/PressStart2P-Regular.ttf')
+        'press-start-2p': require('../../assets/fonts/PressStart2P-Regular.ttf'),
     })
     if(!fontsLoaded){return(null)}
     return(
@@ -33,12 +34,12 @@ export default function TabLayout() {
                 },
                 headerTitleStyle:{
                     color: commonFontColor,
-                    fontFamily: 'press-start-2p',
+                    fontFamily: 'Press-Start-2p',
                     fontSize: 10,
                 },
                 tabBarActiveTintColor: lightPurple,
             }}>
-                <Tabs.Screen name="home" options={{
+                <Tabs.Screen name="home" options={{ 
                     title: 'Problem Trail',
                     tabBarIcon: ({color, focused}) => (
                         <ProblemTrail color={color} isFocused={focused} newSize={42} size={40}/>
@@ -53,10 +54,15 @@ export default function TabLayout() {
                 <Tabs.Screen name="codeEditor" options={{
                     title: 'Code Editor',
                     tabBarIcon: ({color, focused}) => (
-                        <CodeEditor size={40} color={color} isFocused={focused} newSize={42}/>
+                        <CodeEditorIcon size={40} color={color} isFocused={focused} newSize={42}/>
                     ),    
                 }}/>
-                <Tabs.Screen name="collabCoding" options={{title: 'Collab Coding'}}/>
+                <Tabs.Screen name="collabCoding" options={{
+                    title: 'Collab Coding',
+                    tabBarIcon: ({color, focused}) => (
+                        <CollabCodingIcon size={40} color={color} isFocused={focused} newSize={42}/>
+                    ),    
+                }}/>
             </Tabs>
         </SafeAreaProvider>
     )
