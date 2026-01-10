@@ -5,14 +5,15 @@ import Svg, { Circle, ClipPath, Defs, Image } from 'react-native-svg';
 import fontStyles from '../../src/styles/fontStyles';
 import SettingIcon from '../../assets/svg/SettingIcon';
 import UserProfilePicture from '../../assets/svg/UserProfile';
-import ToggleBtn from '../../assets/svg/ToggleBtn';
 import LogoutBtn from '../../assets/svg/Logout';
+import { UseAuthStore } from '../../src/authStore';
 
 const cx = 160;
 const cy = 160;
 const radius = 143;
 
 const userProfile = () => {
+  const logOut = UseAuthStore(state => state.logOut);
   return (
     <SafeAreaView edges={['bottom']}style={styles.container}>
       <View>
@@ -42,14 +43,14 @@ const userProfile = () => {
             <Text style={fontStyles.label}>View Profile</Text>
           </TouchableOpacity>
 
-          {/* Lights modes Label */}
+          {/* Lights modes Label
           <TouchableOpacity style={lable.position}>
             <ToggleBtn width={32} height={32}/>
             <Text style={fontStyles.label}>Light Modes</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           {/* Logout Option */}
-          <TouchableOpacity style={lable.position}>
+          <TouchableOpacity style={lable.position} onPress={() => logOut()}>
             <LogoutBtn width={32} height={32}/>
             <Text style={fontStyles.label}>Logout</Text>
           </TouchableOpacity>
@@ -69,9 +70,9 @@ const styles = StyleSheet.create(
       },
       optionPanel:{
         backgroundColor: darkGrey,
-        flex: 1,
+        flexDirection: 'column',
         alignSelf: 'center',
-        marginHorizontal: 10,
+        justifyContent: 'center',
         padding: 10,
         marginTop: 10,
         width: '90%',

@@ -4,9 +4,9 @@ import { boxShadowColor, commonFontColor, darkGrey, grey, purple } from './color
 
 export default StyleSheet.create({
     container:{
-        marginTop: 10,
         backgroundColor: grey,
-        width: '91%',
+        width: 375,
+        height: '80%',
     },
     border:{
         borderColor: purple,
