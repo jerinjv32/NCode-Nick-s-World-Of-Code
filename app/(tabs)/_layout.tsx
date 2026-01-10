@@ -8,9 +8,17 @@ import ProblemTrail from "../../assets/svg/ProblemTrail";
 import ChatBot from "../../assets/svg/ChatBot";
 import CodeEditorIcon from "../../assets/svg/CodeEditorIcon";
 import CollabCodingIcon from "../../assets/svg/CollabCodingIcon";
+import { UseAuthStore } from "../../src/authStore";
+import { useEffect } from "react";
 
 export default function TabLayout() {
     const router = useRouter();
+    const isLogged = UseAuthStore(state => state.loggedIn);
+    useEffect(()=>{
+        if(!isLogged) {
+            router.replace('/');
+        }
+    }, [isLogged]);
     const [fontsLoaded] = useFonts({
         'press-start-2p': require('../../assets/fonts/PressStart2P-Regular.ttf'),
     })
@@ -34,7 +42,7 @@ export default function TabLayout() {
                 },
                 headerTitleStyle:{
                     color: commonFontColor,
-                    fontFamily: 'Press-Start-2p',
+                    fontFamily: 'press-start-2p',
                     fontSize: 10,
                 },
                 tabBarActiveTintColor: lightPurple,

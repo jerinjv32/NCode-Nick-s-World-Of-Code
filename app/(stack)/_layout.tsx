@@ -4,6 +4,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { commonFontColor, headerFooter } from "../../src/styles/colors";
 import { TouchableOpacity } from "react-native";
 import BackArrow from "../../assets/svg/arrow";
+import { grey } from "../../src/styles/colors";
 
 export default function ProfileRootLayout(){
         const [fontsLoaded] = useFonts({
@@ -12,7 +13,7 @@ export default function ProfileRootLayout(){
     if(!fontsLoaded){return(null)}
     const router = useRouter();
     return(
-        <SafeAreaProvider>
+        <SafeAreaProvider style={{backgroundColor: grey}}>
             <Stack>
                 <Stack.Screen name="userProfile" options={{
                     title: 'Profile',
@@ -29,7 +30,7 @@ export default function ProfileRootLayout(){
                         <TouchableOpacity onPress={() => router.replace('/home')}>
                             <BackArrow width={50} height={50}/>
                         </TouchableOpacity>
-                    )
+                    ),
                 }}/>
             </Stack>
         </SafeAreaProvider>
