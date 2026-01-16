@@ -39,14 +39,16 @@ const Title = () => {
             <Text style={[styles.text, {opacity: 0.5}]}>
               Email
             </Text>
-            <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80} onChangeText={setEmail}/>
+            <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80} 
+              onChangeText={setEmail} autoCapitalize='none'/>
           </View>
           {/* password */}
           <View style={inputStyles.inputBox}>
             <Text style={[styles.text, {opacity: 0.5}]}>
               password
             </Text>
-            <TextInput style={inputStyles.inputText} maxLength={20} onChangeText={setPassword}/>
+            <TextInput style={inputStyles.inputText} maxLength={20} 
+              onChangeText={setPassword} secureTextEntry={true} autoCapitalize='none'/>
           </View>
           <Text style={[styles.text, { textAlign: 'right' }]}>
             Forgot Password?
