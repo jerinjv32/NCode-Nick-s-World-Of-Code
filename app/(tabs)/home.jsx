@@ -10,13 +10,14 @@ import CircleProgress from '../../assets/svg/CircleProgress'
 import { useEffect, useState } from 'react'
 import ProgressBar from '../../assets/svg/ProgressBar'
 import { grey, darkGrey, purple, commonFontColor } from '../../src/styles/colors'
+import { useRouter } from 'expo-router'
 
 
 const totalLesson = 7
 
 const Home = () => {
     const [lesson, setLesson] = useState(0)
-
+    const router = useRouter(); 
     useEffect(()=>{
         setCounter(c => 1 + (lesson/totalLesson))
     },[lesson])
@@ -75,7 +76,8 @@ const Home = () => {
                     {/* Go button */}
                     <View style={mainPageStyles.goButtonPosition}>
                         <View style={[mainPageStyles.goButton, mainPageStyles.goButtonBorder]}>
-                            <TouchableOpacity style={{flex:1, justifyContent: 'center', alignItems: 'center'}} onPress={()=>addLesson()}>
+                            <TouchableOpacity style={{flex:1, justifyContent: 'center', alignItems: 'center'}}
+                             onPress={()=>router.push('/problem_trail')}>
                                 <Text style={mainPageStyles.goButtonText}>GO!</Text>
                             </TouchableOpacity>
                         </View>

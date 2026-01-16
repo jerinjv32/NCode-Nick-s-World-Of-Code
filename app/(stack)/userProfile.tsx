@@ -14,6 +14,7 @@ const radius = 143;
 
 const userProfile = () => {
   const logOut = UseAuthStore(state => state.logOut);
+
   return (
     <SafeAreaView edges={['bottom']}style={styles.container}>
       <View>
