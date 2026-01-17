@@ -34,17 +34,26 @@ const signUp = () => {
                 <Text style={[fontStyle.header1, { margin: 20, alignSelf: 'center'}]}>Sign Up</Text>
                 <View style={{flexDirection: 'row', alignSelf: 'center', marginBottom: 40}}>
                     <Text style={fontStyle.header2}>Already a memeber?</Text>
-                    <Pressable onPress={() => router.dismissTo('/')}>
+                    <Pressable onPress={() => router.dismissTo('/signIn')}>
                         <Text style={[fontStyle.header2,{color: lightPurple}]}> Login</Text>
                     </Pressable>
                 </View>
+                {/* email input box */}
                 <View style={[inputStyles.inputBox]}>
                     <Text style={[fontStyle.normal,{color: '#999'}]}>Email</Text>
-                    <TextInput style={inputStyles.inputText} maxLength={80} onChangeText={setEmail}/>
+                    <TextInput style={inputStyles.inputText} maxLength={80} 
+                        onChangeText={setEmail}
+                        autoCapitalize='none'
+                    />
                 </View>
+                {/* Password input box */}
                 <View style={[inputStyles.inputBox]}>
                     <Text style={[fontStyle.normal,{color: '#999'}]}>Password</Text>
-                    <TextInput style={inputStyles.inputText} maxLength={20} onChangeText={setPassword}/>
+                    <TextInput style={inputStyles.inputText} maxLength={20} 
+                        onChangeText={setPassword}
+                        autoCapitalize='none'
+                        secureTextEntry={true}
+                    />
                 </View>
                 <TouchableOpacity style={styles.signUpButton} onPress={() => signUpWithEmail()}>
                     <Text style={styles.signUpText}>Sign Up</Text>

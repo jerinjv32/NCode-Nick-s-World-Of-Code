@@ -23,8 +23,8 @@ export default function ProfileRootLayout(){
                 },
                 headerTintColor: backButtonColor
             }}>
-                <Stack.Screen name="userProfile" options={{
-                    title: 'Profile',
+                <Stack.Screen name="account" options={{
+                    title: 'Account',
                     headerTitleAlign: 'center',
                     headerStyle:{
                         backgroundColor: headerFooter,
@@ -39,6 +39,9 @@ export default function ProfileRootLayout(){
                 <Stack.Screen name="problem_trail" options={{
                     title: "Problem Trail",
                     headerBackVisible: true,   
+                }} />
+                <Stack.Screen name="myProfile" options={{
+                    title: 'My Profile',
                 }} />
             </Stack>
         </SafeAreaProvider>

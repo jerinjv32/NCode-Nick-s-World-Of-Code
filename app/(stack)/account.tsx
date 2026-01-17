@@ -7,6 +7,7 @@ import SettingIcon from '../../assets/svg/SettingIcon';
 import UserProfilePicture from '../../assets/svg/UserProfile';
 import LogoutBtn from '../../assets/svg/Logout';
 import { UseAuthStore } from '../../src/authStore';
+import { useRouter } from 'expo-router';
 
 const cx = 160;
 const cy = 160;
@@ -14,6 +15,7 @@ const radius = 143;
 
 const userProfile = () => {
   const logOut = UseAuthStore(state => state.logOut);
+  const router = useRouter();
 
   return (
     <SafeAreaView edges={['bottom']}style={styles.container}>
@@ -39,16 +41,10 @@ const userProfile = () => {
           </TouchableOpacity>
 
           {/* View Profile Label */}
-          <TouchableOpacity style={lable.position}>
+          <TouchableOpacity style={lable.position} onPress ={ () => router.push('/myProfile')}>
             <UserProfilePicture width={32} height={32}/>
             <Text style={fontStyles.label}>View Profile</Text>
           </TouchableOpacity>
-
-          {/* Lights modes Label
-          <TouchableOpacity style={lable.position}>
-            <ToggleBtn width={32} height={32}/>
-            <Text style={fontStyles.label}>Light Modes</Text>
-          </TouchableOpacity> */}
 
           {/* Logout Option */}
           <TouchableOpacity style={lable.position} onPress={() => logOut()}>

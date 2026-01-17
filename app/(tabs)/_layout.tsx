@@ -27,7 +27,7 @@ export default function TabLayout() {
         <SafeAreaProvider style={{backgroundColor: grey}}>
             <Tabs screenOptions={{
                 headerRight: () => (
-                    <TouchableOpacity style={{marginRight: 10}} onPress={() => router.push('/userProfile')}>
+                    <TouchableOpacity style={{marginRight: 10}} onPress={() => router.push('/account')}>
                         <UserProfileIcon width={50} height={50}/>
                     </TouchableOpacity>
                 ),
