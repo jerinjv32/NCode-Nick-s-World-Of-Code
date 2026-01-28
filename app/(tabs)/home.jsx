@@ -9,7 +9,7 @@ import NextBtn from '../../assets/svg/Next'
 import CircleProgress from '../../assets/svg/CircleProgress'
 import { useEffect, useState } from 'react'
 import ProgressBar from '../../assets/svg/ProgressBar'
-import { grey, darkGrey, purple, commonFontColor } from '../../src/styles/colors'
+import { grey, darkGrey, purple, commonFontColor, mainBgColor } from '../../src/styles/colors'
 import { useRouter } from 'expo-router'
 
 
@@ -46,8 +46,7 @@ const Home = () => {
         }
     }
     return (
-    <SafeAreaView edges={['bottom']} style={{ flex:1, backgroundColor: grey}}>
-        <ImageBackground source={require('../../assets/images/background.png')} resizeMode="cover" style={styles.background}>
+    <SafeAreaView edges={['bottom']} style={{ flex:1, backgroundColor: mainBgColor }}>
             <View style={{flex: 1, justifyContent: 'space-evenly', alignItems: 'center'}}>
                 {/* Progress Bar */}
                 <View>
@@ -103,7 +102,6 @@ const Home = () => {
                     {/* Next Button Ends Here */}
                 </View>
             </View>
-        </ImageBackground>
     </SafeAreaView>
     )
 }
@@ -121,7 +119,7 @@ const styles = StyleSheet.create({
         fontFamily: 'press-start-2p',
         fontSize: 9,
         marginLeft: 5,
-        paddingBottom: 3,
+        paddingBottom: 2,
     },
     progressBar:{
         width: '100%',

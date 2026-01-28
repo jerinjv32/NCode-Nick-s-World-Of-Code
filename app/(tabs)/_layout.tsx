@@ -21,6 +21,7 @@ export default function TabLayout() {
     }, [isLogged]);
     const [fontsLoaded] = useFonts({
         'press-start-2p': require('../../assets/fonts/PressStart2P-Regular.ttf'),
+        'GoogleSansCode-Regular': require('../../assets/fonts/GoogleSansCode-Regular.ttf'),
     })
     if(!fontsLoaded){return(null)}
     return(
