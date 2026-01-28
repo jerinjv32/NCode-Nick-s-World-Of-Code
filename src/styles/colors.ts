@@ -7,3 +7,4 @@ export const lightPurple = '#6760AB';
 export const headerFooter = '#282828';
 export const backButtonColor = '#ffff';
 export const displayQuestionColor = 'rgba(217, 217, 217, 0.44)';
+export const mainBgColor = '#252525';

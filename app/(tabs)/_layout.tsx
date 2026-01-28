@@ -2,7 +2,7 @@ import { Tabs, useRouter } from "expo-router";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { useFonts } from 'expo-font'
 import { commonFontColor, grey, headerFooter, lightPurple } from "../../src/styles/colors";
-import { Pressable, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import UserProfileIcon from "../../assets/svg/UserProfileIcon";
 import ProblemTrail from "../../assets/svg/ProblemTrail";
 import ChatBot from "../../assets/svg/ChatBot";
@@ -21,6 +21,7 @@ export default function TabLayout() {
     }, [isLogged]);
     const [fontsLoaded] = useFonts({
         'press-start-2p': require('../../assets/fonts/PressStart2P-Regular.ttf'),
+        'GoogleSansCode-Regular': require('../../assets/fonts/GoogleSansCode-Regular.ttf'),
     })
     if(!fontsLoaded){return(null)}
     return(

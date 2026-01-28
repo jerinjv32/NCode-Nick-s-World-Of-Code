@@ -6,7 +6,6 @@ import { grey } from '../src/styles/colors'
 
 export default function AuthRootLayout () {
   const isLogged = UseAuthStore(state => state.loggedIn)
-  console.log(isLogged)
   
   const [fontsLoaded] = useFonts({
     'press-start-2p': require('../assets/fonts/PressStart2P-Regular.ttf')
