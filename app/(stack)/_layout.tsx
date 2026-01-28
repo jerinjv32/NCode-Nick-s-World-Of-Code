@@ -43,6 +43,10 @@ export default function ProfileRootLayout(){
                 <Stack.Screen name="myProfile" options={{
                     title: 'My Profile',
                 }} />
+                <Stack.Screen name="editorForSolving" options={{
+                    title: 'Solve'
+                }}
+                />
             </Stack>
         </SafeAreaProvider>
     )

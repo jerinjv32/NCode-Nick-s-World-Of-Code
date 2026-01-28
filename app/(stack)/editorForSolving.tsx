@@ -1,34 +1,17 @@
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Dropdown } from 'react-native-element-dropdown'
 import { useState } from 'react'
-import { commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
+import { commonFontColor, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
-import useCodeStoreEditor from '../../src/codeStoreEditor'
-
-const lang = [
-    {
-        label: 'python',
-        value: '1'
-    },
-    {
-        label: 'JavaScript',
-        value: '2'
-    },
-    {
-        label: 'C',
-        value: '3'
-    }
-]
+import useCodeStore from '../../src/codeStore'
 
 const codeEditor = () => {
     // const [language, setLang] = useState(null); choosing language will be done in the future 
-    const code = useCodeStoreEditor(state => state.code);
-    const setCode = useCodeStoreEditor(state => state.setCode);
-    const output = useCodeStoreEditor(state => state.output);
-    const setOutput = useCodeStoreEditor(state => state.setOutput);
+    const code = useCodeStore(state => state.code);
+    const setCode = useCodeStore(state => state.setCode);
+    const output = useCodeStore(state => state.output);
+    const setOutput = useCodeStore(state => state.setOutput);
 
-    const [value, setValue] = useState(null);
     const [displayOutput, setDisplayOutput] = useState<"none" | "flex">("none");
     async function compile(program: string) {
         try {
@@ -49,48 +32,7 @@ const codeEditor = () => {
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
             <View style={styles.tab}>
-                <Dropdown
-                    data={lang}
-                    style={{
-                        width: 170,
-                        backgroundColor: darkGrey,
-                        paddingHorizontal: 10,
-                        paddingVertical: 5,
-                        borderWidth: 3,
-                        borderColor: purple,
-                        borderRadius: 10,
-                        elevation: 5
-                    }}
-                    containerStyle={{
-                        backgroundColor: purple,
-                        borderWidth: 3,
-                        borderColor: purple,
-                        borderRadius: 10,
-                        elevation: 5
-                    }}
-                    itemTextStyle={{
-                        color: commonFontColor,
-                        fontSize: 10,
-                    }}
-                    selectedTextStyle={{
-                        fontSize: 10,
-                        color: commonFontColor,
-                    }}
-                    activeColor='#2c2848ff'
-                    placeholderStyle={{
-                        fontSize: 10,
-                        color: commonFontColor
-                    }}
-                    valueField={'value'}
-                    labelField={'label'}
-                    fontFamily='press-start-2p'
-                    value={value}
-                    onChange={item => {
-                        setValue(item.value);
-                    }}
-                >
-                </Dropdown>
-                <TouchableOpacity activeOpacity={0.5} onPress={() => { setDisplayOutput('flex'); }}>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => setDisplayOutput('flex')}>
                     <Text style={styles.runBtn}>OUTPUT</Text>
                 </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => { setDisplayOutput('flex'), compile(code); }}>
@@ -178,7 +120,7 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: '97%',
         top: 400,
-        minHeight: 345,
-        maxHeight: 345,
+        minHeight: 400,
+        maxHeight: 400,
     }
 })

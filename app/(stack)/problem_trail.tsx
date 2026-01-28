@@ -3,8 +3,12 @@ import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { commonFontColor, displayQuestionColor, grey, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
+import { useRouter } from 'expo-router'
 
 const problem_trail = () => {
+  const router = useRouter();
+
+
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
       {/* Display question */}
@@ -26,7 +30,7 @@ const problem_trail = () => {
       </View>
       {/* Buttons */}
       <View style={styles.btns}>
-        <TouchableOpacity style={styles.btnStyle}>
+        <TouchableOpacity style={styles.btnStyle} onPress={() => router.push('/editorForSolving')}>
           <Text style={[fontStyle.header2,{color: commonFontColor}]}>Solve</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnStyle}>
