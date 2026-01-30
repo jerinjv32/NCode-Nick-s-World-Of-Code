@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet, TouchableOpacity} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { darkGrey, grey, purple } from '../../src/styles/colors'
 import Svg, { Circle, ClipPath, Defs, Image } from 'react-native-svg';
@@ -6,7 +6,7 @@ import fontStyles from '../../src/styles/fontStyles';
 import SettingIcon from '../../assets/svg/SettingIcon';
 import UserProfilePicture from '../../assets/svg/UserProfile';
 import LogoutBtn from '../../assets/svg/Logout';
-import { UseAuthStore } from '../../src/authStore';
+import { UseAuthStore } from '../../src/store/authStore';
 import { useRouter } from 'expo-router';
 
 const cx = 160;
@@ -18,42 +18,40 @@ const userProfile = () => {
   const router = useRouter();
 
   return (
-    <SafeAreaView edges={['bottom']}style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <View>
         <Svg width="45%" height="45%" viewBox='0 0 320 320' style={profileStyle.haloPosition}>
-          <Defs> 
+          <Defs>
             <ClipPath id='profile'>
-              <Circle cx={cx} cy={cy} r={radius}/>
+              <Circle cx={cx} cy={cy} r={radius} />
             </ClipPath>
           </Defs>
-          <Circle cx={cx} cy={cy} r={radius} fill={'white'}/>
-          <Image y={40} href={require('../../assets/icons/user_profile.png')} clipPath='url(#profile)'/>
-          <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={purple} strokeWidth={10}/>
+          <Circle cx={cx} cy={cy} r={radius} fill={'white'} />
+          <Image y={40} href={require('../../assets/icons/user_profile.png')} clipPath='url(#profile)' />
+          <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={purple} strokeWidth={10} />
         </Svg>
-        <Text style={[fontStyles.header1, {alignSelf: 'center'}]}>Username</Text>
-
         {/* OPtion Panel */}
         <View style={styles.optionPanel}>
           {/* Settings Label */}
           <TouchableOpacity style={lable.position}>
-            <SettingIcon width={32} height={32}/>
+            <SettingIcon width={32} height={32} />
             <Text style={fontStyles.label}>Settings</Text>
           </TouchableOpacity>
 
           {/* View Profile Label */}
-          <TouchableOpacity style={lable.position} onPress ={ () => router.push('/myProfile')}>
-            <UserProfilePicture width={32} height={32}/>
+          <TouchableOpacity style={lable.position} onPress={() => router.push('/myProfile')}>
+            <UserProfilePicture width={32} height={32} />
             <Text style={fontStyles.label}>View Profile</Text>
           </TouchableOpacity>
 
           {/* Logout Option */}
           <TouchableOpacity style={lable.position} onPress={() => logOut()}>
-            <LogoutBtn width={32} height={32}/>
+            <LogoutBtn width={32} height={32} />
             <Text style={fontStyles.label}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </SafeAreaView> 
+    </SafeAreaView>
   )
 }
 
@@ -61,26 +59,26 @@ export default userProfile;
 
 const styles = StyleSheet.create(
   {
-     container: {
-        backgroundColor: grey,
-        flex: 1,
-      },
-      optionPanel:{
-        backgroundColor: darkGrey,
-        flexDirection: 'column',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        padding: 10,
-        marginTop: 10,
-        width: '90%',
-        borderRadius: 10,
-      }
+    container: {
+      backgroundColor: grey,
+      flex: 1,
+    },
+    optionPanel: {
+      backgroundColor: darkGrey,
+      flexDirection: 'column',
+      alignSelf: 'center',
+      justifyContent: 'center',
+      padding: 10,
+      marginTop: 10,
+      width: '90%',
+      borderRadius: 10,
+    }
   }
 );
 
 const lable = StyleSheet.create(
   {
-    position:{
+    position: {
       flexDirection: 'row',
       margin: 5
     }
@@ -89,7 +87,7 @@ const lable = StyleSheet.create(
 
 const profileStyle = StyleSheet.create(
   {
-    haloPosition:{
+    haloPosition: {
       marginTop: 10,
       alignSelf: 'center'
     }

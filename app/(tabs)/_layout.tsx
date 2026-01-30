@@ -8,7 +8,7 @@ import ProblemTrail from "../../assets/svg/ProblemTrail";
 import ChatBot from "../../assets/svg/ChatBot";
 import CodeEditorIcon from "../../assets/svg/CodeEditorIcon";
 import CollabCodingIcon from "../../assets/svg/CollabCodingIcon";
-import { UseAuthStore } from "../../src/authStore";
+import { UseAuthStore } from "../../src/store/authStore";
 import { useEffect } from "react";
 
 export default function TabLayout() {

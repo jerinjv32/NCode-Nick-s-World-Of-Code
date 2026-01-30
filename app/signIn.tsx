@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { grey, darkGrey, purple, boxShadowColor } from '../src/styles/colors'
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
-import { UseAuthStore } from '../src/authStore'
+import { UseAuthStore } from '../src/store/authStore'
 import { inputStyles } from '../src/styles/inputStyle'
 import { Redirect, useRouter } from 'expo-router'
 

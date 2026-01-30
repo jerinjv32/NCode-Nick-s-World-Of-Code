@@ -3,7 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { useState } from 'react'
 import { commonFontColor, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
-import useCodeStore from '../../src/codeStore'
+import useCodeStore from '../../src/store/codeStore'
 
 const codeEditor = () => {
     // const [language, setLang] = useState(null); choosing language will be done in the future 
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     },
     output: {
         backgroundColor: 'black',
+        maxHeight: 353,
     },
     outputScreen: {
         borderWidth: 5,
@@ -119,8 +120,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         width: '97%',
-        top: 400,
+        top: 360,
         minHeight: 400,
         maxHeight: 400,
+        backgroundColor: 'black'
     }
 })

@@ -6,7 +6,7 @@ export default StyleSheet.create({
     container:{
         backgroundColor: grey,
         width: 375,
-        height: '80%',
+        height: '85%',
     },
     border:{
         borderColor: purple,
@@ -57,6 +57,6 @@ export default StyleSheet.create({
     buttons:{
         flexDirection: 'row',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
     }
 })

@@ -20,7 +20,6 @@ const fontStyle =  StyleSheet.create({
     normal:{
         fontFamily: 'press-start-2p',
         fontSize: 9,
-        padding: 10,
     }
 })
 
