@@ -1,5 +1,5 @@
 import { useRouter } from 'expo-router'
-import { UseAuthStore } from '../src/authStore'
+import { UseAuthStore } from '../src/store/authStore'
 import { StyleSheet, Text, View } from 'react-native'
 import { commonFontColor, grey } from '../src/styles/colors'
 import fontStyle from '../src/styles/fontStyles'

@@ -10,7 +10,7 @@ import SendIcon from '../../assets/svg/SendIcon'
 import { boxShadowColor, commonFontColor, darkGrey, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import Markdown from 'react-native-markdown-display'
-import useStoreMessages from '../../src/store'
+import useStoreMessages from '../../src/store/store'
 
 const chatBot = () => {
   const [text, setText] = useState('')

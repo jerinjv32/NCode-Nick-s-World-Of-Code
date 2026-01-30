@@ -4,7 +4,7 @@ import { Dropdown } from 'react-native-element-dropdown'
 import { useState } from 'react'
 import { commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
-import useCodeStoreEditor from '../../src/codeStoreEditor'
+import useCodeStoreEditor from '../../src/store/codeStoreEditor'
 
 const lang = [
     {
@@ -119,15 +119,17 @@ const codeEditor = () => {
                         paddingBottom: 4,
                     }}>Close</Text>
                 </Pressable>
-                <ScrollView style={styles.output}>
-                    <Text style={{
-                        color: 'white',
-                        fontFamily: 'GoogleSansCode-Regular',
-                        padding: 10,
-                    }}>
-                        {output}
-                    </Text>
-                </ScrollView>
+                <View>
+                    <ScrollView style={styles.output}>
+                        <Text style={{
+                            color: 'white',
+                            fontFamily: 'GoogleSansCode-Regular',
+                            padding: 10,
+                        }}>
+                            {output}
+                        </Text>
+                    </ScrollView>
+                </View>
             </View>
         </SafeAreaView>
     )
@@ -169,6 +171,7 @@ const styles = StyleSheet.create({
     },
     output: {
         backgroundColor: 'black',
+        maxHeight: 305,
     },
     outputScreen: {
         borderWidth: 5,
@@ -177,8 +180,9 @@ const styles = StyleSheet.create({
         position: 'absolute',
         alignSelf: 'center',
         width: '97%',
-        top: 400,
+        top: 360,
         minHeight: 345,
-        maxHeight: 345,
+        maxHeight: '100%',
+        backgroundColor: 'black'
     }
 })

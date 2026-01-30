@@ -1,7 +1,7 @@
 import { Stack} from 'expo-router'
 import { useFonts } from 'expo-font'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import { UseAuthStore } from '../src/authStore'
+import { UseAuthStore } from '../src/store/authStore'
 import { grey } from '../src/styles/colors'
 
 export default function AuthRootLayout () {

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { commonFontColor, darkGrey, purple } from './colors'
+import { boxShadowColor, commonFontColor, darkGrey, purple } from './colors'
 
 
 export default StyleSheet.create({
@@ -23,5 +23,6 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderColor: purple,
         elevation: 5,
+        shadowColor: boxShadowColor
     }
 })

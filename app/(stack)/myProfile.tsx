@@ -1,9 +1,11 @@
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { commonFontColor, grey } from '../../src/styles/colors'
+import { commonFontColor, grey, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { supabase } from '../../lib/supabase'
+import ProgressBar from '../../assets/svg/ProgressBar'
+import Svg, { Circle, ClipPath, Defs, Image } from 'react-native-svg';
 
 interface User {
     displayName?: string;
@@ -14,10 +16,14 @@ interface MyCallback {
     (username: string): void,
 }
 
+const cx = 160;
+const cy = 160;
+const radius = 143;
 
 const myProfile = () => {
+    const [progress, setProgress] = useState(0)
     const [profile, setProfile] = useState<User>({
-        displayName: null,
+        displayName: '',
         level: null,
     });
 
@@ -42,21 +48,55 @@ const myProfile = () => {
             setProfile({
                 displayName: data.display_name,
                 level: data.level,
-            })
+            });
         }
     }, []);
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
-            <Text style={[fontStyle.normal, { color: commonFontColor }]}>
-                Username: {profile.displayName}
-            </Text>
-            <Text style={[fontStyle.normal, { color: commonFontColor }]}>
-                Level: {profile.level}
-            </Text>
+            <View>
+                <Svg width="45%" height="45%" viewBox='0 0 320 320' style={profileStyle.haloPosition}>
+                    <Defs>
+                        <ClipPath id='profile'>
+                            <Circle cx={cx} cy={cy} r={radius} />
+                        </ClipPath>
+                    </Defs>
+                    <Circle cx={cx} cy={cy} r={radius} fill={'white'} />
+                    <Image y={40} href={require('../../assets/icons/user_profile.png')} clipPath='url(#profile)' />
+                    <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={purple} strokeWidth={10} />
+                </Svg>
+                <View style={{flex: 1, alignItems: 'center', marginTop: 20}}>
+                    <Text style={[fontStyle.header1, { color: commonFontColor }]}>
+                        {profile.displayName}
+                    </Text>
+                    <Text style={[fontStyle.normal, { color: '#999', padding: 10 }]}>
+                        Level: {profile.level}
+                    </Text>
+                    <View style={{ marginTop: 20 }}>
+                        <Text style={[styles.progressMotive, fontStyle.normal]}>Total Progress:</Text>
+                        <ProgressBar progress={progress} />
+                    </View>
+                </View>
+            </View>
         </SafeAreaView>
     )
 }
 
 export default myProfile
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    progressMotive: {
+        color: commonFontColor,
+        fontSize: 9,
+        paddingBottom: 10,
+        marginLeft: 4
+    },
+})
+
+const profileStyle = StyleSheet.create(
+    {
+        haloPosition: {
+            marginTop: 43,
+            alignSelf: 'center'
+        }
+    }
+);
