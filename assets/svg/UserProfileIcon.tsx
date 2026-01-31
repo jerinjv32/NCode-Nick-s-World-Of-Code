@@ -1,5 +1,5 @@
 import Svg, { Circle, ClipPath, Defs, Image } from "react-native-svg";
-import { purple } from "../../src/styles/colors";
+import { darkGrey, grey, purple } from "../../src/styles/colors";
 import { SvgProps } from "react-native-svg";
 
 type Unit = SvgProps & {
@@ -23,7 +23,7 @@ export default function UserProfileIcon({width, height, ...props} : Unit){
                 y={10}
                 x={5}
             />
-            <Circle cx={30} cy={30} r={25} stroke={purple} fill={'none'} strokeWidth={3}/>
+            <Circle cx={30} cy={30} r={25} stroke={grey} fill={'none'} strokeWidth={3}/>
         </Svg>
     );
 }

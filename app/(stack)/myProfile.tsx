@@ -1,7 +1,7 @@
 import { Alert, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { commonFontColor, grey, purple } from '../../src/styles/colors'
+import { commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { supabase } from '../../lib/supabase'
 import ProgressBar from '../../assets/svg/ProgressBar'
@@ -52,7 +52,7 @@ const myProfile = () => {
         }
     }, []);
     return (
-        <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
+        <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
             <View>
                 <Svg width="45%" height="45%" viewBox='0 0 320 320' style={profileStyle.haloPosition}>
                     <Defs>
@@ -62,7 +62,7 @@ const myProfile = () => {
                     </Defs>
                     <Circle cx={cx} cy={cy} r={radius} fill={'white'} />
                     <Image y={40} href={require('../../assets/icons/user_profile.png')} clipPath='url(#profile)' />
-                    <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={purple} strokeWidth={10} />
+                    <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={darkGrey} strokeWidth={10} />
                 </Svg>
                 <View style={{flex: 1, alignItems: 'center', marginTop: 20}}>
                     <Text style={[fontStyle.header1, { color: commonFontColor }]}>
