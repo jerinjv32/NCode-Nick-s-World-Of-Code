@@ -7,7 +7,7 @@ import { TextInput } from 'react-native'
 import { KeyboardAvoidingView } from 'react-native'
 import { Platform } from 'react-native'
 import SendIcon from '../../assets/svg/SendIcon'
-import { boxShadowColor, commonFontColor, darkGrey, purple } from '../../src/styles/colors'
+import { boxShadowColor, commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import Markdown from 'react-native-markdown-display'
 import useStoreMessages from '../../src/store/store'
@@ -19,14 +19,14 @@ const chatBot = () => {
   const addBotMessage = useStoreMessages(state => state.addBotMessage)
   const addUserMessage = useStoreMessages(state => state.addUserMessage)
 
-  // Setting app user message and emptying the textinput area
+
   const sendMessage = (text) => {
     if (!text.trim()) return;
     addUserMessage(text)
     setText('');
   };
 
-  // Fetching and passing the prompt to the model
+
   const aiResponse = async (prompt, callback) => {
     try {
       const response = await axios.post('http://192.168.1.5:8001/chat', {
@@ -49,7 +49,7 @@ const chatBot = () => {
     if (role === 'bot') {
       return (
         <>
-          <Image source={require('../../assets/icons/chat_bot_avatar.png')} style={[styles.avatar, { marginRight: 15 }]} />
+          <Image source={require('../../assets/icons/chat_bot_avatar.png')} style={[styles.avatar]} />
           <View style={[styles.botMessage, styles.msgCommonstyle]}>
             <Markdown style={{
               body: {
@@ -86,7 +86,7 @@ const chatBot = () => {
               }
             }}>{title}</Markdown>
           </View>
-          <Image source={require('../../assets/icons/user_profile.png')} style={[styles.avatar, { marginLeft: 15 }]} />
+          <Image source={require('../../assets/icons/user_profile.png')} style={[styles.avatar]} />
         </>
       )
     }
@@ -97,7 +97,7 @@ const chatBot = () => {
     </View>
   )
   return (
-    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: '#2F2F2F' }}>
+    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
       <View style={{ flex: 1 }}>
         <FlatList
           data={message}
@@ -109,7 +109,7 @@ const chatBot = () => {
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS == 'ios' ? 100 : 110}>
         <View style={styles.userInput}>
           <TextInput value={text} style={styles.inputText} placeholder='Ask Away' placeholderTextColor={'rgba(255 255 255 / 0.5)'}
-            onChangeText={setText}>
+            onChangeText={setText} multiline>
           </TextInput>
           <TouchableOpacity onPress={() => { sendMessage(text), aiResponse(text, displayMessage) }}>
             <SendIcon style={{ marginTop: 10, marginBottom: 10, marginRight: 10 }} />
@@ -140,39 +140,42 @@ const styles = StyleSheet.create({
   },
   msgCommonstyle: {
     borderRadius: 10,
-    width: 320,
+    width: '80%',
   },
   avatar: {
     width: 40,
     height: 40,
     backgroundColor: darkGrey,
     borderRadius: 50,
-    borderColor: purple,
+    borderColor: darkGrey,
     marginTop: 10,
     borderWidth: 1,
+    marginHorizontal: 10
   },
   msgContainer: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   userInput: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    height: 50,
+    minHeight: 50,
+    maxHeight: 200,
     borderWidth: 3,
-    borderColor: purple,
+    borderColor: darkGrey,
     backgroundColor: darkGrey,
     borderRadius: 50,
     elevation: 5,
     shadowColor: boxShadowColor,
     marginBottom: 10,
-    marginHorizontal: 10
+    width: '95%',
+    alignSelf: 'center'
   },
   inputText: {
     color: commonFontColor,
     marginLeft: 20,
-    width: 325
+    width: '80%'
   }
 })

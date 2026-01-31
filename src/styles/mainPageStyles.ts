@@ -3,58 +3,29 @@ import { boxShadowColor, commonFontColor, darkGrey, grey, purple } from './color
 
 
 export default StyleSheet.create({
-    container:{
+    container: {
         backgroundColor: grey,
-        width: 375,
+        width: '90%',
         height: '85%',
     },
-    border:{
+    border: {
         borderColor: purple,
         borderWidth: 3,
         borderRadius: 10,
     },
-    levels:{
-        marginTop: 20,
+    goButtonText: {
         color: commonFontColor,
-        textAlign: 'center',
-        fontFamily: 'press-start-2p',
-        fontSize: 16
-    },
-    lessons:{
-        marginTop: 20,
-        color: commonFontColor,
-        textAlign: 'center',
-        fontFamily: 'press-start-2p',
-        fontSize: 13
-    },
-    goButtonPosition:{
-        flexDirection: 'column',
-        alignItems: 'center'
-    },
-    goButton:{
         backgroundColor: darkGrey,
-        height: 84,
-        width: 84,
         elevation: 5,
-        shadowColor: boxShadowColor
+        shadowColor: boxShadowColor,
+        padding: 10
     },
-    goButtonText:{
-      color: commonFontColor,
-      fontFamily: 'press-start-2p',
-      fontSize: 16,  
-    },
-    goButtonBorder:{
+    goButtonBorder: {
         borderColor: purple,
         borderWidth: 3,
         borderRadius: 10
     },
-    lessonProgression:{ 
-        width: 300,
-        height: 100,
-        marginTop: 160,
-        marginBottom: 50,
-    },
-    buttons:{
+    buttons: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

@@ -2,7 +2,7 @@ import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, V
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { Dropdown } from 'react-native-element-dropdown'
 import { useState } from 'react'
-import { commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
+import { alertRed, commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import useCodeStoreEditor from '../../src/store/codeStoreEditor'
 
@@ -47,14 +47,14 @@ const codeEditor = () => {
         }
     }
     return (
-        <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
+        <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
             <View style={styles.tab}>
-                <Dropdown
+                {/* <Dropdown
                     data={lang}
                     style={{
-                        width: 170,
+                        width: '50%',
                         backgroundColor: darkGrey,
-                        paddingHorizontal: 10,
+                        paddingHorizontal: 5,
                         paddingVertical: 5,
                         borderWidth: 3,
                         borderColor: purple,
@@ -89,7 +89,7 @@ const codeEditor = () => {
                         setValue(item.value);
                     }}
                 >
-                </Dropdown>
+                </Dropdown> */}
                 <TouchableOpacity activeOpacity={0.5} onPress={() => { setDisplayOutput('flex'); }}>
                     <Text style={styles.runBtn}>OUTPUT</Text>
                 </TouchableOpacity>
@@ -109,26 +109,28 @@ const codeEditor = () => {
                     onChangeText={setCode}
                 />
             </View>
-            <View style={[styles.outputScreen, { display: displayOutput }]}>
-                <Pressable onPress={() => setDisplayOutput('none')}>
-                    <Text style={{
-                        backgroundColor: purple,
-                        color: commonFontColor,
-                        textAlign: 'right',
-                        paddingRight: 4,
-                        paddingBottom: 4,
-                    }}>Close</Text>
-                </Pressable>
-                <View>
-                    <ScrollView style={styles.output}>
+            <View style={{width: '100%', height: '100%'}}>
+                <View style={[styles.outputScreen, { display: displayOutput }]}>
+                    <Pressable onPress={() => setDisplayOutput('none')}>
                         <Text style={{
-                            color: 'white',
-                            fontFamily: 'GoogleSansCode-Regular',
-                            padding: 10,
-                        }}>
-                            {output}
-                        </Text>
-                    </ScrollView>
+                            backgroundColor: mainBgColor,
+                            color: alertRed,
+                            textAlign: 'right',
+                            paddingRight: 4,
+                            paddingBottom: 4,
+                        }}>Close</Text>
+                    </Pressable>
+                    <View>
+                        <ScrollView style={styles.output}>
+                            <Text style={{
+                                color: 'white',
+                                fontFamily: 'GoogleSansCode-Regular',
+                                padding: 10,
+                            }}>
+                                {output}
+                            </Text>
+                        </ScrollView>
+                    </View>
                 </View>
             </View>
         </SafeAreaView>
@@ -171,18 +173,19 @@ const styles = StyleSheet.create({
     },
     output: {
         backgroundColor: 'black',
-        maxHeight: 305,
+        height: '87%'
     },
     outputScreen: {
         borderWidth: 5,
-        borderColor: purple,
+        borderColor: mainBgColor,
         borderRadius: 10,
         position: 'absolute',
         alignSelf: 'center',
         width: '97%',
-        top: 360,
-        minHeight: 345,
-        maxHeight: '100%',
-        backgroundColor: 'black'
+        top: '30%',
+        minHeight: '40%',
+        maxHeight: '50%',
+        backgroundColor: 'black',
+        elevation: 5
     }
 })
