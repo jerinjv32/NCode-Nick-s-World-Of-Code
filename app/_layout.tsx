@@ -20,7 +20,7 @@ export default function AuthRootLayout () {
         <Stack.Screen name='signIn' options={{ headerShown: false }} />
         <Stack.Screen name='signUp' options={{ headerShown: false }} />
         <Stack.Protected guard={isLogged}>
-          <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
+          <Stack.Screen name='(tabs)' options={{ headerShown: false, contentStyle: {paddingTop: 0}}} />
           <Stack.Screen name='(stack)' options={{ headerShown: false }} />
         </Stack.Protected>
       </Stack>

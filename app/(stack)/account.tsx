@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { darkGrey, grey, purple } from '../../src/styles/colors'
+import { alertRed, commonFontColor, darkGrey, grey, purple } from '../../src/styles/colors'
 import Svg, { Circle, ClipPath, Defs, Image } from 'react-native-svg';
 import fontStyles from '../../src/styles/fontStyles';
 import SettingIcon from '../../assets/svg/SettingIcon';
@@ -28,26 +28,26 @@ const userProfile = () => {
           </Defs>
           <Circle cx={cx} cy={cy} r={radius} fill={'white'} />
           <Image y={40} href={require('../../assets/icons/user_profile.png')} clipPath='url(#profile)' />
-          <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={purple} strokeWidth={10} />
+          <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={darkGrey} strokeWidth={10} />
         </Svg>
         {/* OPtion Panel */}
         <View style={styles.optionPanel}>
           {/* Settings Label */}
           <TouchableOpacity style={lable.position}>
             <SettingIcon width={32} height={32} />
-            <Text style={fontStyles.label}>Settings</Text>
+            <Text style={[fontStyles.label, {color: commonFontColor}]}>Settings</Text>
           </TouchableOpacity>
 
           {/* View Profile Label */}
           <TouchableOpacity style={lable.position} onPress={() => router.push('/myProfile')}>
             <UserProfilePicture width={32} height={32} />
-            <Text style={fontStyles.label}>View Profile</Text>
+            <Text style={[fontStyles.label, {color: commonFontColor}]}>View Profile</Text>
           </TouchableOpacity>
 
           {/* Logout Option */}
           <TouchableOpacity style={lable.position} onPress={() => logOut()}>
             <LogoutBtn width={32} height={32} />
-            <Text style={fontStyles.label}>Logout</Text>
+            <Text style={[fontStyles.label, {color: alertRed}]}>Logout</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,10 +1,12 @@
 export const grey = '#2F2F2F';
-export const purple = '#35315C';
+export const purple = '#289513';
 export const darkGrey = '#212020';
 export const boxShadowColor = '#171717';
 export const commonFontColor = 'white';
-export const lightPurple = '#6760AB';
+export const lightPurple = '#2EB215';
 export const headerFooter = '#282828';
 export const backButtonColor = '#ffff';
 export const displayQuestionColor = 'rgba(217, 217, 217, 0.44)';
 export const mainBgColor = '#252525';
+export const bannerHeaderBg = '#5894B5';
+export const alertRed = '#C7372F'

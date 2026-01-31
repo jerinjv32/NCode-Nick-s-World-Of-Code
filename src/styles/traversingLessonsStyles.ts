@@ -4,9 +4,7 @@ import { boxShadowColor, commonFontColor, darkGrey, purple } from './colors'
 
 export default StyleSheet.create({
     container:{
-        height: 58,
-        width: 375,
-        marginTop: 10,
+        width: '90%',
         flexDirection: 'row',
         justifyContent: 'space-between',
     },
