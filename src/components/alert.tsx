@@ -5,23 +5,25 @@ import fontStyle from '../styles/fontStyles'
 import useModalVisible from '../store/modalStore'
 import useLevelDisplay from '../store/levelDisplayStore'
 import { useRouter } from 'expo-router'
+import modalStyles from '../styles/modalStyles'
 
 const AlertBox = () => {
-    const modalVisible = useModalVisible(state => state.modalVisible);
-    const setModalVisible = useModalVisible(state => state.setModalVisible);
     const lesson = useLevelDisplay(state => state.lesson);
     const title = useLevelDisplay(state => state.title);
     const router = useRouter();
+
+    const activeModal = useModalVisible(state => state.activeModal);
+    const closeModal = useModalVisible(state => state.closeModal);
     return (
         <Modal
             transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => setModalVisible(false)}
+            visible={activeModal == 'lessonModal' ? true : false}
+            onRequestClose={() => closeModal()}
             animationType='fade'
         >
             <View style={styles.centeredView}>
-                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-                    <View style={styles.overlay} />
+                <TouchableWithoutFeedback onPress={() => closeModal()}>
+                    <View style={modalStyles.overlay} />
                 </TouchableWithoutFeedback>
 
                 <TouchableWithoutFeedback>
@@ -74,14 +76,7 @@ const styles = StyleSheet.create({
         borderColor: grey,
         borderWidth: 5
     },
-    overlay: {
-        position: 'absolute',
-        backgroundColor: transparent,
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0,
-    },
+
     button: {
         justifyContent: 'center',
         alignItems: 'center',
