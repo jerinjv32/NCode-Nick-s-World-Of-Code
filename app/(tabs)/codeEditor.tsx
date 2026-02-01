@@ -5,6 +5,10 @@ import { useState } from 'react'
 import { alertRed, commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import useCodeStoreEditor from '../../src/store/codeStoreEditor'
+import DisplayOutput from '../../src/components/DisplayOutput'
+import useModalVisible from '../../src/store/modalStore'
+import Run from '../../src/components/Run'
+import Output from '../../src/components/Output'
 
 const lang = [
     {
@@ -28,8 +32,6 @@ const codeEditor = () => {
     const output = useCodeStoreEditor(state => state.output);
     const setOutput = useCodeStoreEditor(state => state.setOutput);
 
-    const [value, setValue] = useState(null);
-    const [displayOutput, setDisplayOutput] = useState<"none" | "flex">("none");
     async function compile(program: string) {
         try {
             const response = await axios.post('https://emkc.org/api/v2/piston/execute', {
@@ -46,8 +48,10 @@ const codeEditor = () => {
             console.error("Compiler Error:", error);
         }
     }
+    const openModal = useModalVisible(state => state.openModal);
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
+            <DisplayOutput output={output} />
             <View style={styles.tab}>
                 {/* <Dropdown
                     data={lang}
@@ -90,11 +94,11 @@ const codeEditor = () => {
                     }}
                 >
                 </Dropdown> */}
-                <TouchableOpacity activeOpacity={0.5} onPress={() => { setDisplayOutput('flex'); }}>
-                    <Text style={styles.runBtn}>OUTPUT</Text>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'); }}>
+                    <Output/>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.5} onPress={() => { setDisplayOutput('flex'), compile(code); }}>
-                    <Text style={styles.runBtn}>RUN</Text>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
+                    <Run/>
                 </TouchableOpacity>
             </View>
             <View>
@@ -106,32 +110,9 @@ const codeEditor = () => {
                     placeholder='Start Typing Here...'
                     placeholderTextColor={'#999'}
                     autoCapitalize='none'
+                    autoCorrect={false}
                     onChangeText={setCode}
                 />
-            </View>
-            <View style={{width: '100%', height: '100%'}}>
-                <View style={[styles.outputScreen, { display: displayOutput }]}>
-                    <Pressable onPress={() => setDisplayOutput('none')}>
-                        <Text style={{
-                            backgroundColor: mainBgColor,
-                            color: alertRed,
-                            textAlign: 'right',
-                            paddingRight: 4,
-                            paddingBottom: 4,
-                        }}>Close</Text>
-                    </Pressable>
-                    <View>
-                        <ScrollView style={styles.output}>
-                            <Text style={{
-                                color: 'white',
-                                fontFamily: 'GoogleSansCode-Regular',
-                                padding: 10,
-                            }}>
-                                {output}
-                            </Text>
-                        </ScrollView>
-                    </View>
-                </View>
             </View>
         </SafeAreaView>
     )
@@ -140,27 +121,14 @@ const codeEditor = () => {
 export default codeEditor
 
 const styles = StyleSheet.create({
-    runBtn: {
-        color: commonFontColor,
-        backgroundColor: lightPurple,
-        fontSize: 10,
-        fontFamily: 'press-start-2p',
-        elevation: 5,
-        padding: 8,
-        width: 85,
-        textAlign: 'center',
-        borderRadius: 10,
-        borderColor: lightPurple,
-        marginLeft: 10,
-        marginRight: 10,
-    },
+
     tab: {
-        backgroundColor: grey,
+        backgroundColor: mainBgColor,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingTop: 10,
-        borderBottomColor: grey,
+        borderBottomColor: mainBgColor,
         borderBottomWidth: 1,
         paddingBottom: 10,
     },
@@ -171,21 +139,4 @@ const styles = StyleSheet.create({
     text: {
         fontSize: 16,
     },
-    output: {
-        backgroundColor: 'black',
-        height: '87%'
-    },
-    outputScreen: {
-        borderWidth: 5,
-        borderColor: mainBgColor,
-        borderRadius: 10,
-        position: 'absolute',
-        alignSelf: 'center',
-        width: '97%',
-        top: '30%',
-        minHeight: '40%',
-        maxHeight: '50%',
-        backgroundColor: 'black',
-        elevation: 5
-    }
 })

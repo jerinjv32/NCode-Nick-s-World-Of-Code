@@ -1,11 +1,12 @@
 import { StyleSheet, View, Text, TouchableOpacity, TextInput, KeyboardAvoidingView, Platform, Alert, Pressable } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { grey, darkGrey, purple, boxShadowColor } from '../src/styles/colors'
+import { grey, darkGrey, purple, boxShadowColor, lightPurple } from '../src/styles/colors'
 import { useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { UseAuthStore } from '../src/store/authStore'
 import { inputStyles } from '../src/styles/inputStyle'
 import { Redirect, useRouter } from 'expo-router'
+import AppLogo from '../assets/svg/Logo'
 
 const SignIn = () => {
   const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const SignIn = () => {
   }
 
   async function signInWithEmail() {
-    const {error} = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     })
@@ -32,42 +33,40 @@ const SignIn = () => {
     }
   }
   return (
-    <SafeAreaView edges={['bottom']} style={styles.container}>
+    <SafeAreaView edges={['bottom', 'top']} style={styles.container}>
       <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}>
-        <View>   
+
+        <View style={{ width: '100%', height: '100%', justifyContent: 'center', alignItems: 'center' }}>
+          <AppLogo />
           {/* logo */}
-          <View style={[styles.button, styles.shadow]}>
-            <Text style={styles.title}><Text style={{ color: '#6760AB', }}>N</Text>CODE</Text>
-          </View>
+
           {/* username */}
           <View style={inputStyles.inputBox} >
-            <Text style={[styles.text, {opacity: 0.5}]}>
-              Email
-            </Text>
-            <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80} 
-              onChangeText={setEmail} autoCapitalize='none'/>
+            <Text style={[styles.text, { opacity: 0.5 }]}>Email</Text>
+            <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80}
+              onChangeText={setEmail} autoCapitalize='none' />
           </View>
+
           {/* password */}
           <View style={inputStyles.inputBox}>
-            <Text style={[styles.text, {opacity: 0.5}]}>
-              password
-            </Text>
-            <TextInput style={inputStyles.inputText} maxLength={20} 
-              onChangeText={setPassword} secureTextEntry={true} autoCapitalize='none'/>
+            <Text style={[styles.text, { opacity: 0.5 }]}>Password </Text>
+            <TextInput style={inputStyles.inputText} maxLength={20}
+              onChangeText={setPassword} secureTextEntry={true} autoCapitalize='none' />
           </View>
-          <Text style={[styles.text, { textAlign: 'right' }]}>
-            Forgot Password?
-          </Text>
+
+          <Text style={[styles.text, { alignSelf: 'flex-end', marginRight: '6%' }]}>Forgot Password?</Text>
+
           {/* sign in button */}
-          <TouchableOpacity style={styles.signIntextBox} onPress={() => signInWithEmail()}>
-                <Text style={styles.signIntext}>Sign In</Text>
+          <TouchableOpacity style={styles.signInBtn} onPress={() => signInWithEmail()}>
+            <Text style={styles.signIntext}>Sign In</Text>
           </TouchableOpacity>
+
           <Pressable onPress={() => router.push('/signUp')}>
-            <Text style={[styles.text, { marginTop: 20, textAlign: 'center' }]}>
-                New? Sign Up
-            </Text>
+            <Text style={[styles.text, { textAlign: 'center' }]}>New? Sign Up</Text>
           </Pressable>
+
         </View>
+
       </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -79,42 +78,26 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: grey,
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
   },
-title: {
-  fontFamily: 'press-start-2p',
-  fontSize: 60,
-  color: 'white',
-},
-button: {
-  borderWidth: 3,
-  borderColor: purple,
-  paddingTop: 30,
-  paddingHorizontal: 20,
-  borderRadius: 10,
-  backgroundColor: darkGrey,
-},
-shadow: {
-  shadowColor: boxShadowColor,
-  elevation: 5
-},
   text: {
+    padding: 15,
+    paddingTop: 15,
     color: '#999',
     fontFamily: 'press-start-2p',
     fontSize: 9,
-    padding: 10,
   },
-  signIntextBox:{
+  signInBtn: {
+    marginVertical: 14,
     borderWidth: 3,
     borderColor: purple,
-    backgroundColor: purple,
+    backgroundColor: lightPurple,
     shadowColor: boxShadowColor,
     borderRadius: 10,
     height: 50,
-    flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    width: '90%',
+    borderBottomWidth: 7,
   },
   signIntext: {
     color: 'white',

@@ -1,8 +1,8 @@
-import { Pressable, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert} from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { grey, lightPurple, purple, darkGrey, boxShadowColor } from '../src/styles/colors'
+import { grey, lightPurple, purple, darkGrey, boxShadowColor, commonFontColor } from '../src/styles/colors'
 import fontStyle from '../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
 import { inputStyles } from '../src/styles/inputStyle'
@@ -10,83 +10,109 @@ import { supabase } from '../lib/supabase'
 
 
 const signUp = () => {
-    const router =  useRouter();
+    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
 
-    async function signUpWithEmail(){
-        const {error} = await supabase.auth.signUp({
+    async function signUpWithEmail() {
+        const { error } = await supabase.auth.signUp({
             email: email,
             password: password
         });
 
-        if(error) {
+        if (error) {
             Alert.alert(error.message);
         }
-        else{
+        else {
             Alert.alert("Check Your Email");
         }
     }
 
+    
+    function checkingPassword(firstPass: string, secondPass: string)  {
+        if (firstPass === secondPass) {
+            signUpWithEmail();
+        }
+        else {
+            Alert.alert("Passwords are not matching")
+        }
+    }
     return (
         <SafeAreaView style={styles.container}>
             <View style={styles.main}>
-                <Text style={[fontStyle.header1, { margin: 20, alignSelf: 'center'}]}>Sign Up</Text>
-                <View style={{flexDirection: 'row', alignSelf: 'center', marginBottom: 40}}>
-                    <Text style={fontStyle.header2}>Already a memeber?</Text>
+
+                <Text style={[fontStyle.header1, { margin: 20, alignSelf: 'center' , color: commonFontColor}]}>Sign Up</Text>
+
+                <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 40 }}>
+                    <Text style={[fontStyle.header2, {color: commonFontColor}]}>Already a memeber?</Text>
                     <Pressable onPress={() => router.dismissTo('/signIn')}>
-                        <Text style={[fontStyle.header2,{color: lightPurple}]}> Login</Text>
+                        <Text style={[fontStyle.header2, { color: lightPurple }]}> Login</Text>
                     </Pressable>
                 </View>
+
                 {/* email input box */}
-                <View style={[inputStyles.inputBox]}>
-                    <Text style={[fontStyle.normal,{color: '#999'}]}>Email</Text>
-                    <TextInput style={inputStyles.inputText} maxLength={80} 
-                        onChangeText={setEmail}
-                        autoCapitalize='none'
-                    />
+
+                {/* username */}
+                <View style={inputStyles.inputBox} >
+                    <Text style={[styles.text, { opacity: 0.5 }]}>Email</Text>
+                    <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80}
+                        onChangeText={setEmail} autoCapitalize='none' />
                 </View>
-                {/* Password input box */}
-                <View style={[inputStyles.inputBox]}>
-                    <Text style={[fontStyle.normal,{color: '#999'}]}>Password</Text>
-                    <TextInput style={inputStyles.inputText} maxLength={20} 
-                        onChangeText={setPassword}
-                        autoCapitalize='none'
-                        secureTextEntry={true}
-                    />
+
+                {/* password */}
+                <View style={inputStyles.inputBox}>
+                    <Text style={[styles.text, { opacity: 0.5 }]}>Password </Text>
+                    <TextInput style={inputStyles.inputText} maxLength={20}
+                        onChangeText={setPassword} secureTextEntry={true} autoCapitalize='none' />
                 </View>
-                <TouchableOpacity style={styles.signUpButton} onPress={() => signUpWithEmail()}>
-                    <Text style={styles.signUpText}>Sign Up</Text>
+
+                <View style={inputStyles.inputBox}>
+                    <Text style={[styles.text, { opacity: 0.5 }]}>Confirm Password </Text>
+                    <TextInput style={inputStyles.inputText} maxLength={20}
+                        onChangeText={setConfirmPassword} secureTextEntry={true} autoCapitalize='none' />
+                </View>
+
+                <TouchableOpacity style={styles.signUpButton} onPress={() => checkingPassword(password, confirmPassword)}>
+                    <Text style={styles.signUpText}>Confirm</Text>
                 </TouchableOpacity>
             </View>
         </SafeAreaView>
-  )
+    )
 }
 
 export default signUp;
 
 const styles = StyleSheet.create({
-    container:{
+    container: {
         flex: 1,
         backgroundColor: grey,
+    },
+    text: {
+        padding: 15,
+        paddingTop: 15,
+        color: '#999',
+        fontFamily: 'press-start-2p',
+        fontSize: 9,
+    },
+    main: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-start',
+        width: '100%',
+        height: '100%',
     },
-    main:{
-        flex: 1,
-        width: '85%',
-    },
-    signUpButton:{
+    signUpButton: {
+        marginVertical: 14,
         borderWidth: 3,
         borderColor: purple,
-        backgroundColor: purple,
+        backgroundColor: lightPurple,
         shadowColor: boxShadowColor,
         borderRadius: 10,
         height: 50,
-        flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 15
+        width: '90%',
+        borderBottomWidth: 7,
     },
     signUpText: {
         color: 'white',

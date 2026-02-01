@@ -4,29 +4,32 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { bannerHeaderBg, commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { LEVEL1DATA } from '../../src/data/levels'
-import { useRouter } from 'expo-router'
-import chatBot from './chatBot'
+import AlertBox from '../../src/components/alert'
+import useModalVisible from '../../src/store/modalStore'
+import useLevelDisplay from '../../src/store/levelDisplayStore'
 
 type ItemProps = {
     lesson?: string,
     level: string,
-    chapter?: string,
+    title?: string,
     type: string,
     side: string
 }
 
-const ChooseStyle = ({ lesson, level, type, side, chapter }: ItemProps) => {
-    const router = useRouter();
+const ChooseStyle = ({ lesson, level, type, side, title,  }: ItemProps) => {
+
+    const openModal = useModalVisible(state => state.openModal);
+    const setLesson = useLevelDisplay(state => state.setLesson);
     if (type == 'question') {
         return (
             <View style={[styles.shutterQuestions, side == 'left' ? styles.onRight : styles.onLeft]}>
-                <View style={styles.chapter}>
-                    <Text style={[fontStyle.normal, {color: commonFontColor}]}>{chapter}</Text>
+                <View style={styles.title}>
+                    <Text style={[fontStyle.normal, { color: commonFontColor }]}>{title}</Text>
                 </View>
                 <TouchableOpacity
-                    onPress={() => router.push('/problem_trail')}
+                    onPress={() => { openModal('lessonModal'), setLesson({ lesson, title }) }}
                     style={[
-                        styles.box,
+                         styles.box,
                         {
                             justifyContent: 'center',
                             alignItems: 'center'
@@ -49,17 +52,25 @@ const ChooseStyle = ({ lesson, level, type, side, chapter }: ItemProps) => {
     }
 }
 
-const Item = ({ lesson, level, type, side, chapter}: ItemProps) => (
+const Item = ({ lesson, level, type, side, title}: ItemProps) => (
     <View style={styles.msgContainer}>
-        <ChooseStyle lesson={lesson} level={level} type={type} side={side} chapter={chapter}/>
+        <ChooseStyle lesson={lesson} level={level} type={type} side={side} title={title} />
     </View>
 )
 const Home = () => {
+
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
+            <AlertBox />
             <FlatList
                 data={LEVEL1DATA}
-                renderItem={({ item }) => <Item lesson={item.lesson} level={item.level} type={item.type} side={item.side} chapter={item.title} />}
+                renderItem={({ item }) =>
+                    <Item lesson={item.lesson}
+                        level={item.level}
+                        type={item.type}
+                        side={item.side}
+                        title={item.title}
+                    />}
                 keyExtractor={item => item.id}
             />
         </SafeAreaView>
@@ -71,12 +82,23 @@ export default Home
 const styles = StyleSheet.create({
     box: {
         backgroundColor: purple,
+        borderColor: lightPurple,
         margin: 10,
         height: 80,
         width: 80,
         borderRadius: 10,
         borderWidth: 3,
-        borderColor: lightPurple,
+        elevation: 5,
+        borderBottomWidth: 5,
+    },
+    boxUnlocked: {
+        backgroundColor: grey,
+        borderColor: darkGrey,
+        margin: 10,
+        height: 80,
+        width: 80,
+        borderRadius: 10,
+        borderWidth: 3,
         elevation: 5,
     },
     level: {
@@ -105,7 +127,13 @@ const styles = StyleSheet.create({
     },
     shutter: {
         backgroundColor: darkGrey,
-        width: '100%'
+        width: '100%',
+        elevation: 5,
+        marginBottom: 10,
+        marginTop: 10,
+        borderColor: grey,
+        borderTopWidth: 3,
+        borderBottomWidth: 3,
     },
     shutterQuestions: {
         borderColor: darkGrey,
@@ -113,14 +141,17 @@ const styles = StyleSheet.create({
         borderWidth: 3,
         margin: 5,
         width: '70%',
+        backgroundColor: grey,
+        elevation: 5,
+        borderBottomWidth: 5
     },
-    onLeft:{
+    onLeft: {
         flexDirection: 'row-reverse'
     },
-    onRight:{
+    onRight: {
         flexDirection: 'row'
     },
-    chapter:{
+    title: {
         flexGrow: 1,
         justifyContent: 'center',
         padding: 10,

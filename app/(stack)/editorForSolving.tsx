@@ -1,9 +1,12 @@
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { useState } from 'react'
-import { commonFontColor, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
+import { darkGrey, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import useCodeStore from '../../src/store/codeStore'
+import DisplayOutput from '../../src/components/DisplayOutput'
+import useModalVisible from '../../src/store/modalStore'
+import Output from '../../src/components/Output'
+import Run from '../../src/components/Run'
 
 const codeEditor = () => {
     // const [language, setLang] = useState(null); choosing language will be done in the future 
@@ -12,7 +15,8 @@ const codeEditor = () => {
     const output = useCodeStore(state => state.output);
     const setOutput = useCodeStore(state => state.setOutput);
 
-    const [displayOutput, setDisplayOutput] = useState<"none" | "flex">("none");
+    const openModal = useModalVisible(state => state.openModal);
+
     async function compile(program: string) {
         try {
             const response = await axios.post('https://emkc.org/api/v2/piston/execute', {
@@ -30,13 +34,14 @@ const codeEditor = () => {
         }
     }
     return (
-        <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
+        <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
+            <DisplayOutput output={output} />
             <View style={styles.tab}>
-                <TouchableOpacity activeOpacity={0.5} onPress={() => setDisplayOutput('flex')}>
-                    <Text style={styles.runBtn}>OUTPUT</Text>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
+                    <Output/>
                 </TouchableOpacity>
-                <TouchableOpacity activeOpacity={0.5} onPress={() => { setDisplayOutput('flex'), compile(code); }}>
-                    <Text style={styles.runBtn}>RUN</Text>
+                <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
+                    <Run/>
                 </TouchableOpacity>
             </View>
             <View>
@@ -51,26 +56,6 @@ const codeEditor = () => {
                     onChangeText={setCode}
                 />
             </View>
-            <View style={[styles.outputScreen, { display: displayOutput }]}>
-                <Pressable onPress={() => setDisplayOutput('none')}>
-                    <Text style={{
-                        backgroundColor: purple,
-                        color: commonFontColor,
-                        textAlign: 'right',
-                        paddingRight: 4,
-                        paddingBottom: 4,
-                    }}>Close</Text>
-                </Pressable>
-                <ScrollView style={styles.output}>
-                    <Text style={{
-                        color: 'white',
-                        fontFamily: 'GoogleSansCode-Regular',
-                        padding: 10,
-                    }}>
-                        {output}
-                    </Text>
-                </ScrollView>
-            </View>
         </SafeAreaView>
     )
 }
@@ -78,27 +63,27 @@ const codeEditor = () => {
 export default codeEditor
 
 const styles = StyleSheet.create({
-    runBtn: {
-        color: commonFontColor,
-        backgroundColor: lightPurple,
-        fontSize: 10,
-        fontFamily: 'press-start-2p',
-        elevation: 5,
-        padding: 8,
-        width: 85,
-        textAlign: 'center',
-        borderRadius: 10,
-        borderColor: lightPurple,
-        marginLeft: 10,
-        marginRight: 10,
-    },
+    // runBtn: {
+    //     color: commonFontColor,
+    //     backgroundColor: lightPurple,
+    //     fontSize: 10,
+    //     fontFamily: 'press-start-2p',
+    //     elevation: 5,
+    //     padding: 8,
+    //     width: 85,
+    //     textAlign: 'center',
+    //     borderRadius: 10,
+    //     borderColor: lightPurple,
+    //     marginLeft: 10,
+    //     marginRight: 10,
+    // },
     tab: {
-        backgroundColor: grey,
+        backgroundColor: mainBgColor,
         flexDirection: 'row',
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingTop: 10,
-        borderBottomColor: grey,
+        borderBottomColor: mainBgColor,
         borderBottomWidth: 1,
         paddingBottom: 10,
     },

@@ -1,14 +1,16 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { commonFontColor, displayQuestionColor, grey, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
+import useModalVisible from '../../src/store/modalStore'
 
 const problem_trail = () => {
   const router = useRouter();
+  const closeModal = useModalVisible(state => state.closeModal)
 
-
+  useEffect(() => closeModal(), []);
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
       {/* Display question */}
@@ -26,15 +28,15 @@ const problem_trail = () => {
       </View>
       {/* Display image */}
       <View style={styles.displayImages}>
-        <Text style={[fontStyle.normal, {textAlign: 'center'}]}>Image</Text>
+        <Text style={[fontStyle.normal, { textAlign: 'center' }]}>Image</Text>
       </View>
       {/* Buttons */}
       <View style={styles.btns}>
         <TouchableOpacity style={styles.btnStyle} onPress={() => router.push('/editorForSolving')}>
-          <Text style={[fontStyle.header2,{color: commonFontColor}]}>Solve</Text>
+          <Text style={[fontStyle.header2, { color: commonFontColor }]}>Solve</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.btnStyle}>
-          <Text style={[fontStyle.header2,{color: commonFontColor}]}>Hints?</Text>
+          <Text style={[fontStyle.header2, { color: commonFontColor }]}>Hints?</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>
@@ -57,14 +59,14 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     margin: 15,
   },
-  btnStyle:{
+  btnStyle: {
     backgroundColor: purple,
     paddingHorizontal: 20,
     paddingVertical: 15,
     elevation: 3,
     borderRadius: 10,
   },
-  displayImages:{
+  displayImages: {
     backgroundColor: displayQuestionColor,
     margin: 20,
     borderRadius: 10,
