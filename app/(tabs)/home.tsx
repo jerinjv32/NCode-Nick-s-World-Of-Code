@@ -1,44 +1,34 @@
-import { StyleSheet, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, FlatList } from 'react-native'
 import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { bannerHeaderBg, commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
+import {commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { LEVEL1DATA } from '../../src/data/levels'
 import AlertBox from '../../src/components/alert'
-import useModalVisible from '../../src/store/modalStore'
-import useLevelDisplay from '../../src/store/levelDisplayStore'
+import { useEffect } from 'react'
+import { supabase } from '../../lib/supabase'
+import UnlockedLesson from '../../src/components/UnlockedLesson'
+import LockedLesson from '../../src/components/lockedLesson'
 
 type ItemProps = {
     lesson?: string,
     level: string,
     title?: string,
     type: string,
-    side: string
+    side: string,
+    unlocked?: boolean
 }
 
-const ChooseStyle = ({ lesson, level, type, side, title,  }: ItemProps) => {
-
-    const openModal = useModalVisible(state => state.openModal);
-    const setLesson = useLevelDisplay(state => state.setLesson);
-    if (type == 'question') {
+const ChooseStyle = ({ lesson, level, type, side, title, unlocked}: ItemProps) => {
+    if (type == 'question' && unlocked) {
+        return(
+            <UnlockedLesson lesson={lesson} side={side} title={title}/>
+        );
+    }
+    else if (type == 'question' && !unlocked) {
         return (
-            <View style={[styles.shutterQuestions, side == 'left' ? styles.onRight : styles.onLeft]}>
-                <View style={styles.title}>
-                    <Text style={[fontStyle.normal, { color: commonFontColor }]}>{title}</Text>
-                </View>
-                <TouchableOpacity
-                    onPress={() => { openModal('lessonModal'), setLesson({ lesson, title }) }}
-                    style={[
-                         styles.box,
-                        {
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }
-                    ]}>
-                    <Text style={[styles.level, fontStyle.header1,]}>{lesson}</Text>
-                </TouchableOpacity>
-            </View>
-        )
+            <LockedLesson lesson={lesson} side={side} title={title}/>
+        );
     }
     else if (type == 'banner') {
         return (
@@ -52,13 +42,26 @@ const ChooseStyle = ({ lesson, level, type, side, title,  }: ItemProps) => {
     }
 }
 
-const Item = ({ lesson, level, type, side, title}: ItemProps) => (
+const Item = ({ lesson, level, type, side, title, unlocked }: ItemProps) => (
     <View style={styles.msgContainer}>
-        <ChooseStyle lesson={lesson} level={level} type={type} side={side} title={title} />
+        <ChooseStyle lesson={lesson} level={level} type={type} side={side} title={title} unlocked={unlocked}/>
     </View>
 )
 const Home = () => {
-
+    useEffect(() => {
+        async function getProgression() {
+            const { data, error } = await supabase
+                .from('lesson_progression')
+                .select('*');
+            if (error) {
+                console.log('error:', error);
+            }
+            else {
+                console.log(data[0].next_lesson);
+            }
+        }
+        getProgression();
+    }, []);
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
             <AlertBox />
@@ -70,6 +73,7 @@ const Home = () => {
                         type={item.type}
                         side={item.side}
                         title={item.title}
+                        unlocked={item.unlocked}
                     />}
                 keyExtractor={item => item.id}
             />
@@ -80,29 +84,15 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
-    box: {
-        backgroundColor: purple,
-        borderColor: lightPurple,
-        margin: 10,
-        height: 80,
-        width: 80,
-        borderRadius: 10,
-        borderWidth: 3,
+    shutter: {
+        backgroundColor: darkGrey,
+        width: '100%',
         elevation: 5,
-        borderBottomWidth: 5,
-    },
-    boxUnlocked: {
-        backgroundColor: grey,
-        borderColor: darkGrey,
-        margin: 10,
-        height: 80,
-        width: 80,
-        borderRadius: 10,
-        borderWidth: 3,
-        elevation: 5,
-    },
-    level: {
-        color: commonFontColor
+        marginBottom: 10,
+        marginTop: 10,
+        borderColor: grey,
+        borderTopWidth: 3,
+        borderBottomWidth: 3,
     },
     banner: {
         justifyContent: 'center',
@@ -125,35 +115,5 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
-    shutter: {
-        backgroundColor: darkGrey,
-        width: '100%',
-        elevation: 5,
-        marginBottom: 10,
-        marginTop: 10,
-        borderColor: grey,
-        borderTopWidth: 3,
-        borderBottomWidth: 3,
-    },
-    shutterQuestions: {
-        borderColor: darkGrey,
-        borderRadius: 13,
-        borderWidth: 3,
-        margin: 5,
-        width: '70%',
-        backgroundColor: grey,
-        elevation: 5,
-        borderBottomWidth: 5
-    },
-    onLeft: {
-        flexDirection: 'row-reverse'
-    },
-    onRight: {
-        flexDirection: 'row'
-    },
-    title: {
-        flexGrow: 1,
-        justifyContent: 'center',
-        padding: 10,
-    }
+
 })
