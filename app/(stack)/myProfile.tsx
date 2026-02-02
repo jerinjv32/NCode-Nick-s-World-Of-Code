@@ -36,7 +36,7 @@ const myProfile = () => {
 
         async function fetch_username(userId: string) {
             const { data, error } = await supabase
-                .from('profile')
+                .from('users_profile')
                 .select('display_name , level')
                 .eq('id', userId)
                 .single();

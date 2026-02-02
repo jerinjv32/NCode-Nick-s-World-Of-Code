@@ -16,7 +16,7 @@ const signUp = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
 
     async function signUpWithEmail() {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password
         });
@@ -25,12 +25,19 @@ const signUp = () => {
             Alert.alert(error.message);
         }
         else {
-            Alert.alert("Check Your Email");
+            if (data.user) {
+                const { error } = await supabase
+                    .from('users_profile')
+                    .insert({ id: data.user.id, level: 1 });
+                    Alert.alert("Your account is succefully created.");
+                    router.back();
+                if (error) {
+                    console.log('error:', error);
+                }
+            }
         }
     }
-
-    
-    function checkingPassword(firstPass: string, secondPass: string)  {
+    function checkingPassword(firstPass: string, secondPass: string) {
         if (firstPass === secondPass) {
             signUpWithEmail();
         }
@@ -42,10 +49,10 @@ const signUp = () => {
         <SafeAreaView style={styles.container}>
             <View style={styles.main}>
 
-                <Text style={[fontStyle.header1, { margin: 20, alignSelf: 'center' , color: commonFontColor}]}>Sign Up</Text>
+                <Text style={[fontStyle.header1, { margin: 20, alignSelf: 'center', color: commonFontColor }]}>Sign Up</Text>
 
                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 40 }}>
-                    <Text style={[fontStyle.header2, {color: commonFontColor}]}>Already a memeber?</Text>
+                    <Text style={[fontStyle.header2, { color: commonFontColor }]}>Already a memeber?</Text>
                     <Pressable onPress={() => router.dismissTo('/signIn')}>
                         <Text style={[fontStyle.header2, { color: lightPurple }]}> Login</Text>
                     </Pressable>
