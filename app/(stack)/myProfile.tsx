@@ -24,7 +24,7 @@ const myProfile = () => {
     const [progress, setProgress] = useState(0)
     const [profile, setProfile] = useState<User>({
         displayName: '',
-        level: null,
+        level: '',
     });
 
     useEffect(() => {
@@ -37,14 +37,16 @@ const myProfile = () => {
         async function fetch_username(userId: string) {
             const { data, error } = await supabase
                 .from('users_profile')
-                .select('display_name , level')
+                .select('display_name, level')
                 .eq('id', userId)
                 .single();
 
             if (error) {
                 Alert.alert("error" + error);
             }
-
+            else {
+                console.log(data);
+            }
             setProfile({
                 displayName: data.display_name,
                 level: data.level,
@@ -64,7 +66,7 @@ const myProfile = () => {
                     <Image y={40} href={require('../../assets/icons/user_profile.png')} clipPath='url(#profile)' />
                     <Circle cx={cx} cy={cy} r={radius} fill={'none'} stroke={darkGrey} strokeWidth={10} />
                 </Svg>
-                <View style={{flex: 1, alignItems: 'center', marginTop: 20}}>
+                <View style={{ flex: 1, alignItems: 'center', marginTop: 20 }}>
                     <Text style={[fontStyle.header1, { color: commonFontColor }]}>
                         {profile.displayName}
                     </Text>

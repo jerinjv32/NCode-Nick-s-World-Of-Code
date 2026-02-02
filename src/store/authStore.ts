@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
-import { deleteItemAsync, setItemAsync, getItemAsync, setItem, getItem } from "expo-secure-store";
+import { deleteItemAsync, setItem, getItem } from "expo-secure-store";
 
 
 type Auth = {

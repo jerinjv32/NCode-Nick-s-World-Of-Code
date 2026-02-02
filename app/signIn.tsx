@@ -40,19 +40,26 @@ const SignIn = () => {
           <AppLogo />
           {/* logo */}
 
-          {/* username */}
-          <View style={inputStyles.inputBox} >
-            <Text style={[styles.text, { opacity: 0.5 }]}>Email</Text>
-            <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80}
-              onChangeText={setEmail} autoCapitalize='none' />
-          </View>
-
+          {/* email input box */}
+          <TextInput
+            style={[inputStyles.inputText, inputStyles.inputBox]}
+            maxLength={80}
+            placeholderTextColor={'#999'}
+            onChangeText={setEmail}
+            autoCapitalize='none'
+            placeholder='Email'
+            inputMode='email'
+          />
           {/* password */}
-          <View style={inputStyles.inputBox}>
-            <Text style={[styles.text, { opacity: 0.5 }]}>Password </Text>
-            <TextInput style={inputStyles.inputText} maxLength={20}
-              onChangeText={setPassword} secureTextEntry={true} autoCapitalize='none' />
-          </View>
+          <TextInput
+            style={[inputStyles.inputText, inputStyles.inputBox]}
+            maxLength={80}
+            placeholderTextColor={'#999'}
+            onChangeText={setPassword}
+            autoCapitalize='none'
+            secureTextEntry={true}
+            placeholder='Password'
+          />
 
           <Text style={[styles.text, { alignSelf: 'flex-end', marginRight: '6%' }]}>Forgot Password?</Text>
 

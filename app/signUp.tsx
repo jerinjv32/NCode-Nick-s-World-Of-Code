@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, TouchableOpacity, Alert, KeyboardAvoidingView } from 'react-native'
 import React from 'react'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,12 +7,13 @@ import fontStyle from '../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
 import { inputStyles } from '../src/styles/inputStyle'
 import { supabase } from '../lib/supabase'
-
+import { Platform } from 'react-native'
 
 const signUp = () => {
     const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
     async function signUpWithEmail() {
@@ -28,9 +29,9 @@ const signUp = () => {
             if (data.user) {
                 const { error } = await supabase
                     .from('users_profile')
-                    .insert({ id: data.user.id, level: 1 });
-                    Alert.alert("Your account is succefully created.");
-                    router.back();
+                    .insert({ id: data.user.id, display_name: username, level: 1, });
+                Alert.alert("Your account is succefully created.");
+                router.back();
                 if (error) {
                     console.log('error:', error);
                 }
@@ -46,44 +47,66 @@ const signUp = () => {
         }
     }
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.main}>
+        <SafeAreaView edges={['bottom', 'top']} style={styles.container}>
+            <KeyboardAvoidingView
+                behavior='padding'
+                keyboardVerticalOffset={Platform.OS === 'ios' ? 100 : 0}
+            >
+                <View style={styles.main}>
+                    <Text style={[fontStyle.header1, { marginBottom: 20, alignSelf: 'center', color: commonFontColor }]}>Sign Up</Text>
 
-                <Text style={[fontStyle.header1, { margin: 20, alignSelf: 'center', color: commonFontColor }]}>Sign Up</Text>
+                    {/* username */}
+                    <TextInput
+                        style={[inputStyles.inputText, inputStyles.inputBox]}
+                        maxLength={80}
+                        placeholderTextColor={'#999'}
+                        onChangeText={setUsername}
+                        autoCapitalize='none'
+                        placeholder='Username'
+                        inputMode='text'
+                    />
+                    {/* email input box */}
+                    <TextInput
+                        style={[inputStyles.inputText, inputStyles.inputBox]}
+                        maxLength={80}
+                        placeholderTextColor={'#999'}
+                        onChangeText={setEmail}
+                        autoCapitalize='none'
+                        placeholder='Email'
+                        inputMode='email'
+                    />
+                    {/* password */}
+                    <TextInput
+                        style={[inputStyles.inputText, inputStyles.inputBox]}
+                        maxLength={80}
+                        placeholderTextColor={'#999'}
+                        onChangeText={setPassword}
+                        autoCapitalize='none'
+                        secureTextEntry={true}
+                        placeholder='Password'
+                    />
 
-                <View style={{ flexDirection: 'row', alignSelf: 'center', marginBottom: 40 }}>
-                    <Text style={[fontStyle.header2, { color: commonFontColor }]}>Already a memeber?</Text>
-                    <Pressable onPress={() => router.dismissTo('/signIn')}>
-                        <Text style={[fontStyle.header2, { color: lightPurple }]}> Login</Text>
-                    </Pressable>
+                    {/* Confirm Password */}
+                    <TextInput
+                        style={[inputStyles.inputText, inputStyles.inputBox]}
+                        maxLength={80}
+                        placeholderTextColor={'#999'}
+                        onChangeText={setConfirmPassword}
+                        autoCapitalize='none'
+                        placeholder='Confirm Password'
+                    />
+                    <TouchableOpacity style={styles.signUpButton} onPress={() => checkingPassword(password, confirmPassword)}>
+                        <Text style={styles.signUpText}>Confirm</Text>
+                    </TouchableOpacity>
+
+                    <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 14 }}>
+                        <Text style={[fontStyle.header2, { color: commonFontColor }]}>Already a memeber?</Text>
+                        <Pressable onPress={() => router.dismissTo('/signIn')}>
+                            <Text style={[fontStyle.header2, { color: lightPurple }]}> Login</Text>
+                        </Pressable>
+                    </View>
                 </View>
-
-                {/* email input box */}
-
-                {/* username */}
-                <View style={inputStyles.inputBox} >
-                    <Text style={[styles.text, { opacity: 0.5 }]}>Email</Text>
-                    <TextInput inputMode='email' style={inputStyles.inputText} maxLength={80}
-                        onChangeText={setEmail} autoCapitalize='none' />
-                </View>
-
-                {/* password */}
-                <View style={inputStyles.inputBox}>
-                    <Text style={[styles.text, { opacity: 0.5 }]}>Password </Text>
-                    <TextInput style={inputStyles.inputText} maxLength={20}
-                        onChangeText={setPassword} secureTextEntry={true} autoCapitalize='none' />
-                </View>
-
-                <View style={inputStyles.inputBox}>
-                    <Text style={[styles.text, { opacity: 0.5 }]}>Confirm Password </Text>
-                    <TextInput style={inputStyles.inputText} maxLength={20}
-                        onChangeText={setConfirmPassword} secureTextEntry={true} autoCapitalize='none' />
-                </View>
-
-                <TouchableOpacity style={styles.signUpButton} onPress={() => checkingPassword(password, confirmPassword)}>
-                    <Text style={styles.signUpText}>Confirm</Text>
-                </TouchableOpacity>
-            </View>
+            </KeyboardAvoidingView>
         </SafeAreaView>
     )
 }
@@ -95,21 +118,14 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: grey,
     },
-    text: {
-        padding: 15,
-        paddingTop: 15,
-        color: '#999',
-        fontFamily: 'press-start-2p',
-        fontSize: 9,
-    },
     main: {
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         width: '100%',
         height: '100%',
     },
     signUpButton: {
-        marginVertical: 14,
+        marginVertical: 20,
         borderWidth: 3,
         borderColor: purple,
         backgroundColor: lightPurple,
