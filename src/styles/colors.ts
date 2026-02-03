@@ -1,15 +1,21 @@
 export const grey = '#2F2F2F';
 export const purple = '#289513';
+export const lightPurple = '#2EB215';
 export const darkGrey = '#212020';
 export const boxShadowColor = '#171717';
 export const commonFontColor = 'white';
-export const lightPurple = '#2EB215';
 export const headerFooter = '#282828';
 export const backButtonColor = '#ffff';
 export const displayQuestionColor = 'rgba(217, 217, 217, 0.44)';
 export const mainBgColor = '#252525';
-export const bannerHeaderBg = '#5894B5';
 export const alertRed = '#C7372F';
 export const transparent = 'rgba(0,0,0,0.5)';
 export const clear = 'rgba(0,0,0,0.0)';
-export const terminalColor = '#171717'
+export const terminalColor = '#171717';
+
+export const unlockedLessonColor = '#289513';
+export const unlockedLessonBorderColor = '#2EB215';
+export const lockedLessonColor = '#252525';
+export const lockedLessonBorderColor = '#2F2F2F';
+export const comepletedLessonColor = '#FFC000';
+export const comepletedLessonBorderColor = '#F9A602';

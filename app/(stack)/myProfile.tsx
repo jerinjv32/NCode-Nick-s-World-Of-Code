@@ -44,9 +44,6 @@ const myProfile = () => {
             if (error) {
                 Alert.alert("error" + error);
             }
-            else {
-                console.log(data);
-            }
             setProfile({
                 displayName: data.display_name,
                 level: data.level,

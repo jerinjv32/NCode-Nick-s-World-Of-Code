@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
-import useModalVisible from '../../src/store/modalStore'
-import useLevelDisplay from '../../src/store/levelDisplayStore'
-import { commonFontColor, darkGrey, grey, purple, lightPurple, unlockedLessonColor, unlockedLessonBorderColor } from '../../src/styles/colors'
-import fontStyle from '../../src/styles/fontStyles'
+import useModalVisible from '../store/modalStore'
+import useLevelDisplay from '../store/levelDisplayStore'
+import { comepletedLessonBorderColor, comepletedLessonColor, darkGrey, grey, mainBgColor } from '../styles/colors'
+import fontStyle from '../styles/fontStyles'
 
 type ItemProps = {
     lesson?: string,
@@ -11,18 +11,18 @@ type ItemProps = {
     side: string
 }
 
-const UnlockedLesson = ({ lesson, side, title, }: ItemProps) => {
+const CompletedLesson = ({ lesson, side, title, }: ItemProps) => {
     const openModal = useModalVisible(state => state.openModal);
     const setLesson = useLevelDisplay(state => state.setLesson);
     return (
         <View style={[styles.shutterQuestions, side == 'left' ? styles.onRight : styles.onLeft]}>
             <View style={styles.title}>
-                <Text style={[fontStyle.normal, { color: commonFontColor }]}>{title}</Text>
+                <Text style={[fontStyle.normal, { color: comepletedLessonColor }]}>{title}</Text>
             </View>
             <TouchableOpacity
                 onPress={() => { openModal('lessonModal'), setLesson({ lesson, title }) }}
                 style={[
-                    styles.box,
+                    styles.boxLocked,
                     {
                         justifyContent: 'center',
                         alignItems: 'center'
@@ -34,29 +34,26 @@ const UnlockedLesson = ({ lesson, side, title, }: ItemProps) => {
     )
 }
 
-export default UnlockedLesson
+export default CompletedLesson
 
 const styles = StyleSheet.create({
-    box: {
-        backgroundColor: unlockedLessonColor,
-        borderColor: unlockedLessonBorderColor,
+    boxLocked: {
+        backgroundColor: comepletedLessonColor,
+        borderColor: comepletedLessonBorderColor,
         margin: 10,
         height: 80,
         width: 80,
         borderRadius: 10,
         borderWidth: 3,
-        elevation: 5,
-        borderBottomWidth: 5,
     },
     shutterQuestions: {
-        borderColor: darkGrey,
+        borderColor: grey,
         borderRadius: 13,
         borderWidth: 3,
         margin: 5,
         width: '70%',
         backgroundColor: grey,
-        elevation: 5,
-        borderBottomWidth: 5
+        borderBottomWidth: 3
     },
     onLeft: {
         flexDirection: 'row-reverse'
@@ -70,6 +67,6 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     level: {
-        color: commonFontColor
+        color: 'white',
     },
 })

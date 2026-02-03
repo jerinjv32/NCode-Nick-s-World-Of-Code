@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList } from 'react-native'
 import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import {commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
+import { commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { LEVEL1DATA } from '../../src/data/levels'
 import AlertBox from '../../src/components/alert'
@@ -9,6 +9,9 @@ import { useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import UnlockedLesson from '../../src/components/UnlockedLesson'
 import LockedLesson from '../../src/components/lockedLesson'
+import CompletedLesson from '../../src/components/CompletedLesson'
+import { useState } from 'react'
+import Index from '..'
 
 type ItemProps = {
     lesson?: string,
@@ -16,20 +19,32 @@ type ItemProps = {
     title?: string,
     type: string,
     side: string,
-    unlocked?: boolean
+    unlocked?: boolean,
+    completed?: boolean
 }
 
-const ChooseStyle = ({ lesson, level, type, side, title, unlocked}: ItemProps) => {
-    if (type == 'question' && unlocked) {
-        return(
-            <UnlockedLesson lesson={lesson} side={side} title={title}/>
-        );
+interface MyCallback {
+    (currentLesson: number) : void
+}
+const ChooseStyle = ({ lesson, level, type, side, title, unlocked, completed }: ItemProps) => {
+    if (type == 'question') {
+        if (completed) {
+            return (
+                <CompletedLesson lesson={lesson} side={side} title={title} />
+            );
+        }
+        else if (!unlocked) {
+            return (
+                <LockedLesson lesson={lesson} side={side} title={title} />
+            );
+        }
+        else {
+            return (
+                <UnlockedLesson lesson={lesson} side={side} title={title} />
+            );
+        }
     }
-    else if (type == 'question' && !unlocked) {
-        return (
-            <LockedLesson lesson={lesson} side={side} title={title}/>
-        );
-    }
+
     else if (type == 'banner') {
         return (
             <View style={styles.shutter}>
@@ -38,35 +53,51 @@ const ChooseStyle = ({ lesson, level, type, side, title, unlocked}: ItemProps) =
                     <View style={styles.bannerUnderLine} />
                 </View>
             </View>
-        )
+        );
     }
 }
 
-const Item = ({ lesson, level, type, side, title, unlocked }: ItemProps) => (
+const Item = ({ lesson, level, type, side, title, unlocked, completed }: ItemProps) => (
     <View style={styles.msgContainer}>
-        <ChooseStyle lesson={lesson} level={level} type={type} side={side} title={title} unlocked={unlocked}/>
+        <ChooseStyle
+            lesson={lesson}
+            level={level} type={type}
+            side={side} title={title}
+            unlocked={unlocked}
+            completed={completed}
+        />
     </View>
-)
+);
+
 const Home = () => {
+    const [lessonData, setLessonData] = useState([])
     useEffect(() => {
-        async function getProgression() {
+        function lessonDisplay(currentLesson: number) {
+            setLessonData(LEVEL1DATA.map((level) => ({
+                ...level,
+                unlocked: level.lesson == String(currentLesson) ? true : false,
+                completed: Number(level.lesson) < currentLesson ? true : false
+            })));
+        }
+
+        async function getProgression(callBack: MyCallback) {
             const { data, error } = await supabase
                 .from('lesson_progression')
                 .select('*');
             if (error) {
                 console.log('error:', error);
             }
-            else {
-                console.log(data[0].next_lesson);
-            }
+            callBack(data[0].next_lesson);
         }
-        getProgression();
+
+        getProgression(lessonDisplay);
+
     }, []);
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
             <AlertBox />
             <FlatList
-                data={LEVEL1DATA}
+                data={lessonData}
                 renderItem={({ item }) =>
                     <Item lesson={item.lesson}
                         level={item.level}
@@ -74,11 +105,12 @@ const Home = () => {
                         side={item.side}
                         title={item.title}
                         unlocked={item.unlocked}
+                        completed={item.completed}
                     />}
                 keyExtractor={item => item.id}
             />
         </SafeAreaView>
-    )
+    );
 }
 
 export default Home
@@ -115,5 +147,4 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
     },
-
-})
+});

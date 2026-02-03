@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import useModalVisible from '../store/modalStore'
 import useLevelDisplay from '../store/levelDisplayStore'
-import { darkGrey, grey, mainBgColor } from '../styles/colors'
+import { darkGrey, grey, lockedLessonBorderColor, lockedLessonColor, mainBgColor } from '../styles/colors'
 import fontStyle from '../styles/fontStyles'
 
 type ItemProps = {
@@ -38,8 +38,8 @@ export default LockedLesson
 
 const styles = StyleSheet.create({
     boxLocked: {
-        backgroundColor: mainBgColor,
-        borderColor: grey,
+        backgroundColor: lockedLessonColor,
+        borderColor: lockedLessonBorderColor,
         margin: 10,
         height: 80,
         width: 80,
