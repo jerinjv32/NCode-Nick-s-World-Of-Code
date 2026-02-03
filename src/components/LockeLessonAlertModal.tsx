@@ -7,17 +7,16 @@ import useLevelDisplay from '../store/levelDisplayStore'
 import { useRouter } from 'expo-router'
 import modalStyles from '../styles/modalStyles'
 
-const AlertBox = () => {
-    const lesson = useLevelDisplay(state => state.lesson);
+const LockedLessonAlertBox = () => {
     const title = useLevelDisplay(state => state.title);
-    const router = useRouter();
+
 
     const activeModal = useModalVisible(state => state.activeModal);
     const closeModal = useModalVisible(state => state.closeModal);
     return (
         <Modal
             transparent={true}
-            visible={activeModal == 'lessonModal' ? true : false}
+            visible={activeModal == 'lockedLessonAlertModal' ? true : false}
             onRequestClose={() => closeModal()}
             animationType='fade'
         >
@@ -29,26 +28,27 @@ const AlertBox = () => {
                 <TouchableWithoutFeedback>
                     <View style={styles.container}>
                         <Text style={[
-                            fontStyle.header1, {
+                            fontStyle.normal, {
+                                textAlign: 'center',
+                                lineHeight: 20,
                                 color: commonFontColor,
                                 padding: 5
                             }
                         ]}>
-                            Lesson:{lesson}
+                            You must complete previous lesson to unlock it
                         </Text>
-                        <Text style={[fontStyle.header2, { color: commonFontColor }]}>{title}</Text>
                         <View style={{
                             borderWidth: 5,
                             borderRadius: 29,
                             borderColor: grey,
-                            width: 100,
-                            height: 100,
+                            width: 90,
+                            height: 90,
                             marginTop: 20,
                             justifyContent: 'center',
                             alignItems: 'center'
                         }}>
-                            <TouchableOpacity style={styles.button} onPress={() => router.push('/problem_trail')}>
-                                <Text style={[fontStyle.header2, { color: commonFontColor }]}>GO</Text>
+                            <TouchableOpacity style={styles.button} onPress={() => closeModal()}>
+                                <Text style={[fontStyle.header2, { color: commonFontColor }]}>OK</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -58,7 +58,7 @@ const AlertBox = () => {
     )
 }
 
-export default AlertBox
+export default LockedLessonAlertBox;
 
 const styles = StyleSheet.create({
     centeredView: {
@@ -69,20 +69,21 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: mainBgColor,
         width: '80%',
-        height: '35%',
+        minHeight: '25%',
         borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
         borderColor: grey,
-        borderWidth: 5
+        borderWidth: 5,
+        padding: 10,
     },
 
     button: {
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: darkGrey,
-        width: 80,
-        height: 80,
+        width: 70,
+        height: 70,
         borderRadius: 20,
         borderColor: purple,
         borderWidth: 4

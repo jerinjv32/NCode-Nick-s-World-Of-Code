@@ -47,6 +47,9 @@ export default function ProfileRootLayout(){
                     title: 'Solve'
                 }}
                 />
+                <Stack.Screen name="completionScreen" options={{
+                    headerShown: false
+                }}/>
             </Stack>
         </SafeAreaProvider>
     )

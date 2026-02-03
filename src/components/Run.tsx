@@ -7,7 +7,7 @@ const Run = () => {
     return (
         <View style={{
             borderWidth: 3, borderColor: grey, height: 55,
-            width: 55, marginHorizontal: 10,
+            width: 55, marginHorizontal: 6,
             borderRadius: 18, flex: 1, justifyContent: 'center',
             alignItems: 'center',
         }}>

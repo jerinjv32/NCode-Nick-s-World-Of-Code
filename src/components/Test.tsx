@@ -2,17 +2,17 @@ import { View, Text, StyleSheet } from 'react-native'
 import React from 'react'
 import { commonFontColor, darkGrey, grey, lightPurple, purple } from '../styles/colors'
 import fontStyle from '../styles/fontStyles'
-const Output = () => {
+const TestBtn = () => {
     return (
         <View style={styles.container}>
             <View style={styles.outputBtn}>
-                <Text style={[fontStyle.header2, { color: commonFontColor }]}>Output</Text>
+                <Text style={[fontStyle.header2, { color: commonFontColor }]}>Test</Text>
             </View>
         </View>
     )
 }
 
-export default Output
+export default TestBtn
 
 const styles = StyleSheet.create({
     outputBtn: {

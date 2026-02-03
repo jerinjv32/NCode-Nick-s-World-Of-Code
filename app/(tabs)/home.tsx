@@ -4,14 +4,15 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import { commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { LEVEL1DATA } from '../../src/data/levels'
-import AlertBox from '../../src/components/alert'
+import AlertBox from '../../src/components/ProblemTraileNavigationModal'
 import { useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import UnlockedLesson from '../../src/components/UnlockedLesson'
 import LockedLesson from '../../src/components/lockedLesson'
 import CompletedLesson from '../../src/components/CompletedLesson'
 import { useState } from 'react'
-import Index from '..'
+import ProblemTrailNavigationModal from '../../src/components/ProblemTraileNavigationModal'
+import LockedLessonAlertBox from '../../src/components/LockeLessonAlertModal'
 
 type ItemProps = {
     lesson?: string,
@@ -95,7 +96,8 @@ const Home = () => {
     }, []);
     return (
         <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
-            <AlertBox />
+            <ProblemTrailNavigationModal />
+            <LockedLessonAlertBox />
             <FlatList
                 data={lessonData}
                 renderItem={({ item }) =>

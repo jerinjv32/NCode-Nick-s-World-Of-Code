@@ -1,9 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
-import useModalVisible from '../store/modalStore'
-import useLevelDisplay from '../store/levelDisplayStore'
-import { comepletedLessonBorderColor, comepletedLessonColor, darkGrey, grey, mainBgColor } from '../styles/colors'
+import { comepletedLessonBorderColor, comepletedLessonColor, grey } from '../styles/colors'
 import fontStyle from '../styles/fontStyles'
+
 
 type ItemProps = {
     lesson?: string,
@@ -11,16 +9,14 @@ type ItemProps = {
     side: string
 }
 
+
 const CompletedLesson = ({ lesson, side, title, }: ItemProps) => {
-    const openModal = useModalVisible(state => state.openModal);
-    const setLesson = useLevelDisplay(state => state.setLesson);
     return (
         <View style={[styles.shutterQuestions, side == 'left' ? styles.onRight : styles.onLeft]}>
             <View style={styles.title}>
                 <Text style={[fontStyle.normal, { color: comepletedLessonColor }]}>{title}</Text>
             </View>
             <TouchableOpacity
-                onPress={() => { openModal('lessonModal'), setLesson({ lesson, title }) }}
                 style={[
                     styles.boxLocked,
                     {

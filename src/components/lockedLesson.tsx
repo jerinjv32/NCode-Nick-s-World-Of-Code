@@ -20,7 +20,8 @@ const LockedLesson = ({ lesson, side, title, }: ItemProps) => {
                 <Text style={[fontStyle.normal, { color: mainBgColor }]}>{title}</Text>
             </View>
             <TouchableOpacity
-                onPress={() => { openModal('lessonModal'), setLesson({ lesson, title }) }}
+                activeOpacity={0.5}
+                onPress={() => { openModal('lockedLessonAlertModal'), setLesson({ lesson, title }) }}
                 style={[
                     styles.boxLocked,
                     {

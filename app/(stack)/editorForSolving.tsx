@@ -7,6 +7,8 @@ import DisplayOutput from '../../src/components/DisplayOutput'
 import useModalVisible from '../../src/store/modalStore'
 import Output from '../../src/components/Output'
 import Run from '../../src/components/Run'
+import TestBtn from '../../src/components/Test'
+import { router } from 'expo-router'
 
 const codeEditor = () => {
     // const [language, setLang] = useState(null); choosing language will be done in the future 
@@ -40,6 +42,9 @@ const codeEditor = () => {
                 <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
                     <Output/>
                 </TouchableOpacity>
+                <TouchableOpacity activeOpacity={0.5} onPress={() =>  {router.dismissAll(),router.replace('/completionScreen')}}>
+                    <TestBtn/>
+                </TouchableOpacity>
                 <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
                     <Run/>
                 </TouchableOpacity>
@@ -63,20 +68,6 @@ const codeEditor = () => {
 export default codeEditor
 
 const styles = StyleSheet.create({
-    // runBtn: {
-    //     color: commonFontColor,
-    //     backgroundColor: lightPurple,
-    //     fontSize: 10,
-    //     fontFamily: 'press-start-2p',
-    //     elevation: 5,
-    //     padding: 8,
-    //     width: 85,
-    //     textAlign: 'center',
-    //     borderRadius: 10,
-    //     borderColor: lightPurple,
-    //     marginLeft: 10,
-    //     marginRight: 10,
-    // },
     tab: {
         backgroundColor: mainBgColor,
         flexDirection: 'row',
