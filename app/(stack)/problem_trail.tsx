@@ -1,16 +1,36 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { commonFontColor, displayQuestionColor, grey, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
 import useModalVisible from '../../src/store/modalStore'
+import { supabase } from '../../lib/supabase'
+import useLevelDisplay from '../../src/store/levelDisplayStore'
 
 const problem_trail = () => {
   const router = useRouter();
-  const closeModal = useModalVisible(state => state.closeModal)
+  const closeModal = useModalVisible(state => state.closeModal);
+  const [displayQuestion, setQuestion] = useState();
+  const lesson_no = useLevelDisplay(state => state.lesson);
+  useEffect(() => {
+    closeModal();
+    async function getQuestion() {
+      const { data, error } = await supabase
+        .from('problems_trail')
+        .select('problem')
+        .eq('lesson_no', lesson_no)
+        .single();
 
-  useEffect(() => closeModal(), []);
+      if (error) {
+        console.log("Error:", error);
+      }
+      setQuestion(data.problem);
+    }
+
+    getQuestion();
+  },
+    []);
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
       {/* Display question */}
@@ -20,10 +40,10 @@ const problem_trail = () => {
           {
             color: commonFontColor,
             textAlign: 'center',
-            lineHeight: 15
+            lineHeight: 15,
           }
         ]}>
-          write a program to swap two numbers using a temporary variable
+          {displayQuestion}
         </Text>
       </View>
       {/* Display image */}
@@ -52,6 +72,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     margin: 15,
+    padding: 5,
+    maxHeight: 200,
+    minHeight: 80,
     borderRadius: 10,
   },
   btns: {
