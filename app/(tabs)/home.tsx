@@ -1,7 +1,7 @@
 import { StyleSheet, FlatList } from 'react-native'
 import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../src/styles/colors'
+import { commonFontColor, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { LEVEL1DATA } from '../../src/data/levels'
 import { useEffect } from 'react'
@@ -12,6 +12,7 @@ import CompletedLesson from '../../src/components/CompletedLesson'
 import { useState } from 'react'
 import ProblemTrailNavigationModal from '../../src/components/ProblemTraileNavigationModal'
 import LockedLessonAlertBox from '../../src/components/LockeLessonAlertModal'
+import BannerComponent from '../../src/components/BannerComponent'
 
 type ItemProps = {
   lesson?: string,
@@ -20,13 +21,14 @@ type ItemProps = {
   type: string,
   side: string,
   unlocked?: boolean,
-  completed?: boolean
+  completed?: boolean,
+  details?: string
 }
 
 interface MyCallback {
   (currentLesson: number): void
 }
-const ChooseStyle = ({ lesson, level, type, side, title, unlocked, completed }: ItemProps) => {
+const ChooseStyle = ({ lesson, level, type, side, title, unlocked, completed, details }: ItemProps) => {
   if (type == 'question') {
     if (completed) {
       return (
@@ -47,17 +49,12 @@ const ChooseStyle = ({ lesson, level, type, side, title, unlocked, completed }: 
 
   else if (type == 'banner') {
     return (
-      <View style={styles.shutter}>
-        <View style={[styles.banner]}>
-          <Text style={[styles.bannerText, fontStyle.header1]}>LEVEL {level}</Text>
-          <View style={styles.bannerUnderLine} />
-        </View>
-      </View>
+      <BannerComponent level={level} details={details} />
     );
   }
 }
 
-const Item = ({ lesson, level, type, side, title, unlocked, completed }: ItemProps) => (
+const Item = ({ lesson, level, type, side, title, unlocked, completed, details }: ItemProps) => (
   <View style={styles.msgContainer}>
     <ChooseStyle
       lesson={lesson}
@@ -65,6 +62,7 @@ const Item = ({ lesson, level, type, side, title, unlocked, completed }: ItemPro
       side={side} title={title}
       unlocked={unlocked}
       completed={completed}
+      details={details}
     />
   </View>
 );
@@ -95,21 +93,27 @@ const Home = () => {
   }, []);
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
-      <ProblemTrailNavigationModal />
-      <LockedLessonAlertBox />
-      <FlatList
-        data={lessonData}
-        renderItem={({ item }) =>
-          <Item lesson={item.lesson}
-            level={item.level}
-            type={item.type}
-            side={item.side}
-            title={item.title}
-            unlocked={item.unlocked}
-            completed={item.completed}
-          />}
-        keyExtractor={item => item.id}
-      />
+      <View style={[styles.languageTitle, { height: '3.5%' }]}>
+        <Text style={[fontStyle.normal, { color: commonFontColor }]}>Python</Text>
+      </View>
+      <View>
+        <ProblemTrailNavigationModal />
+        <LockedLessonAlertBox />
+        <FlatList
+          data={lessonData}
+          renderItem={({ item }) =>
+            <Item lesson={item.lesson}
+              level={item.level}
+              type={item.type}
+              side={item.side}
+              title={item.title}
+              unlocked={item.unlocked}
+              completed={item.completed}
+              details={item.details}
+            />}
+          keyExtractor={item => item.id}
+        />
+      </View>
     </SafeAreaView>
   );
 }
@@ -117,35 +121,16 @@ const Home = () => {
 export default Home
 
 const styles = StyleSheet.create({
-  shutter: {
-    backgroundColor: darkGrey,
-    width: '100%',
-    elevation: 5,
-    marginBottom: 10,
-    marginTop: 10,
-    borderColor: grey,
-    borderTopWidth: 3,
-    borderBottomWidth: 3,
-  },
-  banner: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    margin: 40,
-  },
-  bannerText: {
-    color: commonFontColor,
-    paddingLeft: 20,
-  },
-  bannerUnderLine: {
-    backgroundColor: purple,
-    height: 15,
-    width: 300,
-    marginTop: 10,
-    borderRadius: 10,
-  },
   msgContainer: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'center',
   },
+  languageTitle: {
+    backgroundColor: purple,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 5,
+  }
 });
