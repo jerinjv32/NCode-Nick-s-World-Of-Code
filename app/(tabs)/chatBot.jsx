@@ -29,9 +29,7 @@ const chatBot = () => {
 
   const aiResponse = async (prompt, callback) => {
     try {
-      const response = await axios.post('http://192.168.1.5:8001/chat', {
-        prompt: prompt
-      });
+      const response = await axios.get('http://192.168.1.5:8001/chat');
       console.log(response.data.title)
       const botText = response.data.title
       callback(botText)
@@ -45,7 +43,7 @@ const chatBot = () => {
     addBotMessage(botText);
   }
   const ChooseStyle = ({ title, role }) => {
-    // Response from AI 
+    // Response from AI
     if (role === 'bot') {
       return (
         <>
