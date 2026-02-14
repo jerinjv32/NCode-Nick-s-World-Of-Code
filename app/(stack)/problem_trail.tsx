@@ -1,7 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { commonFontColor, displayQuestionColor, grey, purple } from '../../src/styles/colors'
+import { commonFontColor, darkGrey, displayQuestionColor, grey, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
 import useModalVisible from '../../src/store/modalStore'
@@ -9,6 +9,7 @@ import { supabase } from '../../lib/supabase'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 
 const problem_trail = () => {
+  const [media, setMedia] = useState();
   const router = useRouter();
   const closeModal = useModalVisible(state => state.closeModal);
   const [displayQuestion, setQuestion] = useState();
@@ -18,7 +19,7 @@ const problem_trail = () => {
     async function getQuestion() {
       const { data, error } = await supabase
         .from('problems_trail')
-        .select('problem')
+        .select('problem, image_url')
         .eq('lesson_no', lesson_no)
         .single();
 
@@ -26,6 +27,7 @@ const problem_trail = () => {
         console.log("Error:", error);
       }
       setQuestion(data.problem);
+      setMedia(data.image_url)
     }
 
     getQuestion();
@@ -48,7 +50,11 @@ const problem_trail = () => {
       </View>
       {/* Display image */}
       <View style={styles.displayImages}>
-        <Text style={[fontStyle.normal, { textAlign: 'center' }]}>Image</Text>
+        <Image source={{ uri: media }} resizeMode='contain' style={{
+          width: '100%',
+          height: undefined,
+          aspectRatio: 1,
+        }} />
       </View>
       {/* Buttons */}
       <View style={styles.btns}>
@@ -90,10 +96,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
   },
   displayImages: {
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: displayQuestionColor,
-    margin: 20,
+    alignSelf: 'center',
+    margin: 15,
+    paddingHorizontal: 15,
     borderRadius: 10,
-    padding: 20,
-    height: 200,
   }
 })
