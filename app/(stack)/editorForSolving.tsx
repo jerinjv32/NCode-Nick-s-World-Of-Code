@@ -9,11 +9,8 @@ import Output from '../../src/components/Output'
 import Run from '../../src/components/Run'
 import TestBtn from '../../src/components/Test'
 import { router } from 'expo-router'
-import { Try } from 'expo-router/build/views/Try'
+import useLevelDisplay from '../../src/store/levelDisplayStore'
 
-interface PostReq {
-  lesson_no: string
-}
 const codeEditor = () => {
   // const [language, setLang] = useState(null); choosing language will be done in the future
   const code = useCodeStore(state => state.code);
@@ -21,6 +18,7 @@ const codeEditor = () => {
   const output = useCodeStore(state => state.output);
   const setOutput = useCodeStore(state => state.setOutput);
 
+  const lessonNo = useLevelDisplay(state => state.lesson);
   const openModal = useModalVisible(state => state.openModal);
 
   async function compile(program: string) {
@@ -42,7 +40,8 @@ const codeEditor = () => {
   async function validator() {
     try {
       const response = await axios.post('http://192.168.1.6:8001/validator', {
-        lessonNo: "1"
+        lessonNo: lessonNo,
+        output: output
       });
       console.log(response.data);
     }
@@ -50,6 +49,7 @@ const codeEditor = () => {
       console.error("Error:", e);
     }
   }
+
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
       <DisplayOutput output={output} />
@@ -57,7 +57,7 @@ const codeEditor = () => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
           <Output />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { router.dismissAll(), validator() }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator() }}>
           <TestBtn />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
