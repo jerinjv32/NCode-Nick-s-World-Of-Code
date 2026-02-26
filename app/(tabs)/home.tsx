@@ -1,4 +1,5 @@
 import { StyleSheet, FlatList } from 'react-native'
+import React from 'react'
 import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { commonFontColor, mainBgColor, purple } from '../../src/styles/colors'

@@ -1,7 +1,5 @@
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Dropdown } from 'react-native-element-dropdown'
-import { useState } from 'react'
 import { alertRed, commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
 import useCodeStoreEditor from '../../src/store/codeStoreEditor'
