@@ -21,7 +21,7 @@ const LockedLesson = ({ lesson, side, title, }: ItemProps) => {
       </View>
       <TouchableOpacity
         activeOpacity={0.5}
-        onPress={() => { openModal('lockedLessonAlertModal'), setLesson({ lesson, title }) }}
+        onPress={() => { openModal('AlertModal'), setLesson({ lesson, title }) }}
         style={[
           styles.boxLocked,
           {

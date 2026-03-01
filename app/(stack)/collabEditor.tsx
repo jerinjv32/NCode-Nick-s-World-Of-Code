@@ -7,24 +7,59 @@ import DisplayOutput from '../../src/components/DisplayOutput'
 import useModalVisible from '../../src/store/modalStore'
 import Run from '../../src/components/Run'
 import Output from '../../src/components/Output'
+import { useEffect, useState, useRef } from 'react'
+import fontStyle from '../../src/styles/fontStyles'
+import useRoomStore from '../../src/store/roomIdStore'
 
-const lang = [
-  {
-    label: 'python',
-    value: '1'
-  },
-  {
-    label: 'JavaScript',
-    value: '2'
-  },
-  {
-    label: 'C',
-    value: '3'
+interface DisplayRoomIdProps {
+  roomIdProp: string
+}
+const DisplayRoomId = ({ roomIdProp }: DisplayRoomIdProps) => {
+  return (
+    <Text style={[fontStyle.normal, { color: purple }]}>Room Id:{roomIdProp}</Text>
+  )
+}
+
+const CollabEditor = () => {
+  const closeModal = useModalVisible(state => state.closeModal);
+  const roomId = useRoomStore(state => state.roomId);
+  const currRoomIdRef = useRef<string>(roomId);
+  const wsRef = useRef<WebSocket | null>(null);
+
+
+  useEffect(() => {
+    closeModal();
+    const ws = new WebSocket('ws://192.168.1.2:8080');
+    wsRef.current = ws;
+
+    ws.onopen = () => {
+      const data = { operation: 'init', roomId: currRoomIdRef.current }
+      console.log(roomId);
+      ws.send(JSON.stringify(data));
+    }
+
+    ws.onmessage = (e) => {
+      let data = JSON.parse(e.data)
+      setCode(data.code)
+    }
+    ws.onclose = (e) => {
+      console.log("Disconnected from websocket: ", e.code, e.reason);
+    }
+    return () => ws.close();
+  }, []);
+
+
+  function sendToServer() {
+    if (wsRef.current.readyState === wsRef.current.OPEN) {
+      const data = { operation: 'update', roomId: currRoomIdRef, code: code };
+      wsRef.current.send(JSON.stringify(data));
+    }
   }
-]
 
-const codeEditor = () => {
-  // const [language, setLang] = useState(null); choosing language will be done in the future
+  function handleInput(value: string) {
+    sendToServer()
+    setCode(value);
+  }
   const code = useCodeStoreEditor(state => state.code);
   const setCode = useCodeStoreEditor(state => state.setCode);
   const output = useCodeStoreEditor(state => state.output);
@@ -52,47 +87,7 @@ const codeEditor = () => {
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
       <DisplayOutput output={output} />
       <View style={styles.tab}>
-        {/* <Dropdown
-                    data={lang}
-                    style={{
-                        width: '50%',
-                        backgroundColor: darkGrey,
-                        paddingHorizontal: 5,
-                        paddingVertical: 5,
-                        borderWidth: 3,
-                        borderColor: purple,
-                        borderRadius: 10,
-                        elevation: 5
-                    }}
-                    containerStyle={{
-                        backgroundColor: purple,
-                        borderWidth: 3,
-                        borderColor: purple,
-                        borderRadius: 10,
-                        elevation: 5
-                    }}
-                    itemTextStyle={{
-                        color: commonFontColor,
-                        fontSize: 10,
-                    }}
-                    selectedTextStyle={{
-                        fontSize: 10,
-                        color: commonFontColor,
-                    }}
-                    activeColor='#2c2848ff'
-                    placeholderStyle={{
-                        fontSize: 10,
-                        color: commonFontColor
-                    }}
-                    valueField={'value'}
-                    labelField={'label'}
-                    fontFamily='press-start-2p'
-                    value={value}
-                    onChange={item => {
-                        setValue(item.value);
-                    }}
-                >
-                </Dropdown> */}
+        <DisplayRoomId roomIdProp={roomId} />
         <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'); }}>
           <Output />
         </TouchableOpacity>
@@ -110,14 +105,13 @@ const codeEditor = () => {
           placeholderTextColor={'#999'}
           autoCapitalize='none'
           autoCorrect={false}
-          onChangeText={setCode}
+          onChangeText={(value) => handleInput(value)}
         />
       </View>
     </SafeAreaView>
   )
 }
-
-export default codeEditor
+export default CollabEditor;
 
 const styles = StyleSheet.create({
 
@@ -139,3 +133,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 })
+
