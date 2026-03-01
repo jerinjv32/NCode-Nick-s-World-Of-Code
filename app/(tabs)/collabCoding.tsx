@@ -6,8 +6,11 @@ import { useRef, useState } from 'react'
 import useModalVisible from '../../src/store/modalStore'
 import CCEnteringModal from '../../src/components/modals/CCEntertingModal'
 import ActualAlert from '../../src/components/ActualAlert'
+import { useRouter } from 'expo-router'
+import useRoomStore from '../../src/store/roomIdStore'
 
 const CollabCoding = () => {
+  const getRoomId = useRoomStore(state => state.getRoomId);
   const [textField1, setText1] = useState<string>('');
   const [textField2, setText2] = useState<string>('');
   const [textField3, setText3] = useState<string>('');
@@ -16,6 +19,7 @@ const CollabCoding = () => {
   const [roomId, setRoomId] = useState<string>('');
 
   const [focusedTF, setFocusTF] = useState<Number>();
+  const router = useRouter();
 
 
   const openModal = useModalVisible(state => state.openModal);
@@ -119,7 +123,7 @@ const CollabCoding = () => {
         }} />
         <Text style={[fontStyle.normal, { paddingHorizontal: 10, color: commonFontColor, lineHeight: 20, textAlign: 'center', paddingTop: 20 }]}
         >Generate a room and share the code with your friend.</Text>
-        <TouchableOpacity style={[styles.joinBtn, { height: '10%' }]} onPress={() => console.log(combineTextFields())}>
+        <TouchableOpacity style={[styles.joinBtn, { height: '10%' }]} onPress={() => { getRoomId(), router.push('/collabEditor') }}>
           <Text style={[fontStyle.header2, { color: commonFontColor }]}>Generate</Text>
         </TouchableOpacity>
       </View>

@@ -14,6 +14,9 @@ import { useState } from 'react'
 import ProblemTrailNavigationModal from '../../src/components/ProblemTraileNavigationModal'
 import LockedLessonAlertBox from '../../src/components/LockeLessonAlertModal'
 import BannerComponent from '../../src/components/BannerComponent'
+import ActualAlert from '../../src/components/ActualAlert'
+import useModalVisible from '../../src/store/modalStore'
+import { UseAuthStore } from '../../src/store/authStore'
 
 type ItemProps = {
   lesson?: string,
@@ -70,6 +73,9 @@ const Item = ({ lesson, level, type, side, title, unlocked, completed, details }
 
 const Home = () => {
   const [lessonData, setLessonData] = useState([])
+  const openModal = useModalVisible(state => state.openModal);
+  const logout = UseAuthStore(state => state.logOut);
+
   useEffect(() => {
     function lessonDisplay(currentLesson: number) {
       setLessonData(LEVEL1DATA.map((level) => ({
@@ -83,10 +89,16 @@ const Home = () => {
       const { data, error } = await supabase
         .from('lesson_progression')
         .select('*');
-      if (error) {
-        console.log('error:', error);
+      try {
+        if (error) { console.log('error:', error); }
+        else {
+          callBack(data[0].next_lesson);
+        }
       }
-      callBack(data[0].next_lesson);
+      catch (e) {
+        console.log(e);
+        openModal('AlertModal');
+      }
     }
 
     getProgression(lessonDisplay);
@@ -94,6 +106,7 @@ const Home = () => {
   }, []);
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
+      <ActualAlert desc='There went something wrong loading your data. Please try loging out and loging in.' />
       <View style={[styles.languageTitle, { height: '3.5%' }]}>
         <Text style={[fontStyle.normal, { color: commonFontColor }]}>Python</Text>
       </View>
