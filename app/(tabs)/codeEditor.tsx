@@ -7,6 +7,7 @@ import DisplayOutput from '../../src/components/DisplayOutput'
 import useModalVisible from '../../src/store/modalStore'
 import Run from '../../src/components/Run'
 import Output from '../../src/components/Output'
+import address from '../../src/config/env'
 
 const lang = [
   {
@@ -32,17 +33,11 @@ const codeEditor = () => {
 
   async function compile(program: string) {
     try {
-      // const response = await axios.post('https://emkc.org/api/v2/piston/execute', {
-      //   "language": "python",
-      //   "version": "3.10.0",
-      //   "files": [
-      //     {
-      //       "content": program
-      //     }
-      //   ],
-      // });
-      const responer = await axios.get('')
-      // setOutput(response.data.run.output);
+      const response = await axios.post('http://' + address + ':3000/execute', {
+        "code": program
+      });
+      console.log(response.data)
+      setOutput(response.data)
     } catch (error) {
       console.error("Compiler Error:", error);
     }

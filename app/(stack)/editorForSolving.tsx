@@ -10,6 +10,7 @@ import Run from '../../src/components/Run'
 import TestBtn from '../../src/components/Test'
 import { router } from 'expo-router'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
+import address from '../../src/config/env'
 
 const codeEditor = () => {
   // const [language, setLang] = useState(null); choosing language will be done in the future
@@ -23,27 +24,22 @@ const codeEditor = () => {
 
   async function compile(program: string) {
     try {
-      const response = await axios.post('https://emkc.org/api/v2/piston/execute', {
-        "language": "python",
-        "version": "3.10.0",
-        "files": [
-          {
-            "content": program
-          }
-        ],
+      const response = await axios.post('http://' + address + ':3000/execute', {
+        "code": program
       });
-      setOutput(response.data.run.output);
+      console.log('output', response.data)
+      setOutput(response.data);
     } catch (error) {
       console.error("Compiler Error:", error);
     }
   }
-  async function validator() {
+  async function validator(output: string) {
     try {
-      const response = await axios.post('http://192.168.1.6:8001/validator', {
-        lessonNo: lessonNo,
-        output: output
+      const response = await axios.post('http://10.94.238.219:8004/validator', {
+        'lesson': lessonNo,
+        'output': output
       });
-      console.log(response.data);
+      console.log(response.data)
     }
     catch (e) {
       console.error("Error:", e);
@@ -57,7 +53,7 @@ const codeEditor = () => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
           <Output />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator() }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) }}>
           <TestBtn />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>

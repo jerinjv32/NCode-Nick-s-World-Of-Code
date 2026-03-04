@@ -10,6 +10,7 @@ import Output from '../../src/components/Output'
 import { useEffect, useState, useRef } from 'react'
 import fontStyle from '../../src/styles/fontStyles'
 import useRoomStore from '../../src/store/roomIdStore'
+import address from '../../src/config/env'
 
 interface DisplayRoomIdProps {
   roomIdProp: string
@@ -29,7 +30,7 @@ const CollabEditor = () => {
 
   useEffect(() => {
     closeModal();
-    const ws = new WebSocket('ws://192.168.1.2:8080');
+    const ws = new WebSocket('ws://' + address + ':8080');
     wsRef.current = ws;
 
     ws.onopen = () => {

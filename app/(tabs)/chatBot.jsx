@@ -11,6 +11,7 @@ import { boxShadowColor, commonFontColor, darkGrey, grey, mainBgColor, purple } 
 import axios from 'axios'
 import Markdown from 'react-native-markdown-display'
 import useStoreMessages from '../../src/store/store'
+import address from '../../src/config/env'
 
 const chatBot = () => {
   const [text, setText] = useState('')
@@ -29,9 +30,11 @@ const chatBot = () => {
 
   const aiResponse = async (prompt, callback) => {
     try {
-      const response = await axios.get('http://192.168.1.5:8001/chat');
+      const response = await axios.post('http://' + address + ':8002/chat', {
+        "prompt": prompt
+      });
       console.log(response.data.title)
-      const botText = response.data.title
+      const botText = response.data
       callback(botText)
     }
     catch (error) {
