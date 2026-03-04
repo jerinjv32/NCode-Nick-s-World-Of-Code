@@ -10,28 +10,28 @@ const Index = () => {
   const router = useRouter();
 
   if (!hasRehydrated) {
-      return (
-        <View style={styles.container}>
-          <Text style={[fontStyle.header1, {color: commonFontColor}]}>Loading...</Text>
-        </View>
-      )
-  } 
-  
+    return (
+      <View style={styles.container}>
+        <Text style={[fontStyle.header1, { color: commonFontColor }]}>Loading...</Text>
+      </View>
+    )
+  }
+
   if (!isLogged) {
     return router.replace('/signIn')
   }
-  else{
-    
+  else {
+
   }
 }
 
 export default Index
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: grey,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    }
+  container: {
+    backgroundColor: grey,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
 })
