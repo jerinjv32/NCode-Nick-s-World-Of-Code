@@ -33,7 +33,7 @@ const codeEditor = () => {
 
   async function compile(program: string) {
     try {
-      const response = await axios.post('http://' + address + ':3000/execute', {
+      const response = await axios.post('http://' + address + ':3001/execute', {
         "code": program
       });
       console.log(response.data)

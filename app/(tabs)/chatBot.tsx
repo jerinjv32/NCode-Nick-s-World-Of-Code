@@ -13,6 +13,9 @@ import Markdown from 'react-native-markdown-display'
 import useStoreMessages from '../../src/store/store'
 import address from '../../src/config/env'
 
+interface MyCallback {
+  (myArgument: string): void
+}
 const chatBot = () => {
   const [text, setText] = useState('')
 
@@ -21,16 +24,16 @@ const chatBot = () => {
   const addUserMessage = useStoreMessages(state => state.addUserMessage)
 
 
-  const sendMessage = (text) => {
+  const sendMessage = (text: string) => {
     if (!text.trim()) return;
     addUserMessage(text)
     setText('');
   };
 
 
-  const aiResponse = async (prompt, callback) => {
+  const aiResponse = async (prompt: string, callback: MyCallback) => {
     try {
-      const response = await axios.post('http://' + address + ':8002/chat', {
+      const response = await axios.post('http://' + address + ':3000/api/chatBot', {
         "prompt": prompt
       });
       console.log(response.data.title)
@@ -42,7 +45,7 @@ const chatBot = () => {
       callback("There went something wrong...")
     }
   }
-  const displayMessage = (botText) => {
+  const displayMessage = (botText: string) => {
     addBotMessage(botText);
   }
   const ChooseStyle = ({ title, role }) => {

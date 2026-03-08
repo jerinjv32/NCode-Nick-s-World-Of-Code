@@ -24,7 +24,7 @@ const codeEditor = () => {
 
   async function compile(program: string) {
     try {
-      const response = await axios.post('http://' + address + ':3000/execute', {
+      const response = await axios.post('http://' + address + ':3001/execute', {
         "code": program
       });
       console.log('output', response.data)
@@ -35,7 +35,7 @@ const codeEditor = () => {
   }
   async function validator(output: string) {
     try {
-      const response = await axios.post('http://10.94.238.219:8004/validator', {
+      const response = await axios.post('http://' + address + ':3000/api/validator', {
         'lesson': lessonNo,
         'output': output
       });
