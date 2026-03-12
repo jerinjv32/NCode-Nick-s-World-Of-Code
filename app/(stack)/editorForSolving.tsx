@@ -11,8 +11,12 @@ import TestBtn from '../../src/components/Test'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 import address from '../../src/config/env'
 import { useRouter } from 'expo-router'
+import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
+import { useEffect } from 'react'
 
 const codeEditor = () => {
+  const closeModal = useModalVisible(state => state.closeModal)
+  useEffect(() => closeModal(), [])
   // const [language, setLang] = useState(null); choosing language will be done in the future
   const code = useCodeStore(state => state.code);
   const setCode = useCodeStore(state => state.setCode);
@@ -40,10 +44,11 @@ const codeEditor = () => {
         'output': generatedOutput
       })
       if (response.data == 'pass') {
-        return true
+        router.dismissAll()
+        router.replace('/completionScreen')
       }
       else {
-        return false
+        openModal('HintsDisplayModal')
       }
     }
     catch (e) {
@@ -58,7 +63,7 @@ const codeEditor = () => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
           <Output />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) ? router.push('/completionScreen') : console.log('validatioin failed') }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) }}>
           <TestBtn />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
@@ -77,7 +82,7 @@ const codeEditor = () => {
           onChangeText={setCode}
         />
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 

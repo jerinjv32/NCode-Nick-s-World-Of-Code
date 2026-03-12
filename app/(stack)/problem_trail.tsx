@@ -10,17 +10,19 @@ import { supabase } from '../../lib/supabase'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 import address from '../../src/config/env'
 import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
+import useQuestionStore from '../../src/store/questionStore'
 
 interface MyCallBackPros {
   (hint: string): void
 }
 const problem_trail = () => {
+  const displayQuestion = useQuestionStore(state => state.question);
+  const setQuestion = useQuestionStore(state => state.setQuestion);
   const [hints, setHints] = useState('Loading...');
   const [media, setMedia] = useState();
   const router = useRouter();
   const openModal = useModalVisible(state => state.openModal);
   const closeModal = useModalVisible(state => state.closeModal);
-  const [displayQuestion, setQuestion] = useState();
   const lesson_no = useLevelDisplay(state => state.lesson);
   useEffect(() => {
     closeModal();
@@ -54,7 +56,7 @@ const problem_trail = () => {
 
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
-      <HintsDisplayModal hints={hints} />
+      <HintsDisplayModal />
       {/* Display question */}
       <View style={styles.displayQuestion}>
         <Text style={[
