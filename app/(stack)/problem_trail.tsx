@@ -2,7 +2,7 @@ import axios from 'axios'
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { commonFontColor, darkGrey, displayQuestionColor, grey, purple } from '../../src/styles/colors'
+import { commonFontColor, darkGrey, displayQuestionColor, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
 import useModalVisible from '../../src/store/modalStore'
@@ -10,7 +10,6 @@ import { supabase } from '../../lib/supabase'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 import address from '../../src/config/env'
 import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
-import ActualAlert from '../../src/components/ActualAlert'
 
 interface MyCallBackPros {
   (hint: string): void
@@ -54,7 +53,7 @@ const problem_trail = () => {
   }
 
   return (
-    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
+    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
       <HintsDisplayModal hints={hints} />
       {/* Display question */}
       <View style={styles.displayQuestion}>
