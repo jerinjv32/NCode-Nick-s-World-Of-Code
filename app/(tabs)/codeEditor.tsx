@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { alertRed, commonFontColor, darkGrey, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import axios from 'axios'
@@ -6,6 +6,7 @@ import useCodeStoreEditor from '../../src/store/codeStoreEditor'
 import DisplayOutput from '../../src/components/DisplayOutput'
 import useModalVisible from '../../src/store/modalStore'
 import Run from '../../src/components/Run'
+import InputModal from '../../src/components/modals/inputModal'
 import Output from '../../src/components/Output'
 import address from '../../src/config/env'
 
@@ -23,7 +24,6 @@ const lang = [
     value: '3'
   }
 ]
-
 const codeEditor = () => {
   // const [language, setLang] = useState(null); choosing language will be done in the future
   const code = useCodeStoreEditor(state => state.code);
@@ -45,6 +45,7 @@ const codeEditor = () => {
   const openModal = useModalVisible(state => state.openModal);
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
+      <InputModal />
       <DisplayOutput output={output} />
       <View style={styles.tab}>
         {/* <Dropdown
@@ -91,7 +92,7 @@ const codeEditor = () => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'); }}>
           <Output />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('InputModal') }}>
           <Run />
         </TouchableOpacity>
       </View>
