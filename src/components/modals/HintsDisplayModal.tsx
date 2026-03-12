@@ -1,19 +1,21 @@
-import { Modal, Pressable, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
+import { Modal, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
 import React from 'react'
-import { commonFontColor, darkGrey, grey, mainBgColor, purple, transparent } from '../styles/colors'
-import fontStyle from '../styles/fontStyles'
-import useModalVisible from '../store/modalStore'
-import useLevelDisplay from '../store/levelDisplayStore'
-import { useRouter } from 'expo-router'
-import modalStyles from '../styles/modalStyles'
+import { commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../styles/colors'
+import fontStyle from '../../styles/fontStyles'
+import useModalVisible from '../../store/modalStore'
+import modalStyles from '../../styles/modalStyles'
 
-const LockedLessonAlertBox = () => {
+interface HintsModalProps {
+  hints: string
+}
+
+const HintsDisplayModal = ({ hints }: HintsModalProps) => {
   const activeModal = useModalVisible(state => state.activeModal);
   const closeModal = useModalVisible(state => state.closeModal);
   return (
     <Modal
       transparent={true}
-      visible={activeModal == 'lockedLessonAlertModal' ? true : false}
+      visible={activeModal == 'HintsDisplayModal' ? true : false}
       onRequestClose={() => closeModal()}
       animationType='fade'
     >
@@ -28,11 +30,19 @@ const LockedLessonAlertBox = () => {
               fontStyle.normal, {
                 textAlign: 'center',
                 lineHeight: 20,
+                color: purple,
+                padding: 5
+              }
+            ]}>HINTS</Text>
+            <Text style={[
+              fontStyle.normal, {
+                textAlign: 'center',
+                lineHeight: 20,
                 color: commonFontColor,
                 padding: 5
               }
             ]}>
-              You must complete previous lessons to unlock it
+              {hints}
             </Text>
             <View style={{
               borderWidth: 5,
@@ -55,7 +65,7 @@ const LockedLessonAlertBox = () => {
   )
 }
 
-export default LockedLessonAlertBox;
+export default HintsDisplayModal;
 
 const styles = StyleSheet.create({
   centeredView: {

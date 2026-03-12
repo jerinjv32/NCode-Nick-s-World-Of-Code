@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, FlatList, Alert } from 'react-native'
 import React from 'react'
 import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -74,7 +74,6 @@ const Item = ({ lesson, level, type, side, title, unlocked, completed, details }
 const Home = () => {
   const [lessonData, setLessonData] = useState([])
   const openModal = useModalVisible(state => state.openModal);
-  const logout = UseAuthStore(state => state.logOut);
 
   useEffect(() => {
     function lessonDisplay(currentLesson: number) {
@@ -106,7 +105,8 @@ const Home = () => {
   }, []);
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
-      <ActualAlert desc='There went something wrong loading your data. Please try loging out and loging in.' />
+      <LockedLessonAlertBox />
+      <ActualAlert desc="Something went wrong. Try logout and relogin." />
       <View style={[styles.languageTitle, { height: '3.5%' }]}>
         <Text style={[fontStyle.normal, { color: commonFontColor }]}>Python</Text>
       </View>
