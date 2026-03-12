@@ -10,6 +10,12 @@ import { useRouter } from 'expo-router'
 import useRoomStore from '../../src/store/roomIdStore'
 
 const CollabCoding = () => {
+  const inputRef1 = useRef(null)
+  const inputRef2 = useRef(null)
+  const inputRef3 = useRef(null)
+  const inputRef4 = useRef(null)
+
+
   const getRoomId = useRoomStore(state => state.getRoomId);
   const [textField1, setText1] = useState<string>('');
   const [textField2, setText2] = useState<string>('');
@@ -26,6 +32,7 @@ const CollabCoding = () => {
 
   function combineTextFields() {
     roomIdRef.current = textField1 + textField2 + textField3 + textField4;
+    console.log(roomIdRef.current)
     setRoomId(roomIdRef.current);
   }
   return (
@@ -44,9 +51,19 @@ const CollabCoding = () => {
         >Welcome to collab collabcoding here you can collab with your friends and work on a single code base together!</Text>
         <View style={{ width: '55%', height: 100, flexDirection: 'row', gap: 6 }}>
           <TextInput
+            ref={inputRef1}
             keyboardType='numeric'
             value={textField1}
-            onChangeText={setText1}
+            onChangeText={(value) => {
+              setText1(value)
+              if (value.length === 1) {
+                inputRef2.current.focus()
+              }
+              else {
+                inputRef1.current.focus()
+              }
+
+            }}
             onFocus={() => setFocusTF(1)}
             onBlur={() => setFocusTF(0)}
             style={[
@@ -60,11 +77,21 @@ const CollabCoding = () => {
             maxLength={1}
           />
           <TextInput
+            ref={inputRef2}
             keyboardType='numeric'
             value={textField2}
             onFocus={() => setFocusTF(2)}
             onBlur={() => setFocusTF(0)}
-            onChangeText={setText2}
+            onChangeText={(value) => {
+              setText2(value)
+              if (value.length === 1) {
+                inputRef3.current.focus()
+              }
+              else {
+                inputRef1.current.focus()
+              }
+
+            }}
             style={[
               styles.inputField,
               {
@@ -76,11 +103,21 @@ const CollabCoding = () => {
             maxLength={1}
           />
           <TextInput
+            ref={inputRef3}
             keyboardType='numeric'
             value={textField3}
             onFocus={() => setFocusTF(3)}
             onBlur={() => setFocusTF(0)}
-            onChangeText={setText3}
+            onChangeText={(value) => {
+              setText3(value)
+              if (value.length === 1) {
+                inputRef4.current.focus()
+              }
+              else {
+                inputRef2.current.focus()
+              }
+
+            }}
             style={[
               styles.inputField,
               {
@@ -92,11 +129,20 @@ const CollabCoding = () => {
             maxLength={1}
           />
           <TextInput
+            ref={inputRef4}
             keyboardType='numeric'
             value={textField4}
             onFocus={() => setFocusTF(4)}
             onBlur={() => setFocusTF(0)}
-            onChangeText={setText4}
+            onChangeText={(value) => {
+              setText4(value)
+              if (value.length === 1) {
+                inputRef4.current.focus()
+              }
+              else {
+                inputRef3.current.focus()
+              }
+            }}
             style={[
               styles.inputField,
               {
@@ -115,9 +161,6 @@ const CollabCoding = () => {
           <Text style={[fontStyle.header2, { color: commonFontColor }]}>Join</Text>
         </TouchableOpacity>
         <View style={{
-          width: '100%',
-          borderStyle: 'dashed',
-          borderWidth: 3,
           borderColor: 'white',
           marginTop: '10%'
         }} />

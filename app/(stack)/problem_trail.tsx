@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -7,10 +8,18 @@ import { useRouter } from 'expo-router'
 import useModalVisible from '../../src/store/modalStore'
 import { supabase } from '../../lib/supabase'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
+import address from '../../src/config/env'
+import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
+import ActualAlert from '../../src/components/ActualAlert'
 
+interface MyCallBackPros {
+  (hint: string): void
+}
 const problem_trail = () => {
+  const [hints, setHints] = useState('Loading...');
   const [media, setMedia] = useState();
   const router = useRouter();
+  const openModal = useModalVisible(state => state.openModal);
   const closeModal = useModalVisible(state => state.closeModal);
   const [displayQuestion, setQuestion] = useState();
   const lesson_no = useLevelDisplay(state => state.lesson);
@@ -31,10 +40,22 @@ const problem_trail = () => {
     }
 
     getQuestion();
-  },
-    []);
+  }, []);
+
+  async function provideHints(question: string) {
+    try {
+      const response = await axios.post('http://' + address + ':3000/api/hints', {
+        'question': question
+      });
+      setHints(response.data.content);
+    } catch (e) {
+      console.error('Error:', e)
+    }
+  }
+
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
+      <HintsDisplayModal hints={hints} />
       {/* Display question */}
       <View style={styles.displayQuestion}>
         <Text style={[
@@ -61,11 +82,11 @@ const problem_trail = () => {
         <TouchableOpacity style={styles.btnStyle} onPress={() => router.push('/editorForSolving')}>
           <Text style={[fontStyle.header2, { color: commonFontColor }]}>Solve</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.btnStyle}>
+        <TouchableOpacity style={styles.btnStyle} onPress={() => { provideHints(displayQuestion), openModal('HintsDisplayModal') }}>
           <Text style={[fontStyle.header2, { color: commonFontColor }]}>Hints?</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 
