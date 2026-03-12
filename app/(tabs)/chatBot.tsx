@@ -36,8 +36,7 @@ const chatBot = () => {
       const response = await axios.post('http://' + address + ':3000/api/chatBot', {
         "prompt": prompt
       });
-      console.log(response.data.title)
-      const botText = response.data
+      const botText = response.data.content
       callback(botText)
     }
     catch (error) {

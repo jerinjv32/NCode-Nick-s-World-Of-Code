@@ -8,9 +8,9 @@ import useModalVisible from '../../src/store/modalStore'
 import Output from '../../src/components/Output'
 import Run from '../../src/components/Run'
 import TestBtn from '../../src/components/Test'
-import { router } from 'expo-router'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 import address from '../../src/config/env'
+import { useRouter } from 'expo-router'
 
 const codeEditor = () => {
   // const [language, setLang] = useState(null); choosing language will be done in the future
@@ -21,25 +21,30 @@ const codeEditor = () => {
 
   const lessonNo = useLevelDisplay(state => state.lesson);
   const openModal = useModalVisible(state => state.openModal);
+  const router = useRouter()
 
   async function compile(program: string) {
     try {
       const response = await axios.post('http://' + address + ':3001/execute', {
         "code": program
       });
-      console.log('output', response.data)
       setOutput(response.data);
     } catch (error) {
       console.error("Compiler Error:", error);
     }
   }
-  async function validator(output: string) {
+  async function validator(generatedOutput: string) {
     try {
       const response = await axios.post('http://' + address + ':3000/api/validator', {
         'lesson': lessonNo,
-        'output': output
-      });
-      console.log(response.data)
+        'output': generatedOutput
+      })
+      if (response.data == 'pass') {
+        return true
+      }
+      else {
+        return false
+      }
     }
     catch (e) {
       console.error("Error:", e);
@@ -53,7 +58,7 @@ const codeEditor = () => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
           <Output />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) ? router.push('/completionScreen') : console.log('validatioin failed') }}>
           <TestBtn />
         </TouchableOpacity>
         <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
