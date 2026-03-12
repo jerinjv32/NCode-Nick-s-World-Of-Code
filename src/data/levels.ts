@@ -7,21 +7,21 @@ const levels = [
   {
     lesson: '1',
     level: '1',
-    title: 'Chapter 1',
+    title: 'print() function',
     type: 'question',
 
   },
   {
     lesson: '2',
     level: '1',
-    title: 'Chapter 2',
+    title: 'Intro to Variables',
     type: 'question',
 
   },
   {
     lesson: '3',
     level: '1',
-    title: 'Chapter 3',
+    title: 'Python Arithmetics',
     type: 'question',
 
   },
