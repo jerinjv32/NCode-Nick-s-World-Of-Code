@@ -42,7 +42,7 @@ const levels = [
   {
     level: '2',
     type: 'banner',
-    details: 'This level contains loops, arrays and introduction to DSA.'
+    details: 'At this level you will learn loops, arrays, and the basics of Data Structures and Algorithms, helping you process data and solve problems more efficiently.'
   },
   {
     lesson: '6',

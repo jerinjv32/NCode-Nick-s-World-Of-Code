@@ -13,6 +13,7 @@ import address from '../../src/config/env'
 import { useRouter } from 'expo-router'
 import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
 import { useEffect } from 'react'
+import InputModalProblem from '../../src/components/modals/inputModalProblem'
 
 const codeEditor = () => {
   const closeModal = useModalVisible(state => state.closeModal)
@@ -27,16 +28,6 @@ const codeEditor = () => {
   const openModal = useModalVisible(state => state.openModal);
   const router = useRouter()
 
-  async function compile(program: string) {
-    try {
-      const response = await axios.post('http://' + address + ':3001/execute', {
-        "code": program
-      });
-      setOutput(response.data);
-    } catch (error) {
-      console.error("Compiler Error:", error);
-    }
-  }
   async function validator(generatedOutput: string) {
     try {
       const response = await axios.post('http://' + address + ':3000/api/validator', {
@@ -58,6 +49,7 @@ const codeEditor = () => {
 
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
+      <InputModalProblem />
       <DisplayOutput output={output} />
       <View style={styles.tab}>
         <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
@@ -66,7 +58,7 @@ const codeEditor = () => {
         <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) }}>
           <TestBtn />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('InputModalProblem') }}>
           <Run />
         </TouchableOpacity>
       </View>
