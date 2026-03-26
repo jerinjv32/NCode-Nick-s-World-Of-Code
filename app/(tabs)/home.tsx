@@ -1,4 +1,4 @@
-import { StyleSheet, FlatList, Alert } from 'react-native'
+import { StyleSheet, FlatList, Alert, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { View, Text } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -17,6 +17,7 @@ import BannerComponent from '../../src/components/BannerComponent'
 import ActualAlert from '../../src/components/ActualAlert'
 import useModalVisible from '../../src/store/modalStore'
 import { UseAuthStore } from '../../src/store/authStore'
+import StoryIntroModal from '../../src/components/modals/storyIntro'
 
 type ItemProps = {
   lesson?: string,
@@ -106,10 +107,11 @@ const Home = () => {
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
       <LockedLessonAlertBox />
+      <StoryIntroModal />
       <ActualAlert desc="Something went wrong. Try logout and relogin." />
-      <View style={[styles.languageTitle, { height: '3.5%' }]}>
+      <TouchableOpacity style={[styles.languageTitle, { height: '3.5%' }]} onPress={() => openModal('IntroModal')}>
         <Text style={[fontStyle.normal, { color: commonFontColor }]}>Python</Text>
-      </View>
+      </TouchableOpacity>
       <View>
         <ProblemTrailNavigationModal />
         <LockedLessonAlertBox />
