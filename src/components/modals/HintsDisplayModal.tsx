@@ -1,15 +1,33 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { commonFontColor, darkGrey, grey, mainBgColor, purple } from '../../styles/colors'
 import fontStyle from '../../styles/fontStyles'
 import useModalVisible from '../../store/modalStore'
 import modalStyles from '../../styles/modalStyles'
+import axios from 'axios'
+import useQuestionStore from '../../store/questionStore'
+import address from '../../config/env'
 
-interface HintsModalProps {
-  hints: string
-}
+const HintsDisplayModal = () => {
+  const storedQuestion = useQuestionStore(state => state.question);
+  const [hints, setHints] = useState('Loading...')
 
-const HintsDisplayModal = ({ hints }: HintsModalProps) => {
+  useEffect(() => {
+    async function provideHints(question: string) {
+      try {
+        const response = await axios.post('http://' + address + ':3000/api/hints', {
+          'question': question
+        });
+        setHints(response.data.content);
+      } catch (e) {
+        console.error('Error:', e)
+      }
+    }
+
+    provideHints(storedQuestion);
+  }, [])
+
+
   const activeModal = useModalVisible(state => state.activeModal);
   const closeModal = useModalVisible(state => state.closeModal);
   return (

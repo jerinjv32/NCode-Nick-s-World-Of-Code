@@ -11,8 +11,13 @@ import TestBtn from '../../src/components/Test'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 import address from '../../src/config/env'
 import { useRouter } from 'expo-router'
+import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
+import { useEffect } from 'react'
+import InputModalProblem from '../../src/components/modals/inputModalProblem'
 
 const codeEditor = () => {
+  const closeModal = useModalVisible(state => state.closeModal)
+  useEffect(() => closeModal(), [])
   // const [language, setLang] = useState(null); choosing language will be done in the future
   const code = useCodeStore(state => state.code);
   const setCode = useCodeStore(state => state.setCode);
@@ -23,16 +28,6 @@ const codeEditor = () => {
   const openModal = useModalVisible(state => state.openModal);
   const router = useRouter()
 
-  async function compile(program: string) {
-    try {
-      const response = await axios.post('http://' + address + ':3001/execute', {
-        "code": program
-      });
-      setOutput(response.data);
-    } catch (error) {
-      console.error("Compiler Error:", error);
-    }
-  }
   async function validator(generatedOutput: string) {
     try {
       const response = await axios.post('http://' + address + ':3000/api/validator', {
@@ -40,10 +35,11 @@ const codeEditor = () => {
         'output': generatedOutput
       })
       if (response.data == 'pass') {
-        return true
+        router.dismissAll()
+        router.replace('/completionScreen')
       }
       else {
-        return false
+        openModal('HintsDisplayModal')
       }
     }
     catch (e) {
@@ -53,15 +49,16 @@ const codeEditor = () => {
 
   return (
     <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: darkGrey }}>
+      <InputModalProblem />
       <DisplayOutput output={output} />
       <View style={styles.tab}>
         <TouchableOpacity activeOpacity={0.5} onPress={() => openModal('outputModal')}>
           <Output />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) ? router.push('/completionScreen') : console.log('validatioin failed') }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { validator(output) }}>
           <TestBtn />
         </TouchableOpacity>
-        <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('outputModal'), compile(code); }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={() => { openModal('InputModalProblem') }}>
           <Run />
         </TouchableOpacity>
       </View>
@@ -77,7 +74,7 @@ const codeEditor = () => {
           onChangeText={setCode}
         />
       </View>
-    </SafeAreaView>
+    </SafeAreaView >
   )
 }
 

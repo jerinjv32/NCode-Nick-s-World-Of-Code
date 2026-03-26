@@ -7,21 +7,21 @@ const levels = [
   {
     lesson: '1',
     level: '1',
-    title: 'Chapter 1',
+    title: 'print() function',
     type: 'question',
 
   },
   {
     lesson: '2',
     level: '1',
-    title: 'Chapter 2',
+    title: 'Intro to Variables',
     type: 'question',
 
   },
   {
     lesson: '3',
     level: '1',
-    title: 'Chapter 3',
+    title: 'Python Arithmetics',
     type: 'question',
 
   },
@@ -42,7 +42,7 @@ const levels = [
   {
     level: '2',
     type: 'banner',
-    details: 'This level contains loops, arrays and introduction to DSA.'
+    details: 'At this level you will learn loops, arrays, and the basics of Data Structures and Algorithms, helping you process data and solve problems more efficiently.'
   },
   {
     lesson: '6',

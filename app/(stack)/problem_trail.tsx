@@ -2,7 +2,7 @@ import axios from 'axios'
 import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { commonFontColor, darkGrey, displayQuestionColor, grey, purple } from '../../src/styles/colors'
+import { commonFontColor, darkGrey, displayQuestionColor, grey, lightPurple, mainBgColor, purple } from '../../src/styles/colors'
 import fontStyle from '../../src/styles/fontStyles'
 import { useRouter } from 'expo-router'
 import useModalVisible from '../../src/store/modalStore'
@@ -10,25 +10,29 @@ import { supabase } from '../../lib/supabase'
 import useLevelDisplay from '../../src/store/levelDisplayStore'
 import address from '../../src/config/env'
 import HintsDisplayModal from '../../src/components/modals/HintsDisplayModal'
-import ActualAlert from '../../src/components/ActualAlert'
+import useQuestionStore from '../../src/store/questionStore'
+import useCodeStore from '../../src/store/codeStore'
 
 interface MyCallBackPros {
   (hint: string): void
 }
 const problem_trail = () => {
+  const displayQuestion = useQuestionStore(state => state.question);
+  const setQuestion = useQuestionStore(state => state.setQuestion);
   const [hints, setHints] = useState('Loading...');
   const [media, setMedia] = useState();
   const router = useRouter();
   const openModal = useModalVisible(state => state.openModal);
   const closeModal = useModalVisible(state => state.closeModal);
-  const [displayQuestion, setQuestion] = useState();
   const lesson_no = useLevelDisplay(state => state.lesson);
+  const setCode = useCodeStore(state => state.setCode);
+
   useEffect(() => {
     closeModal();
     async function getQuestion() {
       const { data, error } = await supabase
         .from('problems_trail')
-        .select('problem, image_url')
+        .select('problem, image_url, template')
         .eq('lesson_no', lesson_no)
         .single();
 
@@ -36,7 +40,8 @@ const problem_trail = () => {
         console.log("Error:", error);
       }
       setQuestion(data.problem);
-      setMedia(data.image_url)
+      setMedia(data.image_url);
+      setCode(data.template);
     }
 
     getQuestion();
@@ -54,8 +59,8 @@ const problem_trail = () => {
   }
 
   return (
-    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: grey }}>
-      <HintsDisplayModal hints={hints} />
+    <SafeAreaView edges={['bottom']} style={{ flex: 1, backgroundColor: mainBgColor }}>
+      <HintsDisplayModal />
       {/* Display question */}
       <View style={styles.displayQuestion}>
         <Text style={[
