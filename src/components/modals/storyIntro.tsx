@@ -3,22 +3,63 @@ import useModalVisible from "../../store/modalStore";
 import modalStyles from "../../styles/modalStyles";
 import { commonFontColor, lightPurple, purple, terminalColor } from "../../styles/colors";
 import fontStyle from "../../styles/fontStyles";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+
+interface CharacterProps {
+  character: string
+}
+const ChooseCharacter = ({ character }: CharacterProps) => {
+  if (character == 'nick') {
+    return (
+      <Image
+        source={require('../../../assets/images/nick.png')}
+        resizeMode='contain'
+        style={{
+          width: 320,
+          height: undefined,
+          aspectRatio: 1,
+        }}
+      />
+    );
+  }
+  else {
+    return (
+      <Image
+        source={require('../../../assets/images/game_master.png')}
+        resizeMode='contain'
+        style={{
+          width: 320,
+          height: undefined,
+          aspectRatio: 1,
+        }}
+      />
+    );
+  }
+}
 
 
 export default function StoryIntroModal() {
 
   const count = useRef<number>(0);
+  const character = useRef<string>('');
   const [sentance, setSentance] = useState('...');
 
   const scene: { name: string, sentance: string }[] = [
     {
-      name: 'nick',
-      sentance: 'hello'
+      name: 'gameMaster',
+      sentance: 'test 1'
     },
     {
       name: 'nick',
-      sentance: 'are you ok?'
+      sentance: 'test 2'
+    },
+    {
+      name: 'gameMaster',
+      sentance: 'test 3'
+    },
+    {
+      name: 'nick',
+      sentance: 'test 4'
     }
   ]
 
@@ -26,16 +67,27 @@ export default function StoryIntroModal() {
   const activeModal = useModalVisible(state => state.activeModal);
   const closeModal = useModalVisible(state => state.closeModal);
 
+  useEffect(() => {
+    function getInitialScene() {
+      let obj = scene[count.current];
+      setSentance(obj.sentance);
+      character.current = obj.name;
+    }
+    getInitialScene();
+  }, []);
+
   function getPreviousScene() {
     count.current -= 1;
-    let obj = scene[count.current]
-    setSentance(obj.sentance)
+    let obj = scene[count.current];
+    setSentance(obj.sentance);
+    character.current = obj.name;
   }
 
   function getNextScene() {
-    let obj = scene[count.current]
     count.current += 1;
-    setSentance(obj.sentance)
+    let obj = scene[count.current];
+    setSentance(obj.sentance);
+    character.current = obj.name;
   }
 
   return (
@@ -53,16 +105,7 @@ export default function StoryIntroModal() {
         <TouchableWithoutFeedback>
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', margin: 40 }}>
             <View style={styles.imageDisplay}>
-              <Image
-                source={require('../../../assets/images/nick.png')}
-                resizeMode='contain'
-                style={{
-                  width: 320,
-                  height: undefined,
-                  aspectRatio: 1,
-                }}
-              />
-
+              <ChooseCharacter character={character.current} />
             </View>
             <View style={styles.dialogueBox}>
               <Text style={{ color: commonFontColor }}>{sentance}</Text>
@@ -71,7 +114,7 @@ export default function StoryIntroModal() {
               <TouchableOpacity style={styles.btns} onPress={() => count.current != 0 ? getPreviousScene() : ''}>
                 <Text style={[fontStyle.normal, { color: commonFontColor }]}>previous</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btns} onPress={() => count.current != 1 ? getNextScene() : ''}>
+              <TouchableOpacity style={styles.btns} onPress={() => count.current != 3 ? getNextScene() : ''}>
                 <Text style={[fontStyle.normal, { color: commonFontColor }]}>next</Text>
               </TouchableOpacity>
             </View>

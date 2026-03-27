@@ -110,7 +110,7 @@ const Home = () => {
       <StoryIntroModal />
       <ActualAlert desc="Something went wrong. Try logout and relogin." />
       <TouchableOpacity style={[styles.languageTitle, { height: '3.5%' }]} onPress={() => openModal('IntroModal')}>
-        <Text style={[fontStyle.normal, { color: commonFontColor }]}>Python</Text>
+        <Text style={[fontStyle.normal, { color: commonFontColor }]}>Introduction</Text>
       </TouchableOpacity>
       <View>
         <ProblemTrailNavigationModal />
