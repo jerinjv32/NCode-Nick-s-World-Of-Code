@@ -97,7 +97,6 @@ const CollabEditor = () => {
         </TouchableOpacity>
       </View>
       <View>
-        {/* This shit on this line is temporary */}
         <TextInput
           value={code}
           multiline={true}

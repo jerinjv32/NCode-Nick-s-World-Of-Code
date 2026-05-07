@@ -20,9 +20,6 @@ const Index = () => {
   if (!isLogged) {
     return router.replace('/signIn')
   }
-  else {
-
-  }
 }
 
 export default Index

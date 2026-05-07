@@ -46,21 +46,33 @@ export default function StoryIntroModal() {
 
   const scene: { name: string, sentance: string }[] = [
     {
-      name: 'gameMaster',
-      sentance: 'test 1'
+      name: 'nick',
+      sentance: 'Finally, you are awake! Hello there! Well, you\'re one hell of a sleeper. If I am right, you had slept for 72 Hours!'
     },
     {
       name: 'nick',
-      sentance: 'test 2'
+      sentance: 'Oh, pardon me for not introducing myself. I am Nick. As you may have guessed yes I am an AI which was created to aid the workers here.'
     },
     {
       name: 'gameMaster',
-      sentance: 'test 3'
+      sentance: '...'
     },
     {
       name: 'nick',
-      sentance: 'test 4'
-    }
+      sentance: 'Do not be frightened of it. He won\'t harm you, unless there is a reason. I know you have a lot to ask, will explain them in time.'
+    },
+    {
+      name: 'gameMaster',
+      sentance: 'Do you remember how did you end up here? Not that it does matter. But why you are alive; do matter.'
+    },
+    {
+      name: 'nick',
+      sentance: 'Its no good if you confuse more. Your appearance is more than enough.'
+    },
+    {
+      name: 'gameMaster',
+      sentance: 'Hearing those from a soulless shell as yours, hold no value to me. And this sacred body is beyond your kinds comprehension.'
+    },
   ]
 
 
@@ -99,11 +111,14 @@ export default function StoryIntroModal() {
     >
       <View style={styles.centeredView}>
         <TouchableWithoutFeedback onPress={() => closeModal()}>
-          <View style={modalStyles.overlay} />
+          <View style={[modalStyles.overlay]} />
         </TouchableWithoutFeedback>
 
         <TouchableWithoutFeedback>
           <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', margin: 40 }}>
+            <TouchableOpacity onPress={() => closeModal()} style={{ width: 100, height: 30 }}>
+              <Text style={[fontStyle.header1, { color: commonFontColor, textAlign: 'center' }]}>Close</Text>
+            </TouchableOpacity>
             <View style={styles.imageDisplay}>
               <ChooseCharacter character={character.current} />
             </View>
@@ -114,7 +129,7 @@ export default function StoryIntroModal() {
               <TouchableOpacity style={styles.btns} onPress={() => count.current != 0 ? getPreviousScene() : ''}>
                 <Text style={[fontStyle.normal, { color: commonFontColor }]}>previous</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.btns} onPress={() => count.current != 3 ? getNextScene() : ''}>
+              <TouchableOpacity style={styles.btns} onPress={() => count.current != scene.length - 1 ? getNextScene() : ''}>
                 <Text style={[fontStyle.normal, { color: commonFontColor }]}>next</Text>
               </TouchableOpacity>
             </View>
